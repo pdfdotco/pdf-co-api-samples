@@ -1,0 +1,111 @@
+{
+  "templateVersion": 4,
+  "templatePriority": 0,
+  "templateName": "TGA Authorised Prescriber Letter",
+  "culture": "en-US",
+  "options": {
+    "ocrMode": "auto",
+    "ocrLanguage": "eng"
+  },
+  "objects": [
+    {
+      "name": "MAPReference",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "Our Reference: ({{Anything}})",
+        "regex": true
+      }
+    },
+    {
+      "name": "Title",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "Dr",
+        "regex": false
+      }
+    },
+    {
+      "name": "FirstName",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "Dr ({{UppercaseLetters}}{{Space}}{{UppercaseLetters}})",
+        "regex": true
+      }
+    },
+    {
+      "name": "LastName",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "{{UppercaseLetter}}{{Letters}} Yoo",
+        "regex": true
+      }
+    },
+    {
+      "name": "APPRARegistration",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "(MED{{Digits}})",
+        "regex": true
+      }
+    },
+    {
+      "name": "Email",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "Email: ({{Email}})",
+        "regex": true
+      }
+    },
+    {
+      "name": "SpecifiedTherapeuticGoods",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "Product: ({{SentenceWithSingleSpaces}})",
+        "regex": true
+      }
+    },
+    {
+      "name": "Indications",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "For the following indication(s): ({{AnythingGreedy}}) Schedule",
+        "regex": true
+      }
+    },
+    {
+      "name": "TreatmentDirections",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "Treatment directions (if any): ({{SentenceWithSingleSpaces}})",
+        "regex": true
+      }
+    },
+    {
+      "name": "ExpiryDate",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "This authority has effect for the period commencing on the date of this notice until ({{SmartDate}}),",
+        "regex": true
+      }
+    },
+    {
+      "name": "DateAuthorisationGranted",
+      "objectType": "field",
+      "fieldProperties": {
+        "fieldType": "macros",
+        "expression": "Dated ({{SmartDate}})",
+        "regex": true
+      }
+    }
+  ]
+}
