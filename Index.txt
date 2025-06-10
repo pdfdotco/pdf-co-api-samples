@@ -488,6 +488,7 @@
 \Email Extractor\Email to PDF\cURL
 \Email Extractor\Email to PDF\Java
 \Email Extractor\Email to PDF\JavaScript
+\Email Extractor\Email to PDF\n8n
 \Email Extractor\Email to PDF\PHP
 \Email Extractor\Email to PDF\PowerShell
 \Email Extractor\Email to PDF\Python

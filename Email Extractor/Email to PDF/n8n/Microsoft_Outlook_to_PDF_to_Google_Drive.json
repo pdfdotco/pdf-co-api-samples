@@ -1,0 +1,219 @@
+{
+  "name": "Microsoft Outlook to PDF to Google Drive",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlookTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -60
+      ],
+      "id": "602ef737-eb25-4672-b36e-781b5db8906d",
+      "name": "Microsoft Outlook Trigger",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "OUE5SzEWLU8qK0Hd",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/me/messages/{{ $json.id }}/$value ",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -180,
+        -60
+      ],
+      "id": "1b155e48-f3f6-4f01-b267-65f881abafab",
+      "name": "HTTP Request",
+      "alwaysOutputData": false,
+      "credentials": {
+        "oAuth2Api": {
+          "id": "zCHfO9t3LEHkoiBr",
+          "name": "Microsoft Graph API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "name": "=email.eml"
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        40,
+        -60
+      ],
+      "id": "66b7142a-f164-40ea-8cb2-18bf66861e42",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "Pvnkha8HUv4wSyFL",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Convert to PDF",
+        "convertType": "fromEmail",
+        "url": "={{ $json.url }}",
+        "advancedOptionsEmail": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        260,
+        -60
+      ],
+      "id": "b1c4fb6c-0927-456e-bc25-fe6b4acb1e89",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "Pvnkha8HUv4wSyFL",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        700,
+        -60
+      ],
+      "id": "a6c3cc8e-f9e7-4b22-bfae-5304ae68c8b1",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "fNShWmDeUHcHDvyn",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        -60
+      ],
+      "id": "1a7013a7-2c63-413d-8826-4b2928ec5bef",
+      "name": "HTTP Request1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Microsoft Outlook Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0fa6023c-cc6f-4a67-b081-04685e1a0160",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "01fd14c07da1c03b72a075cb8e73de5cbea06a7841807aea5e4e8c50026f8e7f"
+  },
+  "id": "xLgmSa2Ozja6aSvM",
+  "tags": []
+}
