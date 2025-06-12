@@ -137,6 +137,7 @@
 \AI Invoice Parser\cURL
 \AI Invoice Parser\Java
 \AI Invoice Parser\JavaScript
+\AI Invoice Parser\n8n
 \AI Invoice Parser\PHP
 \AI Invoice Parser\PowerShell
 \AI Invoice Parser\Python
@@ -150,6 +151,7 @@
 \AI Invoice Parser\Java\AI Invoice Parsing with Webhook
 \AI Invoice Parser\JavaScript\AI Invoice Parsing (Node.js)
 \AI Invoice Parser\JavaScript\AI Invoice Parsing with Webhook (Node.js)
+\AI Invoice Parser\n8n\Automate Invoice Entry to QuickBooks
 \AI Invoice Parser\PHP\AI Invoice Parsing
 \AI Invoice Parser\PHP\AI Invoice Parsing with Webhook
 \AI Invoice Parser\PowerShell\AI Invoice Parsing

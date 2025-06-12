@@ -1,0 +1,239 @@
+{
+  "name": "Parse Invoice and Create New Invoice in Quickbooks",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "d9b6cbff-0452-47f8-901b-e3a2f0f038aa",
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -380,
+        40
+      ],
+      "id": "678269b4-c347-42f3-84e4-8c967daab0d2",
+      "name": "Webhook",
+      "webhookId": "d9b6cbff-0452-47f8-901b-e3a2f0f038aa"
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "data0",
+        "name": "file.pdf"
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        40
+      ],
+      "id": "4416b745-a1f0-4b25-865e-1ca0090be191",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "QhbaDAbbTHwFSwWv",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Split PDF",
+        "url": "={{ $json.url }}",
+        "pages": "*",
+        "advancedOptionsPageNumber": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        60,
+        40
+      ],
+      "id": "1772c8bb-ac0d-48e4-9955-fc298fd81c7f",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "QhbaDAbbTHwFSwWv",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body }}",
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        500,
+        40
+      ],
+      "id": "3d8ece64-f485-4cfd-a799-c565353d2d47",
+      "name": "PDFco Api2",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "QhbaDAbbTHwFSwWv",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body",
+        "include": "selectedOtherFields",
+        "fieldsToInclude": "body[]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        280,
+        40
+      ],
+      "id": "be4d4165-4453-48a4-aadc-e9e33267ec98",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process ALL items from the parser, not just the first one\nconst allItems = $input.all();\nconsole.log(`Processing ${allItems.length} invoices from parser`);\n\nconst allInvoices = [];\n\n// Loop through each parsed invoice\nfor (let i = 0; i < allItems.length; i++) {\n  const inputItem = allItems[i];\n  console.log(`\\n=== Processing Invoice ${i + 1} ===`);\n  \n  // Get the invoice data - try different possible structures\n  let invoiceData;\n  \n  if (inputItem.json?.body) {\n    invoiceData = inputItem.json.body;\n  } else if (inputItem.json) {\n    invoiceData = inputItem.json;\n  } else {\n    invoiceData = inputItem;\n  }\n  \n  console.log(`Invoice ${i + 1} data:`, JSON.stringify(invoiceData, null, 2));\n  \n  // Check if this item has lineItems\n  if (!invoiceData.lineItems || !Array.isArray(invoiceData.lineItems)) {\n    console.log(`Invoice ${i + 1}: No valid lineItems found, skipping`);\n    continue;\n  }\n  \n  console.log(`Invoice ${i + 1}: Found ${invoiceData.lineItems.length} line items`);\n  \n  // Transform line items for this invoice\n  const qbLineItems = invoiceData.lineItems.map((item, index) => ({\n    Id: (index + 1).toString(),\n    LineNum: index + 1,\n    Description: item.description || `Item ${index + 1}`,\n    Amount: parseFloat((item.total_usd || item.total || \"0\").toString().replace(/[$,]/g, '')),\n    DetailType: \"SalesItemLineDetail\",\n    SalesItemLineDetail: {\n      ItemRef: {\n        value: \"1\", // Your sandbox item ID\n        name: \"Services\"\n      },\n      Qty: parseFloat((item.quantity || \"1\").toString()),\n      ItemAccountRef: {\n        value: \"1\",\n        name: \"Services\"\n      },\n      TaxCodeRef: {\n        value: \"NON\"\n      }\n    }\n  }));\n  \n  // Add subtotal line\n  qbLineItems.push({\n    Amount: parseFloat((invoiceData.paymentDetails?.subtotal || \"0\").toString().replace(/[$,]/g, '')),\n    DetailType: \"SubTotalLineDetail\",\n    SubTotalLineDetail: {}\n  });\n  \n  // Create QuickBooks invoice for this parsed invoice\n  const invoice = {\n    CustomerRef: {\n      value: \"1\", // Sandbox customer ID\n      name: \"Test Customer\"\n    },\n    DocNumber: invoiceData.invoice?.invoiceNo || `INV-${Date.now()}-${i + 1}`,\n    TxnDate: new Date().toISOString().split('T')[0],\n    CurrencyRef: {\n      value: \"USD\",\n      name: \"United States Dollar\"\n    },\n    Line: qbLineItems,\n    BillAddr: {\n      Line1: invoiceData.customer?.billTo?.address?.streetAddress || \"123 Main St\",\n      City: invoiceData.customer?.billTo?.address?.city || \"Default City\",\n      PostalCode: invoiceData.customer?.billTo?.address?.postalCode || \"12345\"\n    },\n    TotalAmt: parseFloat((invoiceData.paymentDetails?.total || \"0\").toString().replace(/[$,]/g, '')),\n    TxnTaxDetail: {\n      TotalTax: parseFloat((invoiceData.paymentDetails?.tax || \"0\").toString().replace(/[$,]/g, ''))\n    }\n  };\n  \n  console.log(`Invoice ${i + 1} QB format:`, JSON.stringify(invoice, null, 2));\n  allInvoices.push({ json: invoice });\n}\n\nconsole.log(`\\n=== SUMMARY ===`);\nconsole.log(`Parsed ${allItems.length} items from parser`);\nconsole.log(`Created ${allInvoices.length} QuickBooks invoices`);\n\n// Return ALL processed invoices\nreturn allInvoices;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        40
+      ],
+      "id": "9de78ed3-4751-4108-85c8-765a1aa0adcb",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://sandbox-quickbooks.api.intuit.com/v3/company/9341454812253693/invoice",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "quickBooksOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        940,
+        40
+      ],
+      "id": "483a8a37-c7d0-4de4-8c74-fbcd9a3b95e3",
+      "name": "HTTP Request",
+      "credentials": {
+        "quickBooksOAuth2Api": {
+          "id": "knOd9B22dg2j8DEb",
+          "name": "QuickBooks Online account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api2": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3f04d69c-a491-4f66-8b1b-7cefe3574118",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "535af2c37dca6c505c12c4503119cd5cc9833c2f09cf0d65a7386492eba84bd7"
+  },
+  "id": "egwwoJJRRbAdX85m",
+  "tags": []
+}
