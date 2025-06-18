@@ -1301,6 +1301,7 @@
 \PDF Splitting API\GoogleAppScript
 \PDF Splitting API\Java
 \PDF Splitting API\JavaScript
+\PDF Splitting API\n8n
 \PDF Splitting API\PHP
 \PDF Splitting API\PowerShell
 \PDF Splitting API\Python
@@ -1343,6 +1344,7 @@
 \PDF Splitting API\JavaScript\Split PDF From Uploaded File (Node.js) - Async API
 \PDF Splitting API\JavaScript\Split PDF From URL (Node.js)
 \PDF Splitting API\JavaScript\Split PDF From URL (Node.js) - Async API
+\PDF Splitting API\n8n\Payroll PDF Processing and Approval Automation
 \PDF Splitting API\PHP\Split PDF Asynchronously
 \PDF Splitting API\PHP\Split PDF By Barcode Asynchronously
 \PDF Splitting API\PHP\Split PDF By Text Asynchronously
