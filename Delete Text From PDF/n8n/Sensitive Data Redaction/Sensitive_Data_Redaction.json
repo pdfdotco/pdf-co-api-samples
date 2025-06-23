@@ -1,0 +1,257 @@
+{
+  "name": "Sensitive Data Redaction",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1Im9SMR3IriQFelBd2K_T5xO47kfYYAS1",
+          "mode": "list",
+          "cachedResultName": "Confidential Employee Record",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1Im9SMR3IriQFelBd2K_T5xO47kfYYAS1"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7af930c6-a86a-4b37-a6b2-7a171442e93c",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "vXsv9FdjRthxbzXn",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        220,
+        0
+      ],
+      "id": "efed47d7-a99d-4e07-a811-5a4afa0d54cb",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "vXsv9FdjRthxbzXn",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "name": "file.pdf"
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "dc0abeb6-b260-40d0-a114-ab94909e243b",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "QhbaDAbbTHwFSwWv",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Search & Replace Text or Delete",
+        "url": "={{ $json.url }}",
+        "operationType": "delete",
+        "deleteOperations": {
+          "metadataValues": [
+            {
+              "searchString": "(?<=Name:\\s)[A-Za-z\\s]+(?=\\s*Email)"
+            },
+            {
+              "searchString": "(?<=Email:\\s)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+            },
+            {
+              "searchString": "(?<=Phone:\\s)\\([0-9]{3}\\)\\s[0-9]{3}-[0-9]{4}"
+            },
+            {
+              "searchString": "(?<=SSN:\\s)[0-9]{3}-[0-9]{2}-[0-9]{4}"
+            },
+            {
+              "searchString": "(?<=Date of Birth:\\s)[A-Za-z]+\\s+\\d{1,2},\\s+\\d{4}"
+            },
+            {
+              "searchString": "(?<=Address:\\s)[0-9]+\\s[A-Za-z0-9\\s,]+(?=\\s*Credit Card)"
+            },
+            {
+              "searchString": "(?<=Credit Card:\\s+)[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"
+            },
+            {
+              "searchString": "(?<=Employee ID:\\s)EMP-[0-9]{4}-[0-9]{3}"
+            },
+            {
+              "searchString": "(?<=Salary:\\s)\\$[0-9,]+"
+            }
+          ]
+        },
+        "advancedOptions": {
+          "replacementLimit": 0,
+          "regexSearch": true,
+          "profiles": "{'UsePatch': true, 'PatchColor': '#000000'}"
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        660,
+        0
+      ],
+      "id": "80334827-1594-407c-bbbe-d7710951faa7",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "QhbaDAbbTHwFSwWv",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "81e119c3-bce4-4fc0-afc1-7ad4ad363990",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1IIAlqGrZqo_fjwGV9zeYsYTVK8jeiMM0",
+          "mode": "list",
+          "cachedResultName": "Redacted Employee Record",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1IIAlqGrZqo_fjwGV9zeYsYTVK8jeiMM0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "c5d11404-2413-4f6f-bac0-81c661eb1db9",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "vXsv9FdjRthxbzXn",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7df73752-462c-4c10-a999-21f70418863e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "535af2c37dca6c505c12c4503119cd5cc9833c2f09cf0d65a7386492eba84bd7"
+  },
+  "id": "YUpcm9S7BxoeTO3E",
+  "tags": []
+}

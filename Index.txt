@@ -274,6 +274,7 @@
 \Delete Text From PDF\Delphi
 \Delete Text From PDF\Java
 \Delete Text From PDF\JavaScript
+\Delete Text From PDF\n8n
 \Delete Text From PDF\PHP
 \Delete Text From PDF\PowerShell
 \Delete Text From PDF\Python
@@ -300,6 +301,7 @@
 \Delete Text From PDF\JavaScript\Remove Credit Card Data From PDF
 \Delete Text From PDF\JavaScript\Remove Email and SSN Data From PDF
 \Delete Text From PDF\JavaScript\Remove PII Data From PDF
+\Delete Text From PDF\n8n\Sensitive Data Redaction
 \Delete Text From PDF\PHP\Delete PDF Text Asynchronously
 \Delete Text From PDF\PHP\Delete PDF Text From Uploaded File
 \Delete Text From PDF\PowerShell\Delete PDF Text From Uploaded File
@@ -1973,6 +1975,7 @@
 \Replace Text From PDF\cURL
 \Replace Text From PDF\Java
 \Replace Text From PDF\JavaScript
+\Replace Text From PDF\n8n
 \Replace Text From PDF\PHP
 \Replace Text From PDF\PowerShell
 \Replace Text From PDF\Python
@@ -1991,6 +1994,7 @@
 \Replace Text From PDF\JavaScript\Replace Text From Uploaded File (Node.js) - Async API
 \Replace Text From PDF\JavaScript\Replace Text From URL (Node.js)
 \Replace Text From PDF\JavaScript\Replace Text From URL (Node.js) - Async API
+\Replace Text From PDF\n8n\Generate secure PDFs for contracts and email them instantly
 \Replace Text From PDF\PHP\Replace Multiple Text From Uploaded File
 \Replace Text From PDF\PHP\Replace Text Asynchronously
 \Replace Text From PDF\PHP\Replace Text From Uploaded File
