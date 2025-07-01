@@ -1,0 +1,444 @@
+{
+  "name": "Automated Document Assembly and Management",
+  "nodes": [
+    {
+      "parameters": {
+        "downloadAttachments": true,
+        "options": {
+          "customEmailConfig": "[\"UNSEEN\", [\"SUBJECT\", \"Invoice Package\"]]"
+        }
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -1305
+      ],
+      "id": "64a411d6-cfe7-4029-8a4f-27fe0cc4b706",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "bTulOyUit5JhzMyP",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "file",
+        "name": "={{ $json.filename }}"
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        440,
+        -1305
+      ],
+      "id": "33fbc4f3-704b-465b-a931-151ae8aa2ab8",
+      "name": "PDFco Api2",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "bt9kEyWGD3Ebt8Ak",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all attachment keys\nconst attachmentKeys = Object.keys($binary).filter(key => key.startsWith('attachment_'));\n\n// Create one item per attachment\nconst items = [];\nattachmentKeys.forEach(key => {\n  items.push({\n    json: {\n      ...$json,  // Use $json instead of $$input.item(0).json\n      attachment_key: key,\n      filename: $binary[key].fileName\n    },\n    binary: {\n      file: $binary[key]  // Rename to 'file' for consistency\n    }\n  });\n});\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        -1305
+      ],
+      "id": "40b90b93-6c57-44f4-b2e0-df31e398f745",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.url }}",
+                    "rightValue": "Invoice",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "771c3aeb-a177-4696-8e6c-5f108cbfb010"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fffcdd71-f269-427b-989d-8bcb64910ddc",
+                    "leftValue": "={{ $json.url }}",
+                    "rightValue": "Project",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0916bd28-91df-4c03-badb-118fcc87118f",
+                    "leftValue": "={{ $json.url }}",
+                    "rightValue": "Delivery",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": false
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        660,
+        -1305
+      ],
+      "id": "f52ac104-20b5-4a41-bc2d-06d7bd081bf2",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "Split PDF",
+        "url": "={{ $json.url }}",
+        "pages": "1-2, 3-5, 6-7",
+        "advancedOptionsPageNumber": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -1380
+      ],
+      "id": "d34e98b9-39b9-429c-b149-28652c746eb7",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "bt9kEyWGD3Ebt8Ak",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1100,
+        -1305
+      ],
+      "id": "83c4cf18-aa6c-426b-b195-cabf90aa3cda",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "Merge PDF",
+        "url": [
+          "={{ $json.urls[0] }}",
+          "={{ $json.urls[1] }}",
+          "={{ $json.urls[2] }}",
+          "={{ $json.urls[3] }}",
+          "={{ $json.urls[4] }}"
+        ],
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        -1305
+      ],
+      "id": "0239696e-1e9e-42f7-890a-c2c80ebc1856",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "bt9kEyWGD3Ebt8Ak",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const orderedUrls = [];\nconst allInputs = $input.all();\n\n// Debug: see what we have\nconsole.log('Total inputs:', allInputs.length);\nallInputs.forEach((item, index) => {\n  console.log(`Input ${index}:`, Object.keys(item.json));\n});\n\nlet splitUrls = [];\nlet deliveryUrl = '';\nlet projectUrl = '';\n\n// Process each input item\nallInputs.forEach(item => {\n  if (item.json.body && Array.isArray(item.json.body)) {\n    // This has the split URLs\n    splitUrls = item.json.body;\n    console.log('Found split URLs:', splitUrls.length);\n  } else if (item.json.url) {\n    if (item.json.url.includes('Delivery_Confirmation')) {\n      deliveryUrl = item.json.url;\n      console.log('Found delivery URL');\n    } else if (item.json.url.includes('Project_Summary')) {\n      projectUrl = item.json.url;\n      console.log('Found project URL');\n    }\n  }\n});\n\n// Create the ordered sequence\nif (splitUrls.length >= 3) {\n  orderedUrls.push(splitUrls[0]);     // Invoice Part 1\n  orderedUrls.push(projectUrl);       // Project\n  orderedUrls.push(splitUrls[1]);     // Invoice Part 2  \n  orderedUrls.push(deliveryUrl);      // Delivery\n  orderedUrls.push(splitUrls[2]);     // Invoice Part 3\n}\n\nconsole.log('Final ordered URLs:', orderedUrls.length);\nreturn [{ json: { urls: orderedUrls } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        -1305
+      ],
+      "id": "b6df5332-1a67-4c06-b894-825b5f251380",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "10OcIYUl7IBCY9Gv-XttJMmqV-RPBJZr5",
+          "mode": "list",
+          "cachedResultName": "Completed Invoice",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/10OcIYUl7IBCY9Gv-XttJMmqV-RPBJZr5"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2200,
+        -1305
+      ],
+      "id": "c494501b-ce06-4af1-bd96-984316acb935",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "rTIMD6RVwqbmSghi",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1980,
+        -1305
+      ],
+      "id": "622b7267-7d0a-4a39-aa5c-60e24d6c8271",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "Add Text/Images to PDF",
+        "url": "={{ $json.url }}",
+        "annotations": {
+          "metadataValues": [
+            {
+              "text": "=PROJECT CLOSED | Delivered ☑ Accepted ☑ Paid ☑ | {{ $now.format('DD')}}",
+              "x": "3.31",
+              "y": "822.11",
+              "size": "10",
+              "color": "#0E9923",
+              "fontName": "Segoe UI Symbol",
+              "pages": "0-",
+              "width": 585.04,
+              "height": 17.61,
+              "alignment": "center"
+            }
+          ]
+        },
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        -1305
+      ],
+      "id": "a97f2476-3f70-4cd7-af17-8dcf74c546fb",
+      "name": "PDFco Api3",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "bt9kEyWGD3Ebt8Ak",
+          "name": "PDF.co account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api2": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "dd47994e-8290-4b06-b48c-c0663794bb88",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "34908c0a6dfe5051888f4a0aee3fe50d576e5385f6e9f27ab1878f7c0dc271ef"
+  },
+  "id": "N1j5RTtHc6wifBJC",
+  "tags": []
+}

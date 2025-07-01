@@ -1082,6 +1082,7 @@
 \PDF Merging API\GoogleAppScript
 \PDF Merging API\Java
 \PDF Merging API\JavaScript
+\PDF Merging API\n8n
 \PDF Merging API\PHP
 \PDF Merging API\PowerShell
 \PDF Merging API\Python
@@ -1127,6 +1128,7 @@
 \PDF Merging API\JavaScript\Merge PDF Documents From Uploaded File (Node.js) - Async API
 \PDF Merging API\JavaScript\Merge PDF Documents From URLs (Node.js)
 \PDF Merging API\JavaScript\Merge PDF Documents From URLs (Node.js) - Async API
+\PDF Merging API\n8n\Automated Document Assembly and Management
 \PDF Merging API\PHP\Merge Any Documents Asynchronously
 \PDF Merging API\PHP\Merge Any Documents From Uploaded Files
 \PDF Merging API\PHP\Merge Any Documents From Uploaded Files Asynchronously
