@@ -919,6 +919,7 @@
 \PDF from HTML template\Java
 \PDF from HTML template\JavaScript
 \PDF from HTML template\Javascript-Snippets
+\PDF from HTML template\n8n
 \PDF from HTML template\PHP
 \PDF from HTML template\PowerShell
 \PDF from HTML template\Python
@@ -945,6 +946,7 @@
 \PDF from HTML template\Javascript-Snippets\getTotal
 \PDF from HTML template\Javascript-Snippets\getTotalLines
 \PDF from HTML template\Javascript-Snippets\numberFormat
+\PDF from HTML template\n8n\Generate Sales Quote with QR Code
 \PDF from HTML template\PHP\Generate PDF Invoice From HTML Template
 \PDF from HTML template\PHP\Invoice With Multiple Pages
 \PDF from HTML template\PowerShell\Generate PDF Invoice From HTML Template

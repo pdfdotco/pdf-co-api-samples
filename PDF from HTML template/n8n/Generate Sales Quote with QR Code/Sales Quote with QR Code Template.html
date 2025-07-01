@@ -1,0 +1,758 @@
+<!-- Sales Quote Template with Modern UI Design -->
+<!-- Based on invoice template but with premium visual design -->
+<!doctype html>
+<html lang="en-US">
+<head>
+
+<script>
+// Handlebars helper functions for calculations
+// See https://handlebarsjs.com/ for more information
+
+// calculating total after discount with added tax
+Handlebars.registerHelper("calcTotal", calcTotal);
+  
+function calcTotal(data){
+  // first calculate total
+  var total = 0;
+  for (var i in data.items) {
+    total += data.items[i].price * data.items[i].quantity;
+  }
+  
+  return new Handlebars.SafeString( 
+    numberFormat(
+     roundAdvanced(
+      (total - total*data.discount) * // applying discount
+      ( 1.00 + data.tax) // adding tax 
+     )
+    )
+  );
+}
+
+// calculating subtotal before tax and discount
+Handlebars.registerHelper("calcSubtotal", calcSubtotal);
+
+function calcSubtotal(data){
+  var total = 0;
+  for (var i in data.items) {
+    total += data.items[i].price * data.items[i].quantity;
+  }
+  
+  return new Handlebars.SafeString(
+    numberFormat(roundAdvanced(total))
+  );
+}
+
+// calculating tax alone
+Handlebars.registerHelper("calcTax", calcTax);
+
+function calcTax(data){
+  // first calculate total
+  var total = 0;
+  for (var i in data.items) {
+    total += data.items[i].price * data.items[i].quantity;
+  }
+  
+  return new Handlebars.SafeString( 
+    numberFormat(
+     roundAdvanced(
+      total * (1.00 - data.discount) * // total with discount applied
+      data.tax 
+      )
+    )
+  ); // calculating tax alone 
+}
+
+// calculating discount alone (discount is always before tax)
+Handlebars.registerHelper("calcDiscount", calcDiscount);
+
+function calcDiscount(data){
+  // first calculate total
+  var total = 0;
+  for (var i in data.items) {
+    total += data.items[i].price * data.items[i].quantity;
+  }
+  
+  return new Handlebars.SafeString(
+    numberFormat(
+     roundAdvanced(
+       total * data.discount
+     )
+    )
+  );
+}
+
+// calculate line total (price * quantity)
+Handlebars.registerHelper('lineTotal', function(price, quantity){
+  return numberFormat(roundAdvanced(price * quantity));
+});
+
+Handlebars.registerHelper('numberFormat', numberFormat);
+
+function numberFormat(value){
+    // Helper parameters
+    var dl = 2;
+    var ts = ',';
+    var ds = '.';
+
+    // Parse to float
+    var value = parseFloat(value);
+
+    // The regex
+    var re = '\\d(?=(\\d{3})+' + (dl > 0 ? '\\D' : '$') + ')';
+
+    // Formats the number with the decimals
+    var num = value.toFixed(Math.max(0, ~~dl));
+
+    // Returns the formatted number
+    return (ds ? num.replace('.', ds) : num).replace(new RegExp(re, 'g'), '$&' + ts);
+}
+
+function roundAdvanced(val){
+ // round to 2 decimal places https://stackoverflow.com/a/11832950
+ return Math.round( val * 100 + Number.EPSILON ) / 100;
+}
+
+// multiply number and return
+Handlebars.registerHelper('multiply', function(value1, value2){
+ return roundAdvanced( value1 * value2);
+});
+
+</script>
+
+<title>Quote {{quote_id}} - {{client_name}}</title>    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.quote-container {
+    background: white;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    max-width: none;
+    min-height: 100vh;
+}
+
+.quote-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.quote-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -1px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.quote-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-top: 2px;
+    font-weight: 300;
+}
+
+.status-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.status-accepted {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    color: white;
+}
+
+.status-expired {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+}
+
+.quote-content {
+    padding: 20px 30px;
+}
+
+.company-info {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #667eea;
+}
+
+.company-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    color: #5a6c7d;
+}
+
+.info-row i {
+    width: 20px;
+    margin-right: 10px;
+    color: #667eea;
+}
+
+.quote-details {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.detail-value {
+    font-weight: 600;
+}
+
+.client-info {
+    background: #e8f4f8;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #4ecdc4;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.section-title i {
+    margin-right: 10px;
+    color: #667eea;
+}
+
+.validity-alert {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px rgba(253, 203, 110, 0.3);
+}
+
+.validity-alert .alert-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    color: #e17055;
+}
+
+.items-table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 15px 0;
+}
+
+.items-table table {
+    margin: 0;
+    border: none;
+}
+
+.items-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.items-table thead th {
+    border: none;
+    padding: 20px 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+}
+
+.items-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.items-table tbody tr:hover {
+    background: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.items-table tbody td {
+    padding: 20px 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.item-name {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.05rem;
+}
+
+.item-description {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.quantity-badge {
+    background: #667eea;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.price-cell {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.05rem;
+}
+
+.totals-section {
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: 0 15px 35px rgba(116, 185, 255, 0.4);
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    font-size: 1.1rem;
+}
+
+.total-row:last-child {
+    border-bottom: 3px solid rgba(255,255,255,0.4);
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding-top: 20px;
+    margin-top: 15px;
+}
+
+.terms-card {
+    background: #f1f3f4;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 25px 0;
+    border-left: 5px solid #fd79a8;
+}
+
+.acceptance-card {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: 0 15px 35px rgba(0, 184, 148, 0.4);
+}
+
+.acceptance-steps {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+}
+
+.acceptance-steps li {
+    padding: 10px 0;
+    padding-left: 40px;
+    position: relative;
+    font-weight: 500;
+}
+
+.acceptance-steps li::before {
+    content: counter(step-counter);
+    counter-increment: step-counter;
+    position: absolute;
+    left: 0;
+    top: 8px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.acceptance-steps {
+    counter-reset: step-counter;
+}
+
+.qr-section {
+    text-align: center;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    margin: 30px 0;
+}
+
+.qr-title {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.qr-code {
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    display: inline-block;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    .quote-container {
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .quote-header {
+        padding: 25px;
+    }
+    
+    .quote-title {
+        font-size: 2rem;
+    }
+    
+    .quote-content {
+        padding: 25px;
+    }
+    
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .items-table tbody tr:hover {
+        transform: none;
+    }
+}
+
+.animate-in {
+    animation: slideInUp 0.8s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+</head>    
+<body>
+    <div class="quote-container animate-in">
+        {{#if quote_accepted}}
+        <div class="status-badge status-accepted">
+            <i class="fas fa-check-circle"></i> Accepted
+        </div>
+        {{/if}}
+        
+        {{#if quote_expired}}
+        <div class="status-badge status-expired">
+            <i class="fas fa-exclamation-triangle"></i> Expired
+        </div>
+        {{/if}}
+        
+        <!-- Header -->
+        <div class="quote-header">
+            <h1 class="quote-title">Sales Quote</h1>
+            <p class="quote-subtitle">Professional pricing proposal</p>
+        </div>
+        
+        <div class="quote-content">
+            <!-- Company and Quote Info Row -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="company-info">
+                        <div class="section-title">
+                            <i class="fas fa-building"></i>
+                            From
+                        </div>
+                        <div class="company-name">Elena Rodriguez</div>
+                        <div class="info-row">
+                            <i class="fas fa-briefcase"></i>
+                            Future Example Tech Inc.
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            2847 Innovation Drive, Austin, TX 78746
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-envelope"></i>
+                            quotes@example.com
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-phone"></i>
+                            (555) 555-5555
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-globe"></i>
+                            www.example.com
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="quote-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Quote Number</span>
+                            <span class="detail-value">{{quote_id}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Quote Date</span>
+                            <span class="detail-value">{{quote_date}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Valid Until</span>
+                            <span class="detail-value">{{quote_validUntil}}</span>
+                        </div>
+                        {{#if sales_rep}}
+                        <div class="detail-item">
+                            <span class="detail-label">Sales Representative</span>
+                            <span class="detail-value">{{sales_rep}}</span>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Client Info -->
+            <div class="client-info">
+                <div class="section-title">
+                    <i class="fas fa-user"></i>
+                    Quote Prepared For
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-row">
+                            <i class="fas fa-user-circle"></i>
+                            <strong>{{client_name}}</strong>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-building"></i>
+                            {{client_company}}
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{client_address}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-row">
+                            <i class="fas fa-envelope"></i>
+                            {{client_email}}
+                        </div>
+                        {{#if client_phone}}
+                        <div class="info-row">
+                            <i class="fas fa-phone"></i>
+                            {{client_phone}}
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Validity Alert -->
+            {{#if quote_validUntil}}
+            <div class="validity-alert">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-clock alert-icon"></i>
+                    <div>
+                        <strong>Important Notice:</strong> This quote is valid until <strong>{{quote_validUntil}}</strong>. 
+                        Prices and availability are subject to change after this date.
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            
+            <!-- Items Table -->
+            <div class="items-table">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Item & Description</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-right">Unit Price</th>
+                            <th class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each items}}
+                        <tr>
+                            <td>
+                                <div class="item-name">{{name}}</div>
+                                {{#if description}}
+                                <div class="item-description">{{description}}</div>
+                                {{/if}}
+                            </td>
+                            <td class="text-center">
+                                <span class="quantity-badge">{{quantity}}</span>
+                            </td>
+                            <td class="text-right price-cell">${{numberFormat price}}</td>
+                            <td class="text-right price-cell">${{lineTotal price quantity}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Totals and Terms Row -->
+            <div class="row">
+                <div class="col-md-6">
+                    {{#if terms}}
+                    <div class="terms-card">
+                        <div class="section-title">
+                            <i class="fas fa-file-contract"></i>
+                            Terms & Conditions
+                        </div>
+                        <div class="text-muted">Payment terms: Net 30 days from invoice date. All services to be completed within 90 days of quote acceptance. Prices include standard implementation but exclude travel expenses for on-site work beyond 50 miles from Austin, TX.</div>
+                    </div>
+                    {{/if}}
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="totals-section">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span>${{calcSubtotal @root}}</span>
+                        </div>
+                        {{#if @root.discount}}
+                        <div class="total-row">
+                            <span>Discount:</span>
+                            <span>-${{calcDiscount @root}}</span>
+                        </div>
+                        {{/if}}
+                        {{#if @root.tax}}
+                        <div class="total-row">
+                            <span>Tax ({{multiply @root.tax 100}}%):</span>
+                            <span>${{calcTax @root}}</span>
+                        </div>
+                        {{/if}}
+                        <div class="total-row">
+                            <span>Total Quoted Amount:</span>
+                            <span>${{calcTotal @root}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Notes -->
+            <div class="terms-card">
+                <div class="section-title">
+                    <i class="fas fa-sticky-note"></i>
+                    Additional Notes
+                </div>
+                <div>This comprehensive solution will transform your data analytics capabilities and provide your team with cutting-edge AI tools. We’re excited to collaborate on this innovative project and look forward to delivering exceptional results.</div>
+            </div>
+            
+            <!-- Acceptance Instructions -->
+            <div class="acceptance-card">
+                <div class="section-title text-white">
+                    <i class="fas fa-handshake"></i>
+                    Ready to Proceed?
+                </div>
+                <p class="mb-3">To accept this quote and move forward:</p>
+                <ol class="acceptance-steps">
+                    <li>Review all items, quantities, and pricing carefully</li>
+                    <li>Contact us at quotes@example.com or (555) 555-5555 to confirm</li>
+                    <li>We'll convert this quote to an invoice and begin processing</li>
+                    <li>Delivery or service will be arranged as per agreed terms</li>
+                </ol>
+            </div>
+            
+            <!-- QR Code -->
+            <div class="qr-section">
+                <div class="qr-title">Scan for Quick Reference</div>
+                <div class="qr-code">
+                    <img src="[[barcode: QRCode Quote {{quote_id}} {{client_name}} Valid until {{quote_validUntil}}]]" alt="Quote QR Code" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

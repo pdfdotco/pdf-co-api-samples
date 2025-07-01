@@ -1,0 +1,186 @@
+{
+  "name": "Generate Sales Quotes with Embedded Barcode Tracking",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1-OMDh0Ghte4rDoa7bliJOzv1hdzJJjIvGCwkKvXmt7A",
+          "mode": "list",
+          "cachedResultName": "Sales Quotes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-OMDh0Ghte4rDoa7bliJOzv1hdzJJjIvGCwkKvXmt7A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-OMDh0Ghte4rDoa7bliJOzv1hdzJJjIvGCwkKvXmt7A/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -80
+      ],
+      "id": "4283df35-4b8d-4d13-9c12-4f6daf0093f7",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "XjcIiqKTXUwMb7cY",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "function convertSerialDate(serial) {\n  const base = new Date(Date.UTC(1899, 11, 30));\n  const ms = serial * 24 * 60 * 60 * 1000;\n  return new Date(base.getTime() + ms).toLocaleDateString('en-US', {\n    year: 'numeric',\n    month: 'long',\n    day: 'numeric'\n  });\n}\n\nconst groupedQuotes = {};\n\nfor (const item of items) {\n  const row = item.json;\n  const quoteId = row[\"Quote ID\"];\n  \n  if (!groupedQuotes[quoteId]) {\n    groupedQuotes[quoteId] = {\n      quote_accepted: false,\n      quote_expired: false,\n      quote_id: quoteId,\n      quote_date: convertSerialDate(row[\"Quote Date\"]),\n      quote_validUntil: convertSerialDate(row[\"Valid Until\"]),\n      sales_rep: row[\"Sales Rep\"],\n      client_name: row[\"Client Name\"],\n      client_company: row[\"Client Company\"],\n      client_address: row[\"Client Address\"],\n      client_email: row[\"Client Email\"],\n      client_phone: row[\"Client Phone\"],\n      discount: parseFloat(row[\"Discount\"]) || 0,\n      tax: parseFloat(row[\"Tax\"]) || 0,\n      issuer_name: \"Elena Rodriguez\",\n      issuer_company: \"FutureTech Solutions Inc.\",\n      issuer_address: \"2847 Innovation Drive, Austin, TX 78746\",\n      issuer_email: \"quotes@futuretech-solutions.com\",\n      issuer_phone: \"+1 (512) 555-0199\",\n      issuer_website: \"www.futuretech-solutions.com\",\n      terms: \"Payment terms: Net 30 days from invoice date.\",\n      note: \"Thank you for considering our proposal.\",\n      items: []\n    };\n  }\n  \n  groupedQuotes[quoteId].items.push({\n    name: row[\"Item Name\"],\n    description: row[\"Item Description\"],\n    quantity: parseInt(row[\"Quantity\"]) || 1,\n    price: parseFloat(row[\"Price\"]) || 0\n  });\n}\n\n// Return just the quote object, not wrapped in another array\nconst quote = Object.values(groupedQuotes)[0]; // Get the first (and likely only) quote\nreturn [{ json: quote }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        -80
+      ],
+      "id": "ec9520f8-50f3-4235-8577-dc1b3c6a8428",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "URL/HTML to PDF",
+        "convertType": "htmlTemplateToPDF",
+        "templateId": "5471",
+        "templateData": "={\n    \"quote_accepted\": false,\n    \"quote_expired\": false,\n    \"quote_id\": \"{{ $json.quote_id }}\",\n    \"quote_date\": \"{{ $json.quote_date }}\",\n    \"quote_validUntil\": \"{{ $json.quote_validUntil }}\",\n    \"sales_rep\": \"{{ $json.sales_rep }}\",\n    \"client_name\": \"{{ $json.client_name }}\",\n    \"client_company\": \"{{ $json.client_company }}\",\n    \"client_address\": \"{{ $json.client_address }}\",\n    \"client_email\": \"{{ $json.client_email }}\",\n    \"client_phone\": \"{{ $json.client_phone }}\",\n    \"items\": {{ JSON.stringify($json.items) }},\n    \"discount\": {{ $json.discount }},\n    \"tax\": {{ $json.tax }}\n} ",
+        "advancedOptions": {
+          "name": "={{ $json.client_name }}_Sales_Quote.pdf"
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        40,
+        -80
+      ],
+      "id": "0fab7a83-58ec-452a-9818-d11352c27a2b",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "bt9kEyWGD3Ebt8Ak",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        -80
+      ],
+      "id": "db3a46fa-d7eb-4fa6-ad65-8ce7ffcee888",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1IDhvtI7Qr3NsCtn7wLvz8QUSdrViBWYX",
+          "mode": "list",
+          "cachedResultName": "Sales Quotes",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1IDhvtI7Qr3NsCtn7wLvz8QUSdrViBWYX"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        480,
+        -80
+      ],
+      "id": "c67b33af-abdc-43a7-831e-444ac75e0128",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "rTIMD6RVwqbmSghi",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "20ce0664-4e1c-439d-b1d0-1a0a82a545e3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "34908c0a6dfe5051888f4a0aee3fe50d576e5385f6e9f27ab1878f7c0dc271ef"
+  },
+  "id": "vYqA6AKQAdbcS0Iz",
+  "tags": []
+}
