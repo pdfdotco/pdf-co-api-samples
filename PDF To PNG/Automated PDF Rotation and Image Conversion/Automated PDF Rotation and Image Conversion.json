@@ -1,0 +1,219 @@
+{
+  "name": "Automated PDF Rotation and Image Conversion",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -140
+      ],
+      "id": "d05c25eb-0d86-4f97-85e1-e6f3fa311c6b",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "nCL5tpVhf3hGHzEZ",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Rotate PDF Pages",
+        "url": "={{ $json.webContentLink }}",
+        "mode": "auto",
+        "advancedOptions": {
+          "name": "={{ $json.name }}"
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        -180,
+        -140
+      ],
+      "id": "0eb66129-6a32-44ca-b48e-e1b14bae75ed",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "9heirsvXxJWHkCNI",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Convert from PDF",
+        "url": "={{ $json.url }}",
+        "convertType": "toPng",
+        "advancedOptions_Image": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        40,
+        -140
+      ],
+      "id": "88d125ea-3c73-4a7c-bc53-8bcedd1e4db8",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "9heirsvXxJWHkCNI",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1YjRqWA-Be_1wSUDQpV0P5JBHkdzpQEuY",
+          "mode": "list",
+          "cachedResultName": "Save Images",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1YjRqWA-Be_1wSUDQpV0P5JBHkdzpQEuY"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        700,
+        -140
+      ],
+      "id": "d8fd4658-52c8-4a77-8aba-3c30d3b83b33",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "nCL5tpVhf3hGHzEZ",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        260,
+        -140
+      ],
+      "id": "825bbded-bda8-430a-9edb-afee39f4a088",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        -140
+      ],
+      "id": "f66a5d40-f4fa-4932-8ff9-0e4b7d31cd3a",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        []
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d1cfaeb3-480d-4512-9b7b-3fc6baac407c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d5a024e625a43752908dffc5c6e632ba90da265c7940f509839b32671ee64031"
+  },
+  "id": "kZiLkNSN5vNB740W",
+  "tags": []
+}

@@ -1663,6 +1663,7 @@
 \PDF To JSON API\VB.NET\Convert PDF To JSON From URL (AI Powered)
 \PDF To JSON API\VB.NET\Convert PDF To JSON From URL Asynchronously
 \PDF To JSON API\VB.NET\Convert PDF To JSON From URL Asynchronously (AI Powered)
+\PDF To PNG\Automated PDF Rotation and Image Conversion
 \PDF To PNG\AWS Lambda
 \PDF To PNG\C#
 \PDF To PNG\cURL
