@@ -1,0 +1,164 @@
+{
+  "name": "Automate Loan Application Form Filling",
+  "nodes": [
+    {
+      "parameters": {
+        "formId": "rKvROM9R"
+      },
+      "type": "n8n-nodes-base.typeformTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -360,
+        -40
+      ],
+      "id": "7b7910d0-0b91-4b1d-9cbb-5c3137c06a3d",
+      "name": "Typeform Trigger",
+      "webhookId": "eeb966d7-7d9c-4bac-98e7-6ae94d395049",
+      "credentials": {
+        "typeformApi": {
+          "id": "LEwrZIK3BMMh9oxp",
+          "name": "Typeform account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Fill a PDF Form",
+        "url": "filetoken://0f38414d3255ee33060e16e20b4265165664b16b6f4dad38e6",
+        "fields": {
+          "metadataValues": [
+            {
+              "fieldName": "First Name",
+              "text": "={{ $json['First name'] }}"
+            },
+            {
+              "fieldName": "Last Name",
+              "text": "={{ $json['Last name'] }}"
+            },
+            {
+              "fieldName": "Phone Number",
+              "text": "={{ $json['Phone number'] }}"
+            },
+            {
+              "fieldName": "Email Address",
+              "text": "={{ $json.Email }}"
+            },
+            {
+              "fieldName": "Employer Name",
+              "text": "={{ $json.Company }}"
+            }
+          ]
+        },
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        -40
+      ],
+      "id": "fe3c5cb9-569d-4523-828c-f12305f11099",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "9heirsvXxJWHkCNI",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        -40
+      ],
+      "id": "69130485-5ba4-4914-b4e2-e6489b01d029",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        300,
+        -40
+      ],
+      "id": "92447ac3-7a42-465d-a1e2-23a02257f9b3",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "nCL5tpVhf3hGHzEZ",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Typeform Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "54c2053a-2de3-40a6-be7b-1db2a87764fb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d5a024e625a43752908dffc5c6e632ba90da265c7940f509839b32671ee64031"
+  },
+  "id": "EGfJ6qLECeEImkkl",
+  "tags": []
+}
