@@ -368,6 +368,7 @@
 \Document Parser API\GoogleAppScript
 \Document Parser API\Java
 \Document Parser API\JavaScript
+\Document Parser API\n8n
 \Document Parser API\PHP
 \Document Parser API\Powershell
 \Document Parser API\Python
@@ -415,6 +416,7 @@
 \Document Parser API\Java\Extract Multipage PDF Table to CSV Asynchronously\target\classes
 \Document Parser API\JavaScript\Parse From Url (Node.js)
 \Document Parser API\JavaScript\Parse Uploaded File (Node.js)
+\Document Parser API\n8n\Automatically Extract Invoice Data from Email and Save to Google Sheets
 \Document Parser API\PHP\Blood Test Results to JSON
 \Document Parser API\PHP\Create Custom Template
 \Document Parser API\PHP\Extract line items from tables on multiple pages

@@ -1,0 +1,318 @@
+{
+  "name": "Automatically Extract Invoice Data from Email and Save to Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "q": "has:attachment subject:New Invoice"
+        },
+        "options": {
+          "downloadAttachments": true
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -360,
+        -60
+      ],
+      "id": "0aef4d52-a088-480c-8c7e-a053e46129f7",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QiMIbJCRPgHGVdb4",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "attachment_0",
+        "name": "SampleInvoice.pdf"
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        -60
+      ],
+      "id": "dcfeecc0-b8a3-4bf6-8a43-f6a80531e7df",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "9heirsvXxJWHkCNI",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/pdf/documentparser",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "Your_PDFco_API_Key"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "templateId",
+              "value": "1"
+            },
+            {
+              "name": "inline",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        -60
+      ],
+      "id": "79ceeae9-91e7-4ce4-8c8d-c0fc21b6b81b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1zKeGjx5l2zGB_gmYDrjrul3dFBnrziMPZsgzJ1U0hG0",
+          "mode": "list",
+          "cachedResultName": "ACME Invoices",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zKeGjx5l2zGB_gmYDrjrul3dFBnrziMPZsgzJ1U0hG0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zKeGjx5l2zGB_gmYDrjrul3dFBnrziMPZsgzJ1U0hG0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Vendor": "={{ $json.companyName }}",
+            "Customer": "={{ $json.companyName2 }}",
+            "Invoice ID": "={{ $json.invoiceId }}",
+            "Invoice Date": "={{ $json.dateIssued }}",
+            "Quantity": "={{ $json.column1 }}",
+            "Description": "={{ $json.column2 }}",
+            "Unit Price": "={{ $json.column3 }}",
+            "Total": "={{ $json.column4 }}",
+            "Grand Total": "={{ $json.total }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Vendor",
+              "displayName": "Vendor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Customer",
+              "displayName": "Customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Invoice ID",
+              "displayName": "Invoice ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Invoice Date",
+              "displayName": "Invoice Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Unit Price",
+              "displayName": "Unit Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Total",
+              "displayName": "Total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Grand Total",
+              "displayName": "Grand Total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        520,
+        -60
+      ],
+      "id": "0339dea5-1b47-49f3-b6fb-8ebe17001b2a",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VmXPrT1zCYveLRCT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.all();\n\n// Function to process Document Parser results\nfunction processParserResult(parserResult) {\n    const data = Array.isArray(parserResult) ? parserResult[0] : parserResult;\n    \n    if (!data?.body?.objects) {\n        console.log(\"Invalid parser result structure\");\n        return { invoiceFields: {}, tableItems: [] };\n    }\n    \n    const invoiceFields = {};\n    let tableObject = null;\n    \n    // Single pass through objects to extract both fields and table\n    for (const obj of data.body.objects) {\n        if (obj.objectType === \"field\") {\n            invoiceFields[obj.name] = obj.value;\n        } else if (obj.objectType === \"table\" && !tableObject) {\n            tableObject = obj;\n        }\n    }\n    \n    if (!tableObject?.rows) {\n        return { invoiceFields, tableItems: [] };\n    }\n    \n    // Process table rows with optimized column detection\n    const tableItems = tableObject.rows.map((row, index) => {\n        const item = { itemNumber: index + 1 };\n        \n        // Process all columns in the row\n        for (const [key, columnData] of Object.entries(row)) {\n            if (key.startsWith('column') && columnData?.value !== undefined) {\n                const value = columnData.value;\n                // Smart type conversion: check if it's a valid number\n                const numValue = Number(value);\n                item[key] = (!isNaN(numValue) && value !== '' && value !== null) ? numValue : value;\n            }\n        }\n        \n        return item;\n    });\n    \n    return { invoiceFields, tableItems };\n}\n\n// Process all inputs efficiently\nconst results = inputData.flatMap(item => {\n    const { invoiceFields, tableItems } = processParserResult(item.json);\n    \n    // Return array of results (one per table item)\n    return tableItems.map(tableItem => ({\n        json: { ...invoiceFields, ...tableItem }\n    }));\n});\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        -60
+      ],
+      "id": "1576c9b5-7f56-4b65-b993-2c802e43f21d",
+      "name": "Code"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "86d997e6-e3d0-4a7c-a93b-9b87e5e38943",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d5a024e625a43752908dffc5c6e632ba90da265c7940f509839b32671ee64031"
+  },
+  "id": "u5cSo57yxXErRYFC",
+  "tags": []
+}
