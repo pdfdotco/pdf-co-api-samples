@@ -715,6 +715,7 @@
 \PDF Classifier\cURL
 \PDF Classifier\Java
 \PDF Classifier\JavaScript
+\PDF Classifier\n8n
 \PDF Classifier\PHP
 \PDF Classifier\PowerShell
 \PDF Classifier\Salesforce
@@ -728,6 +729,7 @@
 \PDF Classifier\JavaScript\Classify PDF From URL (nodeJs)
 \PDF Classifier\JavaScript\Classify PDF from URL with Custom Rules (jQuery)
 \PDF Classifier\JavaScript\Classify PDF from URL with Custom Rules (nodeJs)
+\PDF Classifier\n8n\Automatically Classify and Organize PDFs
 \PDF Classifier\PHP\Classify PDF From URL
 \PDF Classifier\PHP\Classify PDF from URL with Custom Rules
 \PDF Classifier\PowerShell\Classify PDF From URL
