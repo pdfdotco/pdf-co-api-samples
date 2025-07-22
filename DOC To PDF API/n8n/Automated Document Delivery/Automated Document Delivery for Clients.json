@@ -1,0 +1,124 @@
+{
+  "name": "Automated Document Delivery for Clients",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "Convert to PDF",
+        "url": "https://pdfco-test-files.s3.us-west-2.amazonaws.com/doc-to-pdf/sample.docx",
+        "advancedOptionsCommon": {
+          "name": "={{ $json.body.name }}"
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "06af724c-9637-4880-99a1-d6c2e0043482",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "c9OZLLDzr83pMNmG",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twilio.com/2010-04-01/Accounts/YOUR_ACCOUNT_SID/Messages.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "From",
+              "value": "whatsapp:+YOUR_BUSINESS_NUMBER"
+            },
+            {
+              "name": "To",
+              "value": "=whatsapp:{{ $('Webhook').item.json.body.phone }}"
+            },
+            {
+              "name": "Body",
+              "value": "Here's your file"
+            },
+            {
+              "name": "MediaUrl",
+              "value": "={{ $json.url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "a4958c79-6cb7-42a4-93cc-b4de769f7e9f",
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "GOuYKNkJGxxNVnp2",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "22e0f0cc-8a93-4fcf-8303-8b58be55ce53",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cdb6339d-f939-4619-b910-012c27960c62",
+      "name": "Webhook",
+      "webhookId": "22e0f0cc-8a93-4fcf-8303-8b58be55ce53"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4debe313-56ee-4901-a8de-e36f593ccf09",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "51e66f527de1a9aa7450f501e50f78f19ad1a946c3464f71a55e58da550134cc"
+  },
+  "id": "jsbAWCvkS7ZUPGP5",
+  "tags": []
+}
