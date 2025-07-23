@@ -1,0 +1,199 @@
+{
+  "name": "Automate PDF Text Extraction and Record-Keeping into Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "Convert from PDF",
+        "url": "={{ $json.webContentLink }}",
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "24120428-40e1-4ffb-ad4f-68aa76967e70",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "c9OZLLDzr83pMNmG",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "9628b5ff-e283-4943-be12-5c7caf69ec51",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ffa9df_6VcL1V63Ni-IKdLuH3hXYUNxyqxyAOy80lTs",
+          "mode": "list",
+          "cachedResultName": "Document Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ffa9df_6VcL1V63Ni-IKdLuH3hXYUNxyqxyAOy80lTs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ffa9df_6VcL1V63Ni-IKdLuH3hXYUNxyqxyAOy80lTs/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Document Name": "={{ $('PDFco Api').item.json.name }}",
+            "Text": "={{ $json.data }}",
+            "Page Count": "={{ $('PDFco Api').item.json.pageCount }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Document Name",
+              "displayName": "Document Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Text",
+              "displayName": "Text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Page Count",
+              "displayName": "Page Count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        656,
+        0
+      ],
+      "id": "599bfa6a-ad44-4e09-ad69-d86cd32b1ccc",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "neyEA5qG0t6YjOhe",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d4816afd-328d-4ce3-9233-97c4957e7b11",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "choUNhLbwfRZpVn5",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e3464ec7-35fc-4cdd-9241-bb074d8d92a5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "51e66f527de1a9aa7450f501e50f78f19ad1a946c3464f71a55e58da550134cc"
+  },
+  "id": "9pVOBxBJHhp274Z9",
+  "tags": []
+}

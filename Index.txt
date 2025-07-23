@@ -1717,6 +1717,7 @@
 \PDF To Text API\GoogleAppScript
 \PDF To Text API\Java
 \PDF To Text API\JavaScript
+\PDF To Text API\n8n
 \PDF To Text API\PHP
 \PDF To Text API\PowerShell
 \PDF To Text API\Python
@@ -1749,6 +1750,7 @@
 \PDF To Text API\JavaScript\Convert PDF To Text From URL (Node.js) - Async API
 \PDF To Text API\JavaScript\Convert PDF To Text in JQuery
 \PDF To Text API\JavaScript\Convert PDF To Text in JQuery - Async API
+\PDF To Text API\n8n\Automate PDF Text Extraction and Record-Keeping into Google Sheets
 \PDF To Text API\PHP\Convert PDF To Text Asynchronously
 \PDF To Text API\PHP\Convert PDF To Text From Uploaded File
 \PDF To Text API\PowerShell\Advanced Conversion Options
