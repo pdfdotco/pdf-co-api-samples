@@ -1040,6 +1040,7 @@
 \PDF Make Searchable API\cURL
 \PDF Make Searchable API\Java
 \PDF Make Searchable API\JavaScript
+\PDF Make Searchable API\n8n
 \PDF Make Searchable API\PHP
 \PDF Make Searchable API\PowerShell
 \PDF Make Searchable API\Python
@@ -1067,6 +1068,7 @@
 \PDF Make Searchable API\JavaScript\Make UnSearchable PDF From URL (Node.js)
 \PDF Make Searchable API\JavaScript\Make UnSearchable PDF From URL (Node.js) - Async API
 \PDF Make Searchable API\JavaScript\Make Uploaded PDF Searchable Asynchronously
+\PDF Make Searchable API\n8n\Automate OCR and Document Type Detection for Scanned PDFs
 \PDF Make Searchable API\PHP\Make Searchable PDF Asynchronously
 \PDF Make Searchable API\PHP\Make Searchable PDF From Uploaded File
 \PDF Make Searchable API\PowerShell\Advanced Conversion Options
