@@ -1,0 +1,188 @@
+{
+  "name": "Turn Images into Optimized, Compressed PDFs Automatically",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c7f74ea8-1e35-4d66-8414-9f4df4379c99",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "NoMv72mPDX5qQ6cB",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Convert to PDF",
+        "convertType": "fromImage",
+        "url": "={{ $json.webContentLink }}",
+        "advancedOptionsCommon": {
+          "name": "={{ $json.originalFilename }}"
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "224f2205-a882-4063-8ad6-f240c80429e3",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "7EU7cXXgLpZguBBo",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Compress PDF",
+        "url": "={{ $json.url }}",
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "ce4c3669-d0bb-4a6a-bdc7-1a3b1889c9d8",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "7EU7cXXgLpZguBBo",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "e6544c20-265f-4e89-985a-7a9bbd9b401c",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1pjrpTWjqgGZWpgHJCEUuSX06jggIQ7e2",
+          "mode": "list",
+          "cachedResultName": "Optimized Files",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1pjrpTWjqgGZWpgHJCEUuSX06jggIQ7e2"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        896,
+        0
+      ],
+      "id": "8486cfc4-c0c8-4d92-ac2b-6b08d8824990",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "NoMv72mPDX5qQ6cB",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1be4298b-c2f2-4468-8b45-53c819b8dc48",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aceeebc10f4c619c2460a6957e76cc73dba1a1526fdae0180ffbadc4ee50a733"
+  },
+  "id": "RSrN078l232OXvau",
+  "tags": []
+}
