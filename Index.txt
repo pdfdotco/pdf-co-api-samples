@@ -161,6 +161,7 @@
 \AI Invoice Parser\Python\AI Invoice Parsing
 \AI Invoice Parser\Python\AI Invoice Parsing with Webhook
 \AI Invoice Parser\Python\Parse Invoice from Uploaded File Asynchronously
+\Barcode Generator API\Automated QR Code Ticket Generation on Event Signup
 \Barcode Generator API\AWS Lambda
 \Barcode Generator API\C#
 \Barcode Generator API\cURL

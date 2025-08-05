@@ -1,0 +1,362 @@
+{
+  "name": "Automated QR Code Ticket Generation on Event Signup",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1dN_UBoNNMuUlFXnwtpxK9LhgGZlC7qMwOm8ffcDIZwE",
+          "mode": "list",
+          "cachedResultName": "Event Signup Master Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dN_UBoNNMuUlFXnwtpxK9LhgGZlC7qMwOm8ffcDIZwE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dN_UBoNNMuUlFXnwtpxK9LhgGZlC7qMwOm8ffcDIZwE/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e8019e75-964b-43fe-a4d5-e953babad0c4",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "qiG58D52i4R33EJu",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Barcode Generator",
+        "value": "={{ $json['Ticket ID'] }}",
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "28fdafee-1c94-42dc-936e-86f8c3e53051",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "7EU7cXXgLpZguBBo",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Add Text/Images to PDF",
+        "url": "filetoken://29eac5d886cceaf87d995329173532b92fe278df241a86ebe0",
+        "annotations": {
+          "metadataValues": [
+            {
+              "text": "={{ $('Google Sheets Trigger').item.json.Name }}",
+              "x": "52.14",
+              "y": "136.3",
+              "size": "16",
+              "fontName": "Verdana",
+              "width": 289.62,
+              "height": 28.05
+            },
+            {
+              "text": "={{ $('Google Sheets Trigger').item.json['Event Name'] }}",
+              "x": "40.33",
+              "y": "43.19",
+              "size": "25",
+              "fontName": "Verdana",
+              "width": 345.83,
+              "height": 39.82
+            },
+            {
+              "text": "={{ $('Google Sheets Trigger').item.json['Ticket ID'] }}",
+              "x": "81.88",
+              "y": "213.14",
+              "size": "12",
+              "fontName": "Verdana",
+              "width": 230.15,
+              "height": 20.75
+            }
+          ]
+        },
+        "images": {
+          "metadataValues": [
+            {
+              "imageUrl": "={{ $json.url }}",
+              "x": 465.18,
+              "y": 19.63,
+              "width": 126.28,
+              "height": 157.06
+            }
+          ]
+        },
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "df5174e1-124f-4cae-a6ec-9fcbc7b0cb91",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "7EU7cXXgLpZguBBo",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1dN_UBoNNMuUlFXnwtpxK9LhgGZlC7qMwOm8ffcDIZwE",
+          "mode": "list",
+          "cachedResultName": "Event Signup Master Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dN_UBoNNMuUlFXnwtpxK9LhgGZlC7qMwOm8ffcDIZwE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dN_UBoNNMuUlFXnwtpxK9LhgGZlC7qMwOm8ffcDIZwE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Ticket ID": "={{ $('Google Sheets Trigger').item.json['Ticket ID'] }}",
+            "QR Code": "==IMAGE(\"{{ $json.webContentLink }}\")"
+          },
+          "matchingColumns": [
+            "Ticket ID"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Event Name",
+              "displayName": "Event Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ticket ID",
+              "displayName": "Ticket ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "QR Code",
+              "displayName": "QR Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "c7a55f3d-aee0-48b1-afcd-1df916e25152",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ZQpEVO9VH3hHK7o3",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1X9DlkrLJArlYMPySg43X-d971_26XG0_",
+          "mode": "list",
+          "cachedResultName": "QR Code Storage",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1X9DlkrLJArlYMPySg43X-d971_26XG0_"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        896,
+        0
+      ],
+      "id": "c709cf23-5a0d-4f0d-b6f3-f3860a6f3a93",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "NoMv72mPDX5qQ6cB",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('PDFco Api').item.json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "df662669-cc57-4524-94fc-b847bd5ad1e0",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "14ea2ba7-838a-4e39-bc27-98200250f2f9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aceeebc10f4c619c2460a6957e76cc73dba1a1526fdae0180ffbadc4ee50a733"
+  },
+  "id": "eJcRgAclyqYkBEQ3",
+  "tags": []
+}
