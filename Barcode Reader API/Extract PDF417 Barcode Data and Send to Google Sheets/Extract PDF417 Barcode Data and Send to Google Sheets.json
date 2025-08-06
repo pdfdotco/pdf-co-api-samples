@@ -1,0 +1,263 @@
+{
+  "name": "Extract PDF417 Barcode Data and Send to Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "18566f5e-7d5a-4f6f-81e4-e671f610d307",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "NoMv72mPDX5qQ6cB",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Barcode Reader",
+        "url": "={{ $json.webContentLink }}",
+        "types": [
+          "PDF417"
+        ],
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "5f5d65f5-b148-4743-86e9-2e80c3f5b349",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "7EU7cXXgLpZguBBo",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "28c34447-67d4-4769-baaa-53bc94b02989",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Function Node - Simple BCBP Parser\n// Input: PDF.co barcode reader output\n\n// First, let's debug what we're actually getting\nconsole.log(\"Full input data:\", JSON.stringify($input.item.json, null, 2));\n\n// Check if it's an array or direct object\nconst inputData = $input.item.json;\nlet barcodeResults;\n\nif (Array.isArray(inputData)) {\n    barcodeResults = inputData;\n} else if (inputData.results && Array.isArray(inputData.results)) {\n    barcodeResults = inputData.results;\n} else {\n    barcodeResults = [inputData]; // Wrap single object in array\n}\n\nconsole.log(\"Barcode results:\", JSON.stringify(barcodeResults, null, 2));\n\n// Check if we have results\nif (!barcodeResults || barcodeResults.length === 0) {\n    return {\n        json: {\n            error: \"No barcode results found\",\n            rawInput: $input.item.json\n        }\n    };\n}\n\nconst bcbpString = barcodeResults[0].Value;\n\nfunction parseBCBP(bcbp) {\n    // Extract each field by position\n    const passengerName = bcbp.substring(2, 22).trim();        // SMITH/JOHNATHAN\n    const confirmationCode = bcbp.substring(23, 30).trim();    // ABC123\n    const originAirport = bcbp.substring(30, 33);              // NYC\n    const destinationAirport = bcbp.substring(33, 36);         // CHG\n    const airlineCode = bcbp.substring(36, 39).trim();         // SL\n    const flightNumber = bcbp.substring(39, 44).trim();        // 4257\n    const julianDate = bcbp.substring(44, 47);                 // 074\n    const classCode = bcbp.substring(47, 48);                  // Y\n    const seatNumber = bcbp.substring(48, 52).trim();          // 14F\n    \n    // Convert Julian date to readable format\n    const currentYear = new Date().getFullYear();\n    const julianDay = parseInt(julianDate);\n    const flightDate = new Date(currentYear, 0, julianDay);\n    \n    // Format date as YYYY-MM-DD\n    const formattedDate = flightDate.toISOString().split('T')[0];\n    \n    // Format date as readable (March 15, 2024)\n    const readableDate = flightDate.toLocaleDateString('en-US', {\n        year: 'numeric',\n        month: 'long',\n        day: 'numeric'\n    });\n    \n    // Format passenger name properly\n    const nameParts = passengerName.split('/');\n    const lastName = nameParts[0] || '';\n    const firstName = nameParts[1] || '';\n    const formattedName = firstName && lastName ? `${firstName} ${lastName}` : passengerName;\n    \n    return {\n        clientName: formattedName,\n        flightNumber: `${airlineCode}${flightNumber}`,\n        flightDateFormatted: formattedDate,        // 2024-03-15\n        flightDateReadable: readableDate,          // March 15, 2024\n        julianDate: julianDate,                    // 074 (if you want original)\n        route: `${originAirport}-${destinationAirport}`,\n        seat: seatNumber,\n        confirmationCode: confirmationCode,\n        class: classCode\n    };\n}\n\n// Parse the data\nconst parsed = parseBCBP(bcbpString);\n\n// Return for Google Sheets\nreturn {\n    json: {\n        clientName: parsed.clientName,\n        flightNumber: parsed.flightNumber,\n        travelDate: parsed.flightDateFormatted,\n        route: parsed.route,\n        seat: parsed.seat,\n        processedDate: new Date().toISOString().split('T')[0],\n        confirmationCode: parsed.confirmationCode\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "dd88e5c5-5438-47f7-9591-9898e1adf722",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1KIojUTl8Vu4IRpvcDtPEcmMF_vufcJAzfDUBLpjCG28",
+          "mode": "list",
+          "cachedResultName": "Client Travel Management System",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KIojUTl8Vu4IRpvcDtPEcmMF_vufcJAzfDUBLpjCG28/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KIojUTl8Vu4IRpvcDtPEcmMF_vufcJAzfDUBLpjCG28/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Client Name": "={{ $json.clientName }}",
+            "Flight Number": "={{ $json.flightNumber }}",
+            "Date": "={{ $json.travelDate }}",
+            "Route ": "={{ $json.route }}",
+            "Seat ": "={{ $json.seat }}",
+            "Processed Date": "={{ $json.processedDate }}",
+            "Confirmation Code": "={{ $json.confirmationCode }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Client Name",
+              "displayName": "Client Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Flight Number",
+              "displayName": "Flight Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Route ",
+              "displayName": "Route ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Seat ",
+              "displayName": "Seat ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Confirmation Code",
+              "displayName": "Confirmation Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processed Date",
+              "displayName": "Processed Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        896,
+        0
+      ],
+      "id": "12edc4c2-182e-4c6e-9eca-08735c61749d",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ZQpEVO9VH3hHK7o3",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b2f04f11-6572-45c6-98c8-0dec01bfa625",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aceeebc10f4c619c2460a6957e76cc73dba1a1526fdae0180ffbadc4ee50a733"
+  },
+  "id": "t0r8eqxjNB0t4mwJ",
+  "tags": []
+}

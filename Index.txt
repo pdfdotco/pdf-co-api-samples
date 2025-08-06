@@ -201,6 +201,7 @@
 \Barcode Reader API\AWS Lambda
 \Barcode Reader API\C#
 \Barcode Reader API\cURL
+\Barcode Reader API\Extract PDF417 Barcode Data and Send to Google Sheets
 \Barcode Reader API\GoogleAppScript
 \Barcode Reader API\Java
 \Barcode Reader API\JavaScript
