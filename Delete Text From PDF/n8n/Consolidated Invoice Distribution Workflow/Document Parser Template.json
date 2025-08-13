@@ -1,0 +1,69 @@
+{
+  "templateVersion": 4,
+  "templatePriority": 0,
+  "culture": "en-US",
+  "objects": [
+    {
+      "id": 1755057861661,
+      "objectType": "table",
+      "tableType": "searchBased",
+      "name": "Parse Item Names",
+      "tableProperties": {
+        "start": {
+          "expression": "Item{{Spaces}}Quantity{{Spaces}}Price",
+          "regex": true
+        },
+        "end": {
+          "expression": "TOTAL{{Spaces}}{{Number}}",
+          "regex": true
+        },
+        "left": 30,
+        "right": 163,
+        "columns": [
+          {
+            "name": "Item",
+            "dataType": "string",
+            "x": 30
+          }
+        ]
+      }
+    }
+  ],
+  "oldObjects": [
+    {
+      "id": 1755057861661,
+      "objectType": "table",
+      "tableType": "searchBased",
+      "name": "Parse Item Name",
+      "tableProperties": {
+        "start": {
+          "expression": "Item{{Spaces}}Quantity{{Spaces}}Price",
+          "regex": true
+        },
+        "end": {
+          "expression": "TOTAL{{Spaces}}{{Number}}",
+          "regex": true
+        },
+        "left": 30,
+        "right": 163,
+        "columns": [
+          {
+            "name": "Item",
+            "dataType": "string",
+            "x": 30
+          }
+        ]
+      }
+    }
+  ],
+  "templateName": "Parse Item Names",
+  "description": "",
+  "options": {
+    "ocrMode": "auto",
+    "ocrLanguage": "eng",
+    "ocrResolution": 300,
+    "ocrImageFilters": "",
+    "ocrWhiteList": "",
+    "ocrBlackList": ""
+  }
+}

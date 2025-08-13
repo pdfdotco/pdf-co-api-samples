@@ -303,7 +303,9 @@
 \Delete Text From PDF\JavaScript\Remove Credit Card Data From PDF
 \Delete Text From PDF\JavaScript\Remove Email and SSN Data From PDF
 \Delete Text From PDF\JavaScript\Remove PII Data From PDF
+\Delete Text From PDF\n8n\Consolidated Invoice Distribution Workflow
 \Delete Text From PDF\n8n\Sensitive Data Redaction
+\Delete Text From PDF\n8n\Consolidated Invoice Distribution Workflow\Redacted Files
 \Delete Text From PDF\PHP\Delete PDF Text Asynchronously
 \Delete Text From PDF\PHP\Delete PDF Text From Uploaded File
 \Delete Text From PDF\PowerShell\Delete PDF Text From Uploaded File
@@ -1609,6 +1611,7 @@
 \PDF To JSON API\cURL
 \PDF To JSON API\Java
 \PDF To JSON API\JavaScript
+\PDF To JSON API\n8n
 \PDF To JSON API\PHP
 \PDF To JSON API\PowerShell
 \PDF To JSON API\Python
@@ -1645,6 +1648,7 @@
 \PDF To JSON API\JavaScript\Convert PDF To JSON From URL (Node.js) - Async API (AI Powered)
 \PDF To JSON API\JavaScript\Convert PDF To JSON in JQuery
 \PDF To JSON API\JavaScript\Convert PDF To JSON in JQuery - Async API
+\PDF To JSON API\n8n\Smart PDF Processing Transform Any Document into Actionable Data
 \PDF To JSON API\PHP\Convert PDF To JSON Asynchronously
 \PDF To JSON API\PHP\Convert PDF To JSON Asynchronously (AI Powered)
 \PDF To JSON API\PHP\Convert PDF To JSON From Uploaded File

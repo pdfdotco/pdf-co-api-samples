@@ -1,0 +1,528 @@
+{
+  "name": "Smart PDF Processing: Transform Any Document into Actionable Data",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ff6a3d5e-5960-4b89-8c60-9143ca3152c4",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PT7O2lBVKxlQ02C6",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Convert from PDF",
+        "url": "={{ $json.webContentLink }}",
+        "convertType": "toJson2",
+        "advancedOptions": {}
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "cc92ad12-f2be-4bc3-8844-826cde5f07c0",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "iMimoHNL7KzyPsBi",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "43e1170c-5f71-44ce-851a-4611f9d40366",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Simpler version - just extract text from the first item\nconst item = $input.first();\nconst pdfData = Array.isArray(item.json) ? item.json[0] : item.json;\n\nlet extractedText = \"\";\nconst rows = pdfData?.document?.page?.row || [];\n\nrows.forEach(row => {\n  if (row.column) {\n    row.column.forEach(col => {\n      if (col.text && col.text.text) {\n        extractedText += col.text.text + \" \";\n      }\n    });\n    extractedText += \"\\n\";\n  }\n});\n\nreturn [{\n  json: {\n    extractedText: extractedText.trim()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "6cf33184-288f-4da9-8720-120aa19e01a0",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Analyze this medical laboratory report and extract structured information:\n\n{{$node[\"Code\"].json[\"extractedText\"]}}\n\nPlease extract and structure the following information in JSON format:\n1. Patient demographics (name, DOB, age, sex, patient ID)\n2. Test details (specimen type, collection date, ordering physician)  \n3. All lab values with their results, units, reference ranges, and abnormal flags\n4. Critical values and physician notifications\n5. Clinical assessment of abnormal findings\n\nFocus on identifying the severe anemia indicated by the critical hemoglobin and hematocrit values. Return only valid JSON."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        896,
+        0
+      ],
+      "id": "4a6fd114-c478-4cd7-8e82-6b2f40f90c32",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "MkBB5D0jzf5Xqxp1",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse the OpenAI JSON response - it's a single object, not an array\nconst openaiResponse = $input.first().json;\nconst content = openaiResponse.message.content;  // Remove the [0] since it's not an array\n\n// Extract JSON from the markdown code block\nconst jsonMatch = content.match(/```json\\n(.*?)\\n```/s);\nconst medicalData = JSON.parse(jsonMatch[1]);\n\n// Structure for Google Sheets\nreturn [{\n  json: {\n    patient_name: medicalData.patient_demographics.name,\n    patient_dob: medicalData.patient_demographics.dob,\n    patient_id: medicalData.patient_demographics.patient_id,\n    age: medicalData.patient_demographics.age,\n    sex: medicalData.patient_demographics.sex,\n    specimen_type: medicalData.test_details.specimen_type,\n    collection_date: medicalData.test_details.collection_date_time,\n    ordering_physician: medicalData.test_details.ordering_physician,\n    \n    // Key lab values\n    wbc_value: medicalData.lab_values[\"Complete Blood Count\"][\"White Blood Cell (WBC)\"].result,\n    wbc_flag: medicalData.lab_values[\"Complete Blood Count\"][\"White Blood Cell (WBC)\"].flag || \"Normal\",\n    \n    rbc_value: medicalData.lab_values[\"Complete Blood Count\"][\"Red Blood Cell (RBC)\"].result,\n    rbc_flag: medicalData.lab_values[\"Complete Blood Count\"][\"Red Blood Cell (RBC)\"].flag || \"Normal\",\n    \n    hemoglobin_value: medicalData.lab_values[\"Complete Blood Count\"][\"Hemoglobin (HB/Hgb)\"].result,\n    hemoglobin_flag: medicalData.lab_values[\"Complete Blood Count\"][\"Hemoglobin (HB/Hgb)\"].flag || \"Normal\",\n    \n    hematocrit_value: medicalData.lab_values[\"Complete Blood Count\"][\"Hematocrit (HCT)\"].result,\n    hematocrit_flag: medicalData.lab_values[\"Complete Blood Count\"][\"Hematocrit (HCT)\"].flag || \"Normal\",\n    \n    platelet_value: medicalData.lab_values[\"Complete Blood Count\"][\"Platelet count\"].result,\n    platelet_flag: medicalData.lab_values[\"Complete Blood Count\"][\"Platelet count\"].flag || \"Normal\",\n    \n    // Critical alerts\n    has_critical_values: medicalData.critical_values_and_notifications.critical_values ? \"YES\" : \"NO\",\n    critical_hemoglobin: medicalData.critical_values_and_notifications.critical_values[\"Hemoglobin (HB/Hgb)\"] || \"\",\n    critical_hematocrit: medicalData.critical_values_and_notifications.critical_values[\"Hematocrit (HCT)\"] || \"\",\n    \n    // Notifications\n    notified_physician: medicalData.critical_values_and_notifications.notifications.physician,\n    notification_time: medicalData.critical_values_and_notifications.notifications.time_notified,\n    notified_by: medicalData.critical_values_and_notifications.notifications.notified_by,\n    \n    // Clinical assessment\n    clinical_assessment: medicalData.clinical_assessment.assessment,\n    \n    // Metadata\n    processing_timestamp: new Date().toISOString(),\n    report_date: new Date().toISOString().split('T')[0]  // Just the date part\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        0
+      ],
+      "id": "64559111-f5ec-4121-a2e7-74a96854e5ca",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1v6ooAja4VR2jfur3jw4YfCTfHRyJ3IkSpuaVg4q1OgY",
+          "mode": "list",
+          "cachedResultName": "Lab Reports CBC Analysis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1v6ooAja4VR2jfur3jw4YfCTfHRyJ3IkSpuaVg4q1OgY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1v6ooAja4VR2jfur3jw4YfCTfHRyJ3IkSpuaVg4q1OgY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Report Date": "={{ $json.report_date }}",
+            "Processing Timestamp": "={{ $json.processing_timestamp }}",
+            "Clinical Assessment": "={{ $json.clinical_assessment }}",
+            "Notified By": "={{ $json.notified_by }}",
+            "Notification Time": "={{ $json.notification_time }}",
+            "Notified Physician": "={{ $json.notified_physician }}",
+            "Critical Hematrocrit": "={{ $json.critical_hematocrit }}",
+            "Critical Hemoglobin": "={{ $json.critical_hemoglobin }}",
+            "Has Critical Values": "={{ $json.has_critical_values }}",
+            "Platelet Flag": "={{ $json.platelet_flag }}",
+            "Platelet Value": "={{ $json.platelet_value }}",
+            "Hematrocrit Flag": "={{ $json.hematocrit_flag }}",
+            "Hematocrit Value": "={{ $json.hematocrit_value }}",
+            "Hemoglobin Flag": "={{ $json.hemoglobin_flag }}",
+            "Hemoglobin Value": "={{ $json.hemoglobin_value }}",
+            "RBC Flag": "={{ $json.rbc_flag }}",
+            "RBC Value": "={{ $json.rbc_value }}",
+            "WBC Flag": "={{ $json.wbc_flag }}",
+            "WBC Value": "={{ $json.wbc_value }}",
+            "Ordering Physician": "={{ $json.ordering_physician }}",
+            "Collection Date": "={{ $json.collection_date }}",
+            "Specimen Type": "={{ $json.specimen_type }}",
+            "Sex": "={{ $json.sex }}",
+            "Age": "={{ $json.age }}",
+            "ID": "={{ $json.patient_id }}",
+            "DOB": "={{ $json.patient_dob }}",
+            "Patient Name": "={{ $json.patient_name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Patient Name",
+              "displayName": "Patient Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DOB",
+              "displayName": "DOB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Age",
+              "displayName": "Age",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sex",
+              "displayName": "Sex",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Specimen Type",
+              "displayName": "Specimen Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Collection Date",
+              "displayName": "Collection Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ordering Physician",
+              "displayName": "Ordering Physician",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "WBC Value",
+              "displayName": "WBC Value",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "WBC Flag",
+              "displayName": "WBC Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RBC Value",
+              "displayName": "RBC Value",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RBC Flag",
+              "displayName": "RBC Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hemoglobin Value",
+              "displayName": "Hemoglobin Value",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hemoglobin Flag",
+              "displayName": "Hemoglobin Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hematocrit Value",
+              "displayName": "Hematocrit Value",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hematrocrit Flag",
+              "displayName": "Hematrocrit Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Platelet Value",
+              "displayName": "Platelet Value",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Platelet Flag",
+              "displayName": "Platelet Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Has Critical Values",
+              "displayName": "Has Critical Values",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Critical Hemoglobin",
+              "displayName": "Critical Hemoglobin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Critical Hematrocrit",
+              "displayName": "Critical Hematrocrit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Notified Physician",
+              "displayName": "Notified Physician",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Notification Time",
+              "displayName": "Notification Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Notified By",
+              "displayName": "Notified By",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Clinical Assessment",
+              "displayName": "Clinical Assessment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processing Timestamp",
+              "displayName": "Processing Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Report Date",
+              "displayName": "Report Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1472,
+        0
+      ],
+      "id": "ac6ad96c-8ea7-4cc0-8497-abc47e3c33d4",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "27ai9C8SPuE2lQvS",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "847bd257-5859-44f1-895f-bb8698123e15",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d152a49030d40a571a788b2e6ac6c0751cc6da28c79292ce23269950c2693e08"
+  },
+  "id": "6hPktzjQXEBJ07RZ",
+  "tags": []
+}

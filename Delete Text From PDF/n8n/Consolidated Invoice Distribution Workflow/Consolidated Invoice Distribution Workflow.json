@@ -1,0 +1,243 @@
+{
+  "name": "Consolidated Invoice Distribution Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "40fc8981-4dea-492e-9eb7-2ce5da4f9d99",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PT7O2lBVKxlQ02C6",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/pdf/documentparser",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "YOUR_PDFco_API_KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "templateId",
+              "value": "1"
+            },
+            {
+              "name": "inline",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "6e4e27c5-3331-4ef3-8834-25dc342be9fa",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// N8N JavaScript Code - Extract Unique Items and Generate Redaction Configurations\n// This processes the document parser output and creates redaction configs for each item\n\n// Get the input data from the previous node (document parser output)\nconst inputData = $input.all();\n\n// Array to store unique item values\nlet uniqueItems = [];\nlet seenValues = new Set();\n\n// Process each input item to extract unique values\ninputData.forEach(item => {\n  // Navigate to the table rows\n  const body = item.json.body || item.json[0].body;\n  const objects = body.objects;\n  \n  // Find the table object\n  const table = objects.find(obj => obj.objectType === \"table\");\n  \n  if (table && table.rows) {\n    // Extract item values from each row\n    table.rows.forEach(row => {\n      if (row.item && row.item.value) {\n        const itemValue = row.item.value;\n        \n        // Only add if we haven't seen this value before\n        if (!seenValues.has(itemValue)) {\n          seenValues.add(itemValue);\n          uniqueItems.push(itemValue);\n        }\n      }\n    });\n  }\n});\n\n// Generate redaction configurations for each unique item\nconst redactionConfigs = [];\n\nuniqueItems.forEach(currentItem => {\n  // Get all items except the current one (these will be redacted)\n  const itemsToRedact = uniqueItems.filter(item => item !== currentItem);\n  \n  // Create search strings for redaction\n  const searchStrings = itemsToRedact.map(item => {\n    // Escaped backslashes to produce literal \\s+\\d+\\s+\\d+\\.\\d+\\s+\\d+\\.\\d+ in output\n    return item + '\\\\s+\\\\d+\\\\s+\\\\d+\\\\.\\\\d+\\\\s+\\\\d+\\\\.\\\\d+';\n  });\n  \n  // Create simple data for the PDF.co node to use\n  const config = {\n    // Data for PDF.co node fields - output as proper array like the working example\n    searchStrings: searchStrings,\n    \n    // Metadata for workflow management\n    visibleItem: currentItem,\n    outputFileName: `file_${currentItem.toLowerCase().replace(/\\s+/g, '')}.pdf`,\n    redactedItems: itemsToRedact\n  };\n  \n  redactionConfigs.push(config);\n});\n\n// Return each configuration as a separate n8n output item\nreturn redactionConfigs.map(config => ({\n  json: config\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "87fb9c6a-e90d-405e-ace8-7877206476f1",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/pdf/edit/delete-text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "YOUR_PDFco_API_KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $('Google Drive Trigger').item.json.webContentLink }}\",\n  \"searchstrings\": {{ JSON.stringify($json.searchStrings) }},\n  \"regex\": \"true\",\n  \"replacementLimit\": 0,\n  \"profiles\": \"{'UsePatch': true, 'PatchColor': '#000000'}\",\n  \"name\": \"{{ $json.outputFileName }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "759b1f56-f6bb-4b43-af95-c207b16a97c0",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1r6vuSTyojvoDYUGrzh4qofOARK9vG9TA",
+          "mode": "list",
+          "cachedResultName": "Redacted Files",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1r6vuSTyojvoDYUGrzh4qofOARK9vG9TA"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "274d63ea-d25d-4e54-9825-e3df4b5d967a",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PT7O2lBVKxlQ02C6",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        896,
+        0
+      ],
+      "id": "2f075cde-5fea-41a4-b5e7-86feb420bc69",
+      "name": "HTTP Request2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "84683bde-3597-4c1d-9e0f-371a08fc4f85",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d152a49030d40a571a788b2e6ac6c0751cc6da28c79292ce23269950c2693e08"
+  },
+  "id": "Le6svuUQrv5XtaH2",
+  "tags": []
+}
