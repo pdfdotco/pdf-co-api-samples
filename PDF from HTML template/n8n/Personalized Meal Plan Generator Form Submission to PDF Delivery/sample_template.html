@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Day Custom Meal Plan</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: white;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2c5aa0;
+            padding-bottom: 20px;
+        }
+        
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin: 10px 0;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .client-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2c5aa0;
+        }
+        
+        .day-container {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, #2c5aa0, #3d6bb3);
+            color: white;
+            padding: 12px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+            text-transform: uppercase;
+        }
+        
+        .meals-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+            border: 2px solid #2c5aa0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .meal {
+            padding: 20px;
+            border-right: 1px solid #e0e0e0;
+            min-height: 120px;
+        }
+        
+        .meal:last-child {
+            border-right: none;
+        }
+        
+        .meal-title {
+            font-weight: bold;
+            color: #2c5aa0;
+            font-size: 16px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #e8f2ff;
+            padding-bottom: 5px;
+        }
+        
+        .meal-content {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .grocery-section {
+            margin-top: 40px;
+            page-break-before: always;
+        }
+        
+        .grocery-header {
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+        
+        .grocery-content {
+            border: 2px solid #28a745;
+            border-top: none;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            background: #f8fff9;
+        }
+        
+        .grocery-categories {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .grocery-category {
+            margin-bottom: 20px;
+        }
+        
+        .category-title {
+            font-weight: bold;
+            color: #28a745;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #d4edda;
+            padding-bottom: 5px;
+        }
+        
+        .grocery-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .checkbox {
+            width: 15px;
+            height: 15px;
+            border: 2px solid #28a745;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .instructions-title {
+            font-weight: bold;
+            color: #856404;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <div class="title">Your 7-Day Meal Plan</div>
+        <div class="subtitle">Personalized nutrition designed just for you</div>
+    </div>
+
+    <!-- Client Information -->
+    <div class="client-info">
+        <strong>Prepared for:</strong> {{client_name}}<br>
+        <strong>Goal:</strong> {{client_goal}}<br>
+        <strong>Dietary Preferences:</strong> {{dietary_preferences}}<br>
+        <strong>Date Created:</strong> {{creation_date}}
+    </div>
+
+    <!-- Important Instructions -->
+    <div class="instructions">
+        <div class="instructions-title">📋 Important Instructions</div>
+        <ul>
+            <li>Drink at least 8 glasses of water daily</li>
+            <li>Adjust portion sizes based on your activity level</li>
+            <li>Prepare meals in advance when possible</li>
+            <li>Feel free to swap similar ingredients if needed</li>
+            <li>Contact us if you have any questions about your meal plan</li>
+        </ul>
+    </div>
+
+    <!-- Monday -->
+    <div class="day-container">
+        <div class="day-header">Monday</div>
+        <div class="meals-grid">
+            <div class="meal">
+                <div class="meal-title">🍳 Breakfast</div>
+                <div class="meal-content">
+                    {{{meals.monday.breakfast}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🥗 Lunch</div>
+                <div class="meal-content">
+                    {{{meals.monday.lunch}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🍽️ Dinner</div>
+                <div class="meal-content">
+                    {{{meals.monday.dinner}}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tuesday -->
+    <div class="day-container">
+        <div class="day-header">Tuesday</div>
+        <div class="meals-grid">
+            <div class="meal">
+                <div class="meal-title">🍳 Breakfast</div>
+                <div class="meal-content">
+                    {{{meals.tuesday.breakfast}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🥗 Lunch</div>
+                <div class="meal-content">
+                    {{{meals.tuesday.lunch}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🍽️ Dinner</div>
+                <div class="meal-content">
+                    {{{meals.tuesday.dinner}}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wednesday -->
+    <div class="day-container">
+        <div class="day-header">Wednesday</div>
+        <div class="meals-grid">
+            <div class="meal">
+                <div class="meal-title">🍳 Breakfast</div>
+                <div class="meal-content">
+                    {{{meals.wednesday.breakfast}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🥗 Lunch</div>
+                <div class="meal-content">
+                    {{{meals.wednesday.lunch}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🍽️ Dinner</div>
+                <div class="meal-content">
+                    {{{meals.wednesday.dinner}}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thursday -->
+    <div class="day-container">
+        <div class="day-header">Thursday</div>
+        <div class="meals-grid">
+            <div class="meal">
+                <div class="meal-title">🍳 Breakfast</div>
+                <div class="meal-content">
+                    {{{meals.thursday.breakfast}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🥗 Lunch</div>
+                <div class="meal-content">
+                    {{{meals.thursday.lunch}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🍽️ Dinner</div>
+                <div class="meal-content">
+                    {{{meals.thursday.dinner}}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Friday -->
+    <div class="day-container">
+        <div class="day-header">Friday</div>
+        <div class="meals-grid">
+            <div class="meal">
+                <div class="meal-title">🍳 Breakfast</div>
+                <div class="meal-content">
+                    {{{meals.friday.breakfast}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🥗 Lunch</div>
+                <div class="meal-content">
+                    {{{meals.friday.lunch}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🍽️ Dinner</div>
+                <div class="meal-content">
+                    {{{meals.friday.dinner}}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saturday -->
+    <div class="day-container">
+        <div class="day-header">Saturday</div>
+        <div class="meals-grid">
+            <div class="meal">
+                <div class="meal-title">🍳 Breakfast</div>
+                <div class="meal-content">
+                    {{{meals.saturday.breakfast}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🥗 Lunch</div>
+                <div class="meal-content">
+                    {{{meals.saturday.lunch}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🍽️ Dinner</div>
+                <div class="meal-content">
+                    {{{meals.saturday.dinner}}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sunday -->
+    <div class="day-container">
+        <div class="day-header">Sunday</div>
+        <div class="meals-grid">
+            <div class="meal">
+                <div class="meal-title">🍳 Breakfast</div>
+                <div class="meal-content">
+                    {{{meals.sunday.breakfast}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🥗 Lunch</div>
+                <div class="meal-content">
+                    {{{meals.sunday.lunch}}}
+                </div>
+            </div>
+            <div class="meal">
+                <div class="meal-title">🍽️ Dinner</div>
+                <div class="meal-content">
+                    {{{meals.sunday.dinner}}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grocery List Section -->
+    <div class="grocery-section">
+        <div class="grocery-header">📝 Weekly Grocery List</div>
+        <div class="grocery-content">
+            <div class="grocery-categories">
+                <div class="grocery-category">
+                    <div class="category-title">🥩 Proteins</div>
+                    {{#each grocery_list.proteins}}
+                    <div class="grocery-item">
+                        <div class="checkbox"></div>
+                        {{this}}
+                    </div>
+                    {{/each}}
+                </div>
+                
+                <div class="grocery-category">
+                    <div class="category-title">🥬 Vegetables</div>
+                    {{#each grocery_list.vegetables}}
+                    <div class="grocery-item">
+                        <div class="checkbox"></div>
+                        {{this}}
+                    </div>
+                    {{/each}}
+                </div>
+                
+                <div class="grocery-category">
+                    <div class="category-title">🍞 Grains & Carbs</div>
+                    {{#each grocery_list.grains}}
+                    <div class="grocery-item">
+                        <div class="checkbox"></div>
+                        {{this}}
+                    </div>
+                    {{/each}}
+                </div>
+                
+                <div class="grocery-category">
+                    <div class="category-title">🥛 Pantry & Others</div>
+                    {{#each grocery_list.pantry}}
+                    <div class="grocery-item">
+                        <div class="checkbox"></div>
+                        {{this}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p><strong>ACME Fit Club</strong> | The Best Meal Planning Service</p>
+        <p>For questions or adjustments, contact us at support@acmeclub.com</p>
+        <p>© 2025 ACME Fit Club. All rights reserved.</p>
+    </div>
+</body>
+</html>

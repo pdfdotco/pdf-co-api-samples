@@ -818,6 +818,7 @@
 \PDF Fill PDF Forms\JavaScript\Fill PDF Forms
 \PDF Fill PDF Forms\JavaScript\Fill PDF Forms Simplified
 \PDF Fill PDF Forms\n8n\Automatically Fill and Process Loan Application PDFs from Typeform Submissions
+\PDF Fill PDF Forms\n8n\PDF Contract Generator with Automated Approval
 \PDF Fill PDF Forms\PHP\Fill PDF Forms
 \PDF Fill PDF Forms\PHP\Fill PDF Forms from Local File
 \PDF Fill PDF Forms\PHP\Fill PDF Forms from Local File Asynchronously
@@ -961,6 +962,7 @@
 \PDF from HTML template\Javascript-Snippets\getTotalLines
 \PDF from HTML template\Javascript-Snippets\numberFormat
 \PDF from HTML template\n8n\Generate Sales Quote with QR Code
+\PDF from HTML template\n8n\Personalized Meal Plan Generator Form Submission to PDF Delivery
 \PDF from HTML template\PHP\Generate PDF Invoice From HTML Template
 \PDF from HTML template\PHP\Invoice With Multiple Pages
 \PDF from HTML template\PowerShell\Generate PDF Invoice From HTML Template

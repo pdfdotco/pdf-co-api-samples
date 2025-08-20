@@ -1,0 +1,248 @@
+{
+  "name": "Personalized Meal Plan Generator: Form Submission to PDF Delivery",
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a professional nutritionist creating personalized meal plans. Based on the client information provided, generate a complete 7-day meal plan with grocery list. CLIENT INFORMATION: - Name:  {{ $json['Client Name'] }} - Goal: {{ $json.Goal }} - Dietary Preferences: {{ $json['Dietary Preference'] }} - Activity Level: {{ $json['Activity Level'] }} - Allergies/Restrictions: {{ $json['Allergies / Restrictions'] }} IMPORTANT: You must respond with ONLY valid JSON in this exact structure. Do not include any other text, explanations, or markdown formatting. { \"client_name\": \"Client's full name\", \"client_goal\": \"Their fitness/nutrition goal\", \"dietary_preferences\": \"Their dietary restrictions/preferences\", \"creation_date\": \"Current date in format: Month DD, YYYY\", \"meals\": { \"monday\": { \"breakfast\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"lunch\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"dinner\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\" }, \"tuesday\": { \"breakfast\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"lunch\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"dinner\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\" }, \"wednesday\": { \"breakfast\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"lunch\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"dinner\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\" }, \"thursday\": { \"breakfast\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"lunch\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"dinner\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\" }, \"friday\": { \"breakfast\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"lunch\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"dinner\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\" }, \"saturday\": { \"breakfast\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"lunch\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"dinner\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\" }, \"sunday\": { \"breakfast\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"lunch\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\", \"dinner\": \"<strong>Meal Name</strong><br>Detailed ingredients and instructions<br><em>Calories: XXX | Protein: XXg</em>\" } }, \"grocery_list\": { \"proteins\": [ \"Specific protein items with quantities\" ], \"vegetables\": [ \"Specific vegetable items with quantities\" ], \"grains\": [ \"Specific grain/carb items with quantities\" ], \"pantry\": [ \"Pantry items, oils, condiments, etc.\" ] } } REQUIREMENTS: - Each meal must include HTML formatting exactly as shown (<strong>, <br>, <em>) - Include realistic calorie and protein counts for each meal - Ensure all meals align with the client's dietary preferences and goals - Provide variety across the week - no repeated meals - Generate a complete grocery list based on ALL meals in the plan - Include specific quantities in grocery list (e.g., \"2 lbs chicken breast\", not just \"chicken\") - Organize grocery items into the 4 categories: proteins, vegetables, grains, pantry - Respond with ONLY the JSON - no additional text or explanations "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        160,
+        0
+      ],
+      "id": "155da01d-58b7-4019-9cb2-0ce15a3217f8",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "MkBB5D0jzf5Xqxp1",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "URL/HTML to PDF",
+        "convertType": "htmlTemplateToPDF",
+        "templateId": "11400",
+        "templateData": "={{ $json.message.content }}",
+        "advancedOptions": {
+          "name": "={{ $('Google Sheets Trigger').item.json['Client Name'] }}"
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        512,
+        0
+      ],
+      "id": "53ef03b6-1f7b-493c-9e35-fe50b5397593",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "iMimoHNL7KzyPsBi",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1xXvQjTVx8_TCLeh7BA_0o0VPCZ4ioK3oGAQtR8KdhCQ",
+          "mode": "list",
+          "cachedResultName": "7 Day Meal Planner",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xXvQjTVx8_TCLeh7BA_0o0VPCZ4ioK3oGAQtR8KdhCQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xXvQjTVx8_TCLeh7BA_0o0VPCZ4ioK3oGAQtR8KdhCQ/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        0
+      ],
+      "id": "2b6c6b84-4f2f-484b-bccc-3422b8f86cb1",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "65mf0X0kVaIqIphU",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1tbYk2vEy0KqxP8FbQhoX_GRQVQCIP0ak",
+          "mode": "list",
+          "cachedResultName": "Output File",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1tbYk2vEy0KqxP8FbQhoX_GRQVQCIP0ak"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        960,
+        0
+      ],
+      "id": "b6baca7d-43ae-4f86-96e0-92680aa28ea1",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "PT7O2lBVKxlQ02C6",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        736,
+        0
+      ],
+      "id": "64a9ca61-af40-4d95-9ed9-4f2ebf51f35a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/email/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "YOUR_PDFco_API_KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $('PDFco Api').item.json.url }}\",\n  \"from\": \"John Doe <john@example.com>\",\n  \"to\": \"{{ $('Google Sheets Trigger').item.json['Client Name'] }} <{{ $('Google Sheets Trigger').item.json['Email Address'] }}>\",\n  \"subject\": \"Check attached sample pdf\",\n  \"bodytext\": \"Please check the attached pdf\",\n  \"bodyHtml\": \"Please check the attached pdf\",\n  \"smtpserver\": \"smtp.gmail.com\",\n  \"smtpport\": \"587\",\n  \"smtpusername\": \"my@gmail.com\",\n  \"smtppassword\": \"app specific password created as https://support.google.com/accounts/answer/185833\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "ebe6d0c3-8120-49b4-85d0-3fecdfac8665",
+      "name": "PDF.co Send Email with File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "PDF.co Send Email with File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3eb828d2-d27b-4c7c-88fc-9fda23df4f3d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d152a49030d40a571a788b2e6ac6c0751cc6da28c79292ce23269950c2693e08"
+  },
+  "id": "cE8gPTCF3CnVwK6r",
+  "tags": []
+}

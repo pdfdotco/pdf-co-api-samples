@@ -1,0 +1,239 @@
+{
+  "name": "PDF Contract Generator with Automated Approval",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1TOnE30Rt84OV2Lkka1aP72dq32Cs48HK0HDiI1o-JSI",
+          "mode": "list",
+          "cachedResultName": "Client Information",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TOnE30Rt84OV2Lkka1aP72dq32Cs48HK0HDiI1o-JSI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TOnE30Rt84OV2Lkka1aP72dq32Cs48HK0HDiI1o-JSI/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "73635af1-1eb9-4514-b671-cf327cdd65f9",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "65mf0X0kVaIqIphU",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Fill a PDF Form",
+        "url": "filetoken://975b1924b8934221622e4890cfc0a6a3a552a1dcd114dc7c76",
+        "fields": {
+          "metadataValues": [
+            {
+              "fieldName": "Proposal Date",
+              "text": "={{ $json.Date }}"
+            },
+            {
+              "fieldName": "Client Name",
+              "text": "={{ $json['Client Name'] }}"
+            },
+            {
+              "fieldName": "Description",
+              "text": "={{ $json['Service Description'] }}"
+            },
+            {
+              "fieldName": "Timeline",
+              "text": "={{ $json.Timeline }}"
+            },
+            {
+              "fieldName": "Amount",
+              "text": "={{ $json.Amount }}"
+            }
+          ]
+        },
+        "advancedOptions": {
+          "expiration": 1440
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "90250cf2-2220-4bd9-88cb-6ea160c8b54a",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "iMimoHNL7KzyPsBi",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "fromEmail": "my@email.com",
+        "toEmail": "={{ $('Google Sheets Trigger').item.json['Client Email'] }}",
+        "subject": "=Contract Approval Required -  {{ $('Google Sheets Trigger').item.json['Client Name'] }}",
+        "message": "=<div style=\"font-family: 'Open Sans', sans-serif; max-width: 450px; margin: 0 auto;\">\n\n<div style=\"text-align: center; padding: 20px 0 30px;\">\n  <h2 style=\"color: #525356; margin: 0 0 8px 0;\">Hi {{ $('Google Sheets Trigger').item.json['Client Name'] }}! 👋</h2>\n  <p style=\"color: #9ca3af; margin: 0; font-size: 16px;\">Your contract is ready for approval</p>\n</div>\n\n<div style=\"background: linear-gradient(135deg, #f8fafc, #f1f5f9); \n            border-radius: 16px; padding: 32px; border: 1px solid #e2e8f0;\">\n  \n  <div style=\"text-align: center;\">\n    <div style=\"background: white; width: 60px; height: 60px; border-radius: 50%; \n                margin: 0 auto 20px; display: flex; align-items: center; \n                justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.06);\">\n      📋\n    </div>\n    \n    <a href=\"{{ $('PDFco Api').item.json.url }}\" \n       style=\"display: inline-block; background: #ff6d5a; color: white; \n              padding: 16px 32px; text-decoration: none; border-radius: 10px; \n              font-weight: 600; box-shadow: 0 4px 16px rgba(255, 109, 90, 0.25);\n              transition: all 0.2s ease;\">\n      📄 View Contract\n    </a>\n    \n    <p style=\"color: #64748b; margin: 24px 0 0 0; font-size: 14px;\">\n      Review the document, then complete the approval form below\n    </p>\n  </div>\n  \n</div>\n\n<div style=\"background: #fef3c7; border: 1px solid #f59e0b; border-radius: 12px; \n            padding: 16px; margin: 20px 0; text-align: center;\">\n  <p style=\"color: #92400e; margin: 0; font-size: 14px; font-weight: 500;\">\n    ⏰ <strong>Time Sensitive:</strong> This contract link expires in 24 hours.<br>\n    Please review and confirm your approval before then.\n  </p>\n</div>\n\n</div>",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Approval Decision",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Approved Contract"
+                  },
+                  {
+                    "option": "Rejected Contract"
+                  },
+                  {
+                    "option": "Requested Change"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Comment (if any)",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Electronic Signature",
+              "placeholder": "Type your full name to electronically sign",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "limitWaitTime": {
+            "values": {
+              "resumeAmount": 24
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "3d128390-435a-4626-988f-5ae68ba82bf5",
+      "name": "SendAndWait email",
+      "webhookId": "90edec07-b0b8-44e6-a7ad-605d970b294d",
+      "credentials": {
+        "smtp": {
+          "id": "eF5NQheefn6g9oeM",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/email/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "YOUR_PDFco_API_KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $('PDFco Api').item.json.url }}\",\n  \"from\": \"Email Notifier <email@example.com>\",\n  \"to\": \"Partner <partner@example.com>\",\n  \"subject\": \"{{ $json.data['Approval Decision'] }} - {{ $('Google Sheets Trigger').item.json['Client Name'] }}\",\n  \"bodyHtml\": \"Decision: {{ $json.data['Approval Decision'] }} <br/> Comment (if any): {{ $json.data['Comment (if any)'] }} <br /> Signature: {{ $json.data['Electronic Signature'] }}\",\n  \"smtpserver\": \"smtp.gmail.com\",\n  \"smtpport\": \"587\",\n  \"smtpusername\": \"partner@example.com\",\n  \"smtppassword\": \"app specific password created as https://support.google.com/accounts/answer/185833\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "40475266-48be-406e-a2cb-3d5df8667cf5",
+      "name": "PDF.co Send Email"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "SendAndWait email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SendAndWait email": {
+      "main": [
+        [
+          {
+            "node": "PDF.co Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDF.co Send Email": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7a3d642a-9b97-4d06-b121-b3ba37355a5d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d152a49030d40a571a788b2e6ac6c0751cc6da28c79292ce23269950c2693e08"
+  },
+  "id": "7m7zpCT2U1TeVkmn",
+  "tags": []
+}
