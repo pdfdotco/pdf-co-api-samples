@@ -1,0 +1,158 @@
+{
+  "name": "Convert Excel to PDF",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "event": "fileCreated",
+        "options": {
+          "fileType": "application/vnd.google-apps.spreadsheet"
+        }
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "14844515-5aa9-4f1d-80ef-9636da078acc",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "okhwRrIGuWPXsWr2",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Convert to PDF",
+        "convertType": "fromXls",
+        "url": "=https://docs.google.com/spreadsheets/d/{{ $json.id }}/export?format=pdf&portrait=false",
+        "advancedOptionsCommon": {
+          "name": "={{ $json.name }}"
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "5c675fb4-34b8-4cc5-bbb8-070c8f23fca3",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "ocdD6ve3WcWZTv2i",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "801570f0-9375-474d-b4ac-7f889def19c8",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1xivfGZK2sj0fgWdKk8eJnf_tjncTL5GB",
+          "mode": "list",
+          "cachedResultName": "Output File",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1xivfGZK2sj0fgWdKk8eJnf_tjncTL5GB"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        672,
+        0
+      ],
+      "id": "ed444a89-277f-4cac-9ece-63501c6fed69",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "okhwRrIGuWPXsWr2",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "98d2360f-7b2b-41ad-b5f5-996892cad520",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dcf113dccf0c95dadd6d39f55cfad8f198602dfb0ccf7915c195cdaac914634d"
+  },
+  "id": "uW2KhIj6zOuZOo35",
+  "tags": []
+}

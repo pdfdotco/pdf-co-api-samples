@@ -887,10 +887,12 @@
 \PDF From Excel\cURL
 \PDF From Excel\GoogleAppsScript
 \PDF From Excel\JavaScript
+\PDF From Excel\n8n
 \PDF From Excel\Zapier
 \PDF From Excel\cURL\Excel To PDF
 \PDF From Excel\JavaScript\Convert Excel to PDF in JQuery
 \PDF From Excel\JavaScript\Convert Excel to PDF in JQuery - Async API
+\PDF From Excel\n8n\Convert Spreadsheets to PDF
 \PDF From Excel\Zapier\Google Sheets to PDF export type
 \PDF from HTML\C#
 \PDF from HTML\cURL
