@@ -351,6 +351,7 @@
 \DOC To PDF API\JavaScript\Convert DOC To Protected PDF From URL (Node.js) - Async API
 \DOC To PDF API\JavaScript\Convert Encrypted DOC To PDF From URL (Node.js) - Async API
 \DOC To PDF API\n8n\Automated Document Delivery
+\DOC To PDF API\n8n\Convert Power Point Presentation to PDF
 \DOC To PDF API\PHP\Convert DOC To PDF Asynchronously
 \DOC To PDF API\PHP\Convert DOC To PDF From Uploaded File
 \DOC To PDF API\PHP\Convert DOC to Protected PDF from Uploaded File
@@ -948,6 +949,7 @@
 \PDF from HTML template\C#\Invoice With Multiple Pages
 \PDF from HTML template\C#\Template Iterating Array
 \PDF from HTML template\cURL\Generate PDF Invoice From HTML Template
+\PDF from HTML template\Google Apps Script\Create PDF Invoice From Google Sheet Asynchronously
 \PDF from HTML template\Google Apps Script\Google Spreadsheet to PDF Invoice
 \PDF from HTML template\Java\Generate PDF Invoice From HTML Template
 \PDF from HTML template\Java\Invoice With Multiple Pages
