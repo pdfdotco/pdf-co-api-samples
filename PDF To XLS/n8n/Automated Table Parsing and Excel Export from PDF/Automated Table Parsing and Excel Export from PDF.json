@@ -1,0 +1,198 @@
+{
+  "name": "Automated Table Parsing and Excel Export from PDF",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/pdf/find/table",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "YOUR_PDFCO_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"url\": \"{{ $json.webContentLink }}\",\n    \"async\": \"false\",\n    \"inline\": \"true\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "31383d15-b949-4c5f-af9c-09ec47044d6f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "Convert from PDF",
+        "url": "={{ $('Google Drive Trigger').item.json.webContentLink }}",
+        "convertType": "toXls",
+        "advancedOptions_Excel": {
+          "rect": "={{ $json.body.tables[1].rect }}"
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "741a1f61-46eb-4a39-b839-7c723fb0dc68",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "zZjFvmzVMGyDA0vR",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d9ac6996-a4f3-4403-88f5-3137697f6559",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zxOQ6tikJzg9aLr5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "48bfb76e-a85a-4851-93f4-5223035efb5f",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1xivfGZK2sj0fgWdKk8eJnf_tjncTL5GB",
+          "mode": "list",
+          "cachedResultName": "Output File",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1xivfGZK2sj0fgWdKk8eJnf_tjncTL5GB"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        896,
+        0
+      ],
+      "id": "097102a7-5f6e-4d58-ba25-c7ed5c551b87",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zxOQ6tikJzg9aLr5",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ff4f6af5-5fa5-4e60-a1b9-17b44190095e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c9ab6a0972e3b34eae499bc9001846178323a1734963ba67f8e09480c2f48c59"
+  },
+  "id": "FReA5WmpwPFVOHrW",
+  "tags": []
+}

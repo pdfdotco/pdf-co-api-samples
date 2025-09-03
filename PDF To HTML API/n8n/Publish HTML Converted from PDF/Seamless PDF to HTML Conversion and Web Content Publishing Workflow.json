@@ -1,0 +1,122 @@
+{
+  "name": "Seamless PDF to HTML Conversion and Web Content Publishing Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM",
+          "mode": "list",
+          "cachedResultName": "N8N Tester",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1F7nJ7E2KdxNyifE2xim-lZ-GZSw2INUM"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "202c4279-3b16-4b85-8f05-561b820717bf",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zxOQ6tikJzg9aLr5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Convert from PDF",
+        "url": "={{ $json.webContentLink }}",
+        "convertType": "toHtml",
+        "advancedOptions": {
+          "name": "={{ $json.name }}"
+        }
+      },
+      "type": "n8n-nodes-pdfco.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b73af97d-9a75-4fa3-b676-7e45dbe36668",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "zZjFvmzVMGyDA0vR",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "path": "=htdocs/ {{ $json.name }}",
+        "binaryData": false,
+        "fileContent": "={{ $json.body }}"
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "c1e5d060-64f9-4082-bcd6-ddcff406f1b1",
+      "name": "FTP",
+      "credentials": {
+        "ftp": {
+          "id": "PijO0OpRaEoccNt9",
+          "name": "FTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "FTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ce802086-56cb-48d0-96f2-238b9768e614",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c9ab6a0972e3b34eae499bc9001846178323a1734963ba67f8e09480c2f48c59"
+  },
+  "id": "OztCkdUzfROqR4b1",
+  "tags": []
+}

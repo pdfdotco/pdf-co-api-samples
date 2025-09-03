@@ -1522,6 +1522,7 @@
 \PDF To HTML API\cURL
 \PDF To HTML API\Java
 \PDF To HTML API\JavaScript
+\PDF To HTML API\n8n
 \PDF To HTML API\PHP
 \PDF To HTML API\PowerShell
 \PDF To HTML API\Python
@@ -1550,6 +1551,7 @@
 \PDF To HTML API\JavaScript\Convert PDF To HTML From URL (Node.js) - Async API
 \PDF To HTML API\JavaScript\Convert PDF To HTML in JQuery
 \PDF To HTML API\JavaScript\Convert PDF To HTML in JQuery - Async API
+\PDF To HTML API\n8n\Publish HTML Converted from PDF
 \PDF To HTML API\PHP\Convert PDF To HTML Asynchronously
 \PDF To HTML API\PHP\Convert PDF To HTML From Uploaded File
 \PDF To HTML API\PowerShell\Convert PDF To HTML From Uploaded File
@@ -1830,6 +1832,7 @@
 \PDF To XLS\cURL
 \PDF To XLS\Java
 \PDF To XLS\JavaScript
+\PDF To XLS\n8n
 \PDF To XLS\PowerShell
 \PDF To XLS\Salesforce
 \PDF To XLS\VB.NET
@@ -1852,6 +1855,7 @@
 \PDF To XLS\JavaScript\Convert PDF To XLS From Uploaded File (Node.js) - Async API
 \PDF To XLS\JavaScript\Convert PDF To XLS From URL (Node.js)
 \PDF To XLS\JavaScript\Convert PDF To XLS From URL (Node.js) - Async API
+\PDF To XLS\n8n\Automated Table Parsing and Excel Export from PDF
 \PDF To XLS\PowerShell\Advanced Conversion Options
 \PDF To XLS\PowerShell\Advanced Conversion Options With Rotated Input
 \PDF To XLS\PowerShell\Convert PDF To XLS From Uploaded File
