@@ -1,0 +1,230 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "downloadAttachments": true,
+        "options": {
+          "customEmailConfig": "[\"UNSEEN\", [\"SUBJECT\", \"Invoice Images\"]]"
+        }
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8bdc20c1-c758-4c3c-ad90-9697a814e6da",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "l114abu9aWvgTOsQ",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Merge PDF",
+        "url": [
+          "={{ $json.urls[0] }}",
+          "={{ $json.urls[1] }}",
+          "={{ $json.urls[2] }}",
+          "={{ $json.urls[3] }}"
+        ],
+        "autoConvert": true,
+        "advancedOptions": {
+          "name": "Merged-File"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "d10779b4-1523-49d0-ac1b-d7c2d21be536",
+      "name": "Merge Files Attachments",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const urls = [];\n\nfor (const item of items) {\n  let url =\n    item.json.url ||\n    item.json.fileUrl ||\n    item.json.uploadedFileUrl ||\n    (item.json.body && item.json.body.url);\n\n  if (url) {\n    urls.push(String(url)); // force plain string\n  }\n}\n\nreturn [\n  {\n    json: {\n      urls\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "cd52d3cc-db3d-4349-84b3-06a5e587c4c6",
+      "name": "Collector Function"
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "file",
+        "name": "Attachments"
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "df9a2f51-1ea6-484a-b8f1-ffb82ab31bb4",
+      "name": "Assign URLs to Binary Files",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Step 2: Extract and Analyze Document Collection\n// Standardize all documents so each item has:\n// - json.filename\n// - json.mimeType (or type)\n// - binary.file (the actual file to upload later)\n\nconst results = [];\n\nfor (const item of items) {\n  // Get all binary keys in this item\n  const binaryKeys = Object.keys(item.binary || {});\n  \n  if (binaryKeys.length === 0) {\n    // No file found, skip\n    continue;\n  }\n\n  for (const key of binaryKeys) {\n    const bin = item.binary[key];\n\n    results.push({\n      json: {\n        ...item.json,\n        filename: bin.fileName || \"unnamed_file\",\n        mimeType: bin.mimeType || \"application/octet-stream\"\n      },\n      binary: {\n        file: bin   // normalize to \"file\" so PDF.co can map it\n      }\n    });\n  }\n}\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "048c4d52-76a9-4663-851f-ed999d002111",
+      "name": "Normalize Files"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "ad96ee9a-18dc-48e6-8a53-41787ad1d3dc",
+      "name": "Convert merged file to binary"
+    },
+    {
+      "parameters": {
+        "name": "={{ $json.name }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1320,
+        0
+      ],
+      "id": "eb2e215c-3eea-4453-9e7e-4dd5a3b7209d",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Normalize Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Files Attachments": {
+      "main": [
+        [
+          {
+            "node": "Convert merged file to binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collector Function": {
+      "main": [
+        [
+          {
+            "node": "Merge Files Attachments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign URLs to Binary Files": {
+      "main": [
+        [
+          {
+            "node": "Collector Function",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Files": {
+      "main": [
+        [
+          {
+            "node": "Assign URLs to Binary Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert merged file to binary": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c7bec28d-d96c-4f63-9d5e-77ea33c2837c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "ccfQTnD4hDOfJqx3",
+  "tags": []
+}
