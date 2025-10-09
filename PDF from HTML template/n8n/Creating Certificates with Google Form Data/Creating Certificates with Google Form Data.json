@@ -1,0 +1,163 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        660,
+        0
+      ],
+      "id": "735aba90-9f00-45d4-9386-6d1a97bc6318",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "URL/HTML to PDF",
+        "convertType": "htmlTemplateToPDF",
+        "templateId": "15032",
+        "templateData": "={\n\"student_name\":\"{{ $json['Student\\'s Name'] }}\",\n\"course_name\":\"{{ $json['Course Title'] }}\",\n\"completion_date\" : \"{{ $json['Date of Completion'] }}\"\n} ",
+        "advancedOptions": {
+          "name": "=Certificate_{{ $json['Student\\'s Name'] }}.pdf"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "dbe29b57-888f-4fdd-b296-f2478559d73d",
+      "name": "Create Form Using HTML Template",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "e53440c1-46d8-417b-9cdd-82b5e3bbb7ab",
+      "name": "Convert to Binary File"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1t2fhd5r2sTFV-Sh6l6ubFUH0RvWl1xo63eF65hbDnlo",
+          "mode": "list",
+          "cachedResultName": "Course Completion Form (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1t2fhd5r2sTFV-Sh6l6ubFUH0RvWl1xo63eF65hbDnlo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 281279206,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1t2fhd5r2sTFV-Sh6l6ubFUH0RvWl1xo63eF65hbDnlo/edit#gid=281279206"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8232e373-2410-45cd-84b6-37b2893df2bd",
+      "name": "Google Sheets Trigger from Google Form",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "7iRVIt5uRDr98EJU",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Create Form Using HTML Template": {
+      "main": [
+        [
+          {
+            "node": "Convert to Binary File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to Binary File": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger from Google Form": {
+      "main": [
+        [
+          {
+            "node": "Create Form Using HTML Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "306f670a-1493-4ed2-a1ed-301e5beab5a9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "ccfQTnD4hDOfJqx3",
+  "tags": []
+}
