@@ -99,6 +99,8 @@
 \Add Text And Images To PDF\JavaScript\Add Text to Existing PDF (Node.js)
 \Add Text And Images To PDF\JavaScript\Add Text to Existing PDF Base64 (Node.js)
 \Add Text And Images To PDF\JavaScript\Add Text With Line Breaks to Existing PDF (Node.js)
+\Add Text And Images To PDF\n8n\Automated Filling Medical Form, creating an event on Google calendar
+\Add Text And Images To PDF\n8n\Automate_PDF_Watermarking
 \Add Text And Images To PDF\n8n\Personalize and Send Certificates at Scale
 \Add Text And Images To PDF\PHP\Add Page Numbers and Page Count to Existing PDF
 \Add Text And Images To PDF\PHP\Add Template Text With Data to Existing PDF

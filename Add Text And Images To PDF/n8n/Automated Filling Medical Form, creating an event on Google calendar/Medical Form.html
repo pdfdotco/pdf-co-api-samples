@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Patient Information & Medical History Form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --accent:#3b82f6;
+      --muted:#6b7280;
+      --glass: rgba(59,130,246,0.06);
+      --radius:12px;
+      --max-width:900px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg, #f3f6fb 0%, var(--bg) 100%);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:32px;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+      background:var(--card);
+      border-radius:16px;
+      box-shadow:0 8px 30px rgba(16,24,40,0.08);
+      padding:28px;
+      border:1px solid rgba(15,23,42,0.03);
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:18px;
+    }
+
+    .brand{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+
+    .logo{
+      width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 6px 18px rgba(59,130,246,0.18);
+    }
+
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+
+    .print-actions{display:flex;gap:8px;align-items:center}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:600;box-shadow:0 6px 18px rgba(59,130,246,0.12)}
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(59,130,246,0.14);box-shadow:none}
+
+    form{margin-top:8px}
+
+    .section{
+      padding:18px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9));
+      border:1px solid rgba(15,23,42,0.03);
+      margin-bottom:16px;
+    }
+
+    .section h2{margin:0 0 10px 0;font-size:16px}
+    .section p{margin:0 0 12px 0;color:var(--muted);font-size:13px}
+
+    .grid{
+      display:grid;
+      gap:12px;
+    }
+
+    .cols-2{grid-template-columns:repeat(2,1fr)}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+
+    label{display:block;font-size:13px;margin-bottom:6px;color:#111827;font-weight:600}
+
+    input[type="text"], textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid rgba(15,23,42,0.06);
+      background:linear-gradient(180deg, #fff, #fbfdff);
+      font-size:14px;
+      outline:none;
+      box-shadow:inset 0 -1px 0 rgba(15,23,42,0.02);
+    }
+
+    input:focus, textarea:focus{box-shadow:0 8px 20px rgba(59,130,246,0.08);border-color:var(--accent)}
+
+    textarea{min-height:110px;resize:vertical;padding-top:10px}
+
+    .row{display:flex;gap:12px}
+    .muted{color:var(--muted);font-weight:400;font-size:13px}
+
+    .required-star{color:#ef4444;margin-left:6px}
+
+    .form-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px}
+
+    .small{font-size:12px;color:var(--muted)}
+
+    .signature{
+      border-top:1px dashed rgba(15,23,42,0.06);
+      padding-top:12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:12px
+    }
+
+    .sig-line{flex:1;border-bottom:1px solid rgba(15,23,42,0.08);height:40px;margin-right:12px}
+
+    footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+
+    @media(max-width:760px){
+      .cols-2{grid-template-columns:1fr}
+      .cols-3{grid-template-columns:1fr}
+      .brand h1{font-size:18px}
+      .print-actions{margin-top:8px}
+    }
+
+    @media print{
+      body{background:#fff;padding:0}
+      .container{box-shadow:none;border:none;margin:0;border-radius:0;padding:18px}
+      .print-only{display:block}
+      .btn, .print-actions{display:none}
+      .page-break{page-break-before: always;}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <header>
+      <div class="brand">
+        <div class="logo">PT</div>
+        <div>
+          <h1>Patient Information & Medical History Form</h1>
+          <p class="lead">Please complete all required fields. This form is designed to be printed or saved as a PDF.</p>
+        </div>
+      </div>
+
+      <div class="print-actions">
+        <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn ghost" type="button" onclick="document.getElementById('patient-form').reset()">Reset</button>
+      </div>
+    </header>
+
+    <form id="patient-form" class="" autocomplete="on">
+
+      <!-- Personal details -->
+      <section class="section" aria-labelledby="personal-heading">
+        <h2 id="personal-heading">Personal Details</h2>
+        <p class="small">Fill in your personal information below. Fields marked with <span class="required-star">*</span> are required.</p>
+
+        <div class="grid cols-2" style="margin-top:12px">
+          <div>
+            <label for="firstName">First Name</label>
+            <input id="firstName" name="first_name" type="text" value="{{first_name}}">
+          </div>
+
+          <div>
+            <label for="lastName">Last Name</label>
+            <input id="lastName" name="last_name" type="text" value="{{last_name}}">
+          </div>
+        </div>
+
+        <div class="grid cols-3" style="margin-top:12px">
+          <div>
+            <label for="dob">Date of Birth <span class="required-star">*</span></label>
+            <input id="dob" name="date_of_birth" type="text" value="{{date_of_birth}}">
+          </div>
+
+          <div>
+            <label for="gender">Gender <span class="required-star">*</span></label>
+            <input id="gender" name="gender" type="text" value="{{gender}}">
+          </div>
+
+          <div>
+            <label for="primaryPhone">Primary Phone Number</label>
+            <input id="primaryPhone" name="primary_phone" type="text" value="{{primary_phone}}">
+          </div>
+        </div>
+
+        <div class="grid" style="margin-top:12px">
+          <div>
+            <label for="homeAddress">Home Address</label>
+            <input id="homeAddress" name="home_address" type="text" value="{{home_address}}">
+          </div>
+        </div>
+
+        <div class="grid" style="margin-top:12px">
+          <div>
+            <label for="mailingAddress">Mailing Address</label>
+            <input id="mailingAddress" name="mailing_address" type="text" value="{{mailing_address}}">
+          </div>
+        </div>
+
+        <div class="grid cols-2" style="margin-top:12px">
+          <div>
+            <label for="appointmentDate">Appointment Date <span class="required-star">*</span></label>
+            <input id="appointmentDate" name="appointment_date" type="text" value="{{appointment_date}}">
+          </div>
+        </div>
+      </section>
+
+      <!-- Medical information (new page) -->
+      <section class="section page-break" aria-labelledby="medical-heading">
+        <h2 id="medical-heading">Medical Information</h2>
+        <p class="small">Provide any current medications, allergies, or major medical history we should be aware of.</p>
+
+        <div style="margin-top:12px">
+          <label for="currentMedications">Current Medications</label>
+          <textarea id="currentMedications" name="current_medications">{{current_medications}}</textarea>
+        </div>
+
+        <div style="margin-top:12px">
+          <label for="allergies">Allergies</label>
+          <textarea id="allergies" name="allergies">{{allergies}}</textarea>
+        </div>
+
+        <div style="margin-top:12px">
+          <label for="majorHistory">Major Medical History</label>
+          <textarea id="majorHistory" name="major_medical_history">{{major_medical_history}}</textarea>
+        </div>
+      </section>
+
+      <div class="section">
+        <div class="signature">
+          <div style="flex:1">
+            <label for="signature" class="small">Patient Signature</label>
+            <div class="sig-line" aria-hidden="true"></div>
+            <input id="signature" name="patient_signature" type="text" value="{{patient_signature}}">
+          </div>
+
+          <div style="width:200px">
+            <label for="signedDate" class="small">Date</label>
+            <input id="signedDate" name="signature_date" type="text" value="{{signature_date}}">
+          </div>
+        </div>
+
+        <div class="form-foot">
+          <div class="small muted">By signing, you confirm the information above is accurate to the best of your knowledge.</div>
+          <div>
+            <button class="btn" type="submit">Save / Export (if supported)</button>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="small muted">Confidential — For office use only.</div>
+        <div class="small muted">Form version 1.0</div>
+      </footer>
+    </form>
+  </div>
+</body>
+</html>

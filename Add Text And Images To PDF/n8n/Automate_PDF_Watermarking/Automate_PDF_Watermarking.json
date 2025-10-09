@@ -1,0 +1,174 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "164UYRZdbflmG6ji6Cvkfgs9TdstlKZlL",
+          "mode": "list",
+          "cachedResultName": "INPUT-1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/164UYRZdbflmG6ji6Cvkfgs9TdstlKZlL"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cc4307dd-7992-4351-b557-2db336203f12",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Add Text/Images to PDF",
+        "url": "={{ $json.webContentLink }}",
+        "annotations": {
+          "metadataValues": [
+            {
+              "text": "GEC",
+              "x": "104.6",
+              "y": "412.33",
+              "size": "100",
+              "color": "#2563EB66",
+              "fontBold": true,
+              "fontName": "Arial Black",
+              "pages": "",
+              "width": 391.52,
+              "height": 130.41,
+              "alignment": "center"
+            }
+          ]
+        },
+        "advancedOptions": {
+          "name": "={{ $json.name }}"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "72309c3e-46a8-45df-87ff-66b2b7a4089a",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "=data",
+        "name": "=Watermarked_{{ $json.name }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        660,
+        0
+      ],
+      "id": "b4b45340-6365-4feb-8228-b5581dd52f59",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "46fe69ef-1b97-47d0-a14d-51e58b9821a6",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bef7f7de-bbdb-4063-9b8c-9bf719075a13",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "eHNuVV00aRng6P2Z",
+  "tags": []
+}

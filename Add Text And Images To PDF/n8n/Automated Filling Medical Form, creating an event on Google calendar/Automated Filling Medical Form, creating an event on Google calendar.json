@@ -1,0 +1,312 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        640,
+        0
+      ],
+      "id": "735aba90-9f00-45d4-9386-6d1a97bc6318",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "URL/HTML to PDF",
+        "convertType": "htmlTemplateToPDF",
+        "templateId": "15692",
+        "templateData": "={\n  \"first_name\": \"{{ $json['First Name'] }}\",\n  \"last_name\": \"{{ $json['Last Name'] }}\",\n  \"date_of_birth\": \"{{ $json['Date of Birth '] }}\",\n  \"gender\": \"{{ $json['Gender'] }}\",\n  \"primary_phone\": \"{{ $json['Primary Phone Number'] }}\",\n  \"home_address\": \"{{ $json['Home Address'] }}\",\n  \"mailing_address\": \"{{ $json['Mailing Address'] }}\",\n  \"current_medications\": \"{{ $json['Current Medications'] }}\",\n  \"allergies\": \"{{ $json['Allergies'] }}\",\n  \"major_medical_history\": \"{{ $json['Major Medical History'] }}\",\n  \"appointment_date\": \"{{ $json['Appointment date'] }}\"\n}\n",
+        "advancedOptions": {
+          "name": "=Medical-Record_{{ $json['First Name'] }} {{ $json['Last Name'] }}.pdf"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "dbe29b57-888f-4fdd-b296-f2478559d73d",
+      "name": "Create Form Using HTML Template",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 10,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1NkHqE5qpmYXldiFuIy9dLYwM6SLWKUhCkeZSqoJEY1U",
+          "mode": "list",
+          "cachedResultName": "Patient's Form (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NkHqE5qpmYXldiFuIy9dLYwM6SLWKUhCkeZSqoJEY1U/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 800038174,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NkHqE5qpmYXldiFuIy9dLYwM6SLWKUhCkeZSqoJEY1U/edit#gid=800038174"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8232e373-2410-45cd-84b6-37b2893df2bd",
+      "name": "Google Sheets Trigger from Google Form",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "7iRVIt5uRDr98EJU",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "2044ce02-4d2c-4247-bf66-552970b03e54",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "nnamdionyemaobi@gmail.com",
+          "mode": "list",
+          "cachedResultName": "nnamdionyemaobi@gmail.com"
+        },
+        "start": "={{ $('Google Sheets Trigger from Google Form').item.json['Appointment date'] }}",
+        "end": "={{ $('Google Sheets Trigger from Google Form').item.json['Appointment date'] }}",
+        "additionalFields": {
+          "allday": "no",
+          "attendees": [
+            "={{ $('Google Sheets Trigger from Google Form').item.json['Mailing Address'] }}"
+          ],
+          "description": "={{ $('Google Sheets Trigger from Google Form').item.json['First Name'] }} {{ $('Google Sheets Trigger from Google Form').item.json['Last Name'] }}'s Doctor's Appointment"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        860,
+        0
+      ],
+      "id": "da539ce8-663a-4d7c-b844-8e14d9768e6f",
+      "name": "Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "sb27I1REYE0tpCwU",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "URL/HTML to PDF",
+        "convertType": "htmlTemplateToPDF",
+        "templateId": "15694",
+        "templateData": "={\n  \"first_name\": \"{{ $('Google Sheets Trigger from Google Form').item.json['First Name'] }}\",\n  \"last_name\": \"{{ $('Google Sheets Trigger from Google Form').item.json['Last Name'] }}\",\n  \"appointment_date\": \"\",\n  \"date_of_birth\": \"{{ $('Google Sheets Trigger from Google Form').item.json['Date of Birth '] }}\",\n  \"primary_phone\": \"{{ $('Google Sheets Trigger from Google Form').item.json['Primary Phone Number'] }}\",\n  \"home_address\": \"{{ $('Google Sheets Trigger from Google Form').item.json['Home Address'] }}\",\n  \"current_medications\": \"{{ $('Google Sheets Trigger from Google Form').item.json['Current Medications'] }}\",\n  \"allergies\": \"{{ $('Google Sheets Trigger from Google Form').item.json.Allergies }}\",\n  \"major_medical_history\": \"{{ $('Google Sheets Trigger from Google Form').item.json['Major Medical History'] }}\"\n}\n",
+        "advancedOptions": {
+          "name": "={{ $('Google Sheets Trigger from Google Form').item.json['First Name'] }}_{{ $('Google Sheets Trigger from Google Form').item.json['Last Name'] }}_Receipt"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        0
+      ],
+      "id": "98eae3d0-5342-47d0-ae41-4093dec998ce",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Google Sheets Trigger from Google Form').item.json['Mailing Address'] }}",
+        "subject": "=Appointment_Confirmation [{{ $('Google Sheets Trigger from Google Form').item.json['First Name'] }} {{ $('Google Sheets Trigger from Google Form').item.json['Last Name'] }}]",
+        "message": "=<!doctype html> <html lang=\"en\"> <head>   <meta charset=\"utf-8\">   <title>Appointment Confirmation</title>   <style>     body {       font-family: Arial, Helvetica, sans-serif;       background: #f9fafb;       margin: 0;       padding: 0;       color: #111827;     }     .email-container {       max-width: 600px;       margin: 0 auto;       background: #ffffff;       border-radius: 8px;       padding: 24px;       box-shadow: 0 4px 10px rgba(0,0,0,0.05);     }     h1 {       font-size: 20px;       color: #2563eb;       margin-bottom: 16px;     }     p {       font-size: 14px;       line-height: 1.6;       margin: 10px 0;     }     .highlight {       font-weight: bold;       color: #2563eb;     }     .footer {       margin-top: 24px;       font-size: 12px;       color: #6b7280;       text-align: center;       border-top: 1px solid #e5e7eb;       padding-top: 12px;     }   </style> </head> <body>   <div class=\"email-container\">     <h1>Appointment Confirmation</h1>      <p>Dear <span class=\"highlight\">{{ $('Google Sheets Trigger from Google Form').item.json['First Name'] }} {{ $('Google Sheets Trigger from Google Form').item.json['Last Name'] }}</span>,</p>      <p>Thank you for scheduling your appointment with us. This is a confirmation for your upcoming appointment on:</p>      <p class=\"highlight\">{{ $('Google Sheets Trigger from Google Form').item.json['Appointment date'] }}</p>      <p>Attached to this email, you will find your <strong>Appointment Receipt</strong>. Please keep it for your records.</p>      <p>If you need to reschedule or have any questions, please don’t hesitate to contact our office.</p>      <div class=\"footer\">       <p>Confidential — For patient use only.</p>       <p>© {{Signature_Date}} | Healthcare Provider</p>     </div>   </div> </body> </html>",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {
+                "property": "=data"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1500,
+        0
+      ],
+      "id": "a879e679-3d25-416e-a523-22447824bcab",
+      "name": "Gmail",
+      "webhookId": "0ff15740-0f9c-4c3b-9c19-411af9b38ba4",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "8JA1v28IFogzgFKU",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        0
+      ],
+      "id": "0a84aa7c-c4df-40ae-83c5-cc33c231f14d",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Create Form Using HTML Template": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger from Google Form": {
+      "main": [
+        [
+          {
+            "node": "Create Form Using HTML Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "35a879ee-ee82-45e6-917c-6a84d6f9f6c8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "ccfQTnD4hDOfJqx3",
+  "tags": []
+}
