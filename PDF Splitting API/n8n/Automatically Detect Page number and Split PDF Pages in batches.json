@@ -1,0 +1,261 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "downloadAttachments": true,
+        "options": {
+          "customEmailConfig": "[\"UNSEEN\", [\"SUBJECT\", \"Multiple Invoices \"]]"
+        }
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8bdc20c1-c758-4c3c-ad90-9697a814e6da",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "l114abu9aWvgTOsQ",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "attachment_0",
+        "name": "={{ $json.subject }}"
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        200,
+        0
+      ],
+      "id": "df9a2f51-1ea6-484a-b8f1-ffb82ab31bb4",
+      "name": "Assign URLs to Binary Files",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get PageCount safely from the previous node output\nconst pageCount = parseInt($json.body.PageCount, 10);\n\nif (isNaN(pageCount) || pageCount <= 0) {\n  throw new Error(\"Invalid or missing PageCount value.\");\n}\n\nconst ranges = [];\n\n// Rule 1: If below 10 pages → return one full range\nif (pageCount < 10) {\n  ranges.push(`1-${pageCount}`);\n}\n\n// Rule 2: If 15 pages or more → split into 10-page batches\nelse if (pageCount >= 15) {\n  const batchSize = 10;\n  for (let start = 1; start <= pageCount; start += batchSize) {\n    const end = Math.min(start + batchSize - 1, pageCount);\n    ranges.push(`${start}-${end}`);\n  }\n}\n\n// Rule 3: If between 10 and 14 pages → return the whole document\nelse {\n  ranges.push(`1-${pageCount}`);\n}\n\n// Return as string ready for PDF.co \"pages\" field\nreturn [{\n  pages: ranges.join(\",\")\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        0
+      ],
+      "id": "9a424856-59d1-44ee-8193-cb4e0604bba0",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "PDF Information & Form Fields",
+        "url": "={{ $json.url }}",
+        "advancedOptions": {}
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        420,
+        0
+      ],
+      "id": "92d4f7de-52ed-495b-876a-7d4ea983a513",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Split PDF",
+        "url": "={{ $('Assign URLs to Binary Files').item.json.url }}",
+        "pages": "={{ $json.pages }}",
+        "advancedOptionsPageNumber": {}
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        860,
+        0
+      ],
+      "id": "49f09faa-2e44-466f-b357-bbdd668accd7",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 500
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1280,
+        0
+      ],
+      "id": "39b01664-51da-42e4-a7c2-9e2d91c4e943",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1500,
+        0
+      ],
+      "id": "038de6d2-db8f-4fe3-a7f9-eb50b0d10987",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// The PDF Split node usually returns something like:\n// { body: [ \"url1.pdf\", \"url2.pdf\", ... ] }\n\n// Get the array of URLs from the previous node\nconst urls = $json.body;\n\n// Make sure it's an array\nif (!Array.isArray(urls)) {\n  throw new Error(\"Expected 'body' to be an array of URLs, but got: \" + typeof urls);\n}\n\n// Convert into one n8n item per URL\nreturn urls.map(url => {\n  return {\n    json: {\n      url: url\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        0
+      ],
+      "id": "a0880340-ce38-4925-b6cb-bba91cd09b51",
+      "name": "Code1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Assign URLs to Binary Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign URLs to Binary Files": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "62f675ff-c75b-4eb3-b891-1ea033d9fab6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "ccfQTnD4hDOfJqx3",
+  "tags": []
+}

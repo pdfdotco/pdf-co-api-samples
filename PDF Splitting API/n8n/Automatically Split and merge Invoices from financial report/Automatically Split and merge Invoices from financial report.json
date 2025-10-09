@@ -1,0 +1,307 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "downloadAttachments": true,
+        "dataPropertyAttachmentsPrefixName": "file",
+        "options": {
+          "customEmailConfig": "[\"UNSEEN\", [\"SUBJECT\", \"financial_report\"]]"
+        }
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8bdc20c1-c758-4c3c-ad90-9697a814e6da",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "l114abu9aWvgTOsQ",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "file0",
+        "name": "={{ $json.subject }}"
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        200,
+        0
+      ],
+      "id": "df9a2f51-1ea6-484a-b8f1-ffb82ab31bb4",
+      "name": "Assign URLs to Binary Files",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1760,
+        0
+      ],
+      "id": "038de6d2-db8f-4fe3-a7f9-eb50b0d10987",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the body array from the previous node\nconst body = $input.first().json.body || [];\n\n// Extract pageIndex values\nconst pageIndexes = body.map(entry => entry.pageIndex);\n\n// Convert to human-readable page numbers (index + 1), remove duplicates, and sort\nconst pageNumbers = [...new Set(pageIndexes.map(i => i + 1))].sort((a, b) => a - b);\n\n// Return result\nreturn [{\n  json: {\n    pageNumbers: pageNumbers,           // [1, 4, 5]\n    pageNumbersCsv: pageNumbers.join(\",\") // \"1,4,5\" for APIs that need string\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "a0aefbdb-c142-4b9d-bc21-47df7ca7c320",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "operation": "Search in PDF",
+        "url": "={{ $json.url }}",
+        "searchString": "Invoice No",
+        "advancedOptions": {}
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        420,
+        0
+      ],
+      "id": "92d4f7de-52ed-495b-876a-7d4ea983a513",
+      "name": "Find Invoices",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Split PDF",
+        "url": "={{ $('Assign URLs to Binary Files').item.json.url }}",
+        "pages": "={{ $json.pageNumbersCsv }}",
+        "advancedOptionsPageNumber": {}
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "49f09faa-2e44-466f-b357-bbdd668accd7",
+      "name": "Split File to get Invoices",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body[0] }}",
+        "advancedOptions": {}
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "b4902b2a-4531-4cae-a437-326d7aff671f",
+      "name": "Parse Customer's name",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Merge PDF",
+        "url": [
+          "={{ $('Split File to get Invoices').item.json.body[0] }}",
+          "={{ $('Split File to get Invoices').item.json.body[1] }}"
+        ],
+        "advancedOptions": {
+          "name": "={{ $json.body.vendor.name }}}_merged_invoice.pdf"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        0
+      ],
+      "id": "652ca843-6c67-4fd2-a855-61b6e33bc848",
+      "name": "Merge Files",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 500
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1500,
+        0
+      ],
+      "id": "39b01664-51da-42e4-a7c2-9e2d91c4e943",
+      "name": "Convert to Binary File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Assign URLs to Binary Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign URLs to Binary Files": {
+      "main": [
+        [
+          {
+            "node": "Find Invoices",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Split File to get Invoices",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Invoices": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split File to get Invoices": {
+      "main": [
+        [
+          {
+            "node": "Parse Customer's name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Customer's name": {
+      "main": [
+        [
+          {
+            "node": "Merge Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Files": {
+      "main": [
+        [
+          {
+            "node": "Convert to Binary File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to Binary File": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8b922d6c-7634-4227-949f-706a6b79d165",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "ccfQTnD4hDOfJqx3",
+  "tags": []
+}

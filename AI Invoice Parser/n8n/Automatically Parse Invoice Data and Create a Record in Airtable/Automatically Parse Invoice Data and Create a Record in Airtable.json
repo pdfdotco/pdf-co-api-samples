@@ -1,0 +1,256 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "downloadAttachments": true,
+        "options": {
+          "customEmailConfig": "[\"UNSEEN\", [\"SUBJECT\", \"Sales Invoice\"]]"
+        }
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8bdc20c1-c758-4c3c-ad90-9697a814e6da",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "l114abu9aWvgTOsQ",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "attachment_0",
+        "name": "={{ $json.subject }}"
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        200,
+        0
+      ],
+      "id": "df9a2f51-1ea6-484a-b8f1-ffb82ab31bb4",
+      "name": "Assign URLs to Binary Files",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "advancedOptions": {}
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        420,
+        0
+      ],
+      "id": "7c7a55a6-e328-4173-b1f6-6df738551bf0",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appZE5WEkNNVvwjvd",
+          "mode": "list",
+          "cachedResultName": "Invoice Record",
+          "cachedResultUrl": "https://airtable.com/appZE5WEkNNVvwjvd"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblo8cifSJKHwsF0G",
+          "mode": "list",
+          "cachedResultName": "Invoice",
+          "cachedResultUrl": "https://airtable.com/appZE5WEkNNVvwjvd/tblo8cifSJKHwsF0G"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Customer's Name": "={{ $json.body.customer.billTo.name }}",
+            "Customer's Email": "={{ $json.body.customer.billTo.contactInformation.email }}",
+            "Vendor's Name": "={{ $json.body.vendor.name }}",
+            "Vendor's Email": "={{ $json.body.vendor.contactInformation.email }}",
+            "Invoice Date": "={{ $json.body.invoice.invoiceDate }}",
+            "Invoice Number": "={{ $json.body.invoice.invoiceNo }}",
+            "Payment Due Date": "={{ $json.body.paymentDetails.dueDate }}",
+            "Total Amount": "={{ $json.body.paymentDetails.total }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Customer's Name",
+              "displayName": "Customer's Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Customer's Email",
+              "displayName": "Customer's Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Vendor's Name",
+              "displayName": "Vendor's Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Vendor's Email",
+              "displayName": "Vendor's Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Invoice Date",
+              "displayName": "Invoice Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Invoice Number",
+              "displayName": "Invoice Number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Payment Due Date",
+              "displayName": "Payment Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Total Amount",
+              "displayName": "Total Amount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        0
+      ],
+      "id": "0db9a011-8b18-42ac-a22b-99d7aeb897aa",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "Sg6UBAxnVnGbp44r",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Assign URLs to Binary Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign URLs to Binary Files": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "11f23f95-c990-477f-baf6-67be7f80568a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "ccfQTnD4hDOfJqx3",
+  "tags": []
+}
