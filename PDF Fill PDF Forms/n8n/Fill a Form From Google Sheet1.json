@@ -1,0 +1,194 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1UGg0KTHkSV8cts2UHaFKlOELsuPh3JJZB8pXZEkSwZ8",
+          "mode": "list",
+          "cachedResultName": "Physician's Query Form",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UGg0KTHkSV8cts2UHaFKlOELsuPh3JJZB8pXZEkSwZ8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UGg0KTHkSV8cts2UHaFKlOELsuPh3JJZB8pXZEkSwZ8/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c74c05bc-eab4-40dd-89b2-fd8b494f0d3a",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "7iRVIt5uRDr98EJU",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Fill a PDF Form",
+        "url": "filetoken://1b44f921520797d8996a81dfd7ac5cccb225df0c752e17633e",
+        "fields": {
+          "metadataValues": [
+            {
+              "fieldName": "First-Name",
+              "text": "={{ $json['First Name'] }}"
+            },
+            {
+              "fieldName": "Last-name",
+              "text": "={{ $json['Last Name'] }}"
+            },
+            {
+              "fieldName": "Gender",
+              "text": "={{ $json.Gender }}"
+            },
+            {
+              "fieldName": "Designation",
+              "text": "={{ $json.Designation }}"
+            },
+            {
+              "fieldName": "email",
+              "text": "={{ $json['Email '] }}"
+            },
+            {
+              "fieldName": "address",
+              "text": "={{ $json.Address }}"
+            },
+            {
+              "fieldName": "=physician_ID",
+              "text": "={{ $json.Physician_ID }}"
+            }
+          ]
+        },
+        "advancedOptions": {
+          "name": "=PhysicianQuery-{{ $json.Physician_ID }}",
+          "profiles": "{'FlattenDocument()': []}"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "5a712cc8-6199-4159-af80-075fbcfaba73",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        660,
+        0
+      ],
+      "id": "835075bd-52aa-4915-9f02-03c04925927e",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "f7363ac7-8e7d-416d-89c3-d53cb0af01bd",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a71fcbeb-784b-46ce-9dcf-31fa7f21ef4f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "ccfQTnD4hDOfJqx3",
+  "tags": []
+}
