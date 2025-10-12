@@ -776,6 +776,7 @@
 \PDF Delete Pages\cURL
 \PDF Delete Pages\Java
 \PDF Delete Pages\JavaScript
+\PDF Delete Pages\n8n
 \PDF Delete Pages\PHP
 \PDF Delete Pages\PowerShell
 \PDF Delete Pages\Python
@@ -785,6 +786,7 @@
 \PDF Delete Pages\Java\Delete Pages From PDF
 \PDF Delete Pages\JavaScript\Delete Pages From PDF
 \PDF Delete Pages\JavaScript\Delete Pages From PDF Asynchronously
+\PDF Delete Pages\n8n\Automatically find and delete pages in mutipaged invoice
 \PDF Delete Pages\PHP\Delete Pages From PDF
 \PDF Delete Pages\PowerShell\Delete Pages From PDF
 \PDF Delete Pages\Python\Delete Pages From PDF
