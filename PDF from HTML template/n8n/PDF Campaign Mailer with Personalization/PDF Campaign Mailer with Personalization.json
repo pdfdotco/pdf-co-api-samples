@@ -1,0 +1,185 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1q5KfhRH2K7fNU68T_r1fHGE684GrtiWroQL1ReC8SZI",
+          "mode": "list",
+          "cachedResultName": "Campaign Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1q5KfhRH2K7fNU68T_r1fHGE684GrtiWroQL1ReC8SZI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1q5KfhRH2K7fNU68T_r1fHGE684GrtiWroQL1ReC8SZI/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "46310798-3a82-4e8f-b0c0-783444485ea7",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "7iRVIt5uRDr98EJU",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "URL/HTML to PDF",
+        "convertType": "htmlTemplateToPDF",
+        "templateId": "16725",
+        "templateData": "={\n  \"campaign_title\": \"{{ $json.campaign_title }}\",\n  \"campaign_subtitle\": \"{{ $json.campaign_subtitle }}\",\n  \"brand_color\": \"{{ $json.brand_color }}\",\n  \"hero_image\": \"{{ $json.hero_image }}\",\n  \"headline\": \"{{ $json.headline }}\",\n  \"body_text\": \"{{ $json.body_text }}\",\n  \"cta_link\": \"{{ $json.cta_link }}\",\n  \"cta_text\": \"{{ $json.cta_text }}\",\n  \"footer_text\": \"{{ $json.footer_text }}\",\n  \"year\": \"{{ $json.year }}\",\n  \"company_name\": \"{{ $json.company_name }}\"\n}",
+        "advancedOptions": {
+          "name": "={{ $json.campaign_title }}"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "f2b48430-3e98-4b60-a40b-c24b8cba22da",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Add Text/Images to PDF",
+        "url": "={{ $json.url }}",
+        "images": {
+          "metadataValues": [
+            {
+              "imageUrl": "filetoken://c09d644e9ce2d1c41618a2832dd844e33c4695b525ec6577ab",
+              "x": 0.96,
+              "y": 2.88,
+              "width": 252.38,
+              "height": 49.86
+            }
+          ]
+        },
+        "advancedOptions": {}
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "8fe927ff-592a-4e0d-bec4-752e96194488",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.pdf.co/v1/email/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "https://api.pdf.co/v1/email/send"
+            },
+            {
+              "name": "x-api-key",
+              "value": "nnamdionyemaobi@gmail.com_Fcz589ZrRNt66ufvgsZZaMOHs918OOJ75F6p5sHyIZAUVpnjM1e3cVrq3jFs5gDi"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $json.url }}\",\n  \"from\": \"nnamdionyemaobi@gmail.com\",\n  \"to\": \"{{ $('Google Sheets Trigger').item.json.customer_email }}\",\n  \"subject\": \"Check attached sample pdf\",\n  \"bodytext\": \"Hi {{ $('Google Sheets Trigger').item.json.customer_name }},\\n\\nWe’re excited to share your personalized campaign document for {{ $('Google Sheets Trigger').item.json.campaign_subtitle }}.\\nPlease find the PDF file attached to this email.\\n\\nThis document includes all the key information and details relevant to your campaign.\\nIf you have any questions or need further assistance, feel free to reach out to our team.\\n\\nBest regards,\\n{{ $('Google Sheets Trigger').item.json.company_name }} Marketing Team\",\n  \"bodyHtml\": \"<p>Hi {{ $('Google Sheets Trigger').item.json.customer_name }},</p><p>Please find attached your PDF for <strong>{{ $('Google Sheets Trigger').item.json.campaign_subtitle }}</strong>.</p><p>Best regards,<br>{{ $('Google Sheets Trigger').item.json.company_name }} Marketing Team</p>\",\n  \"smtpserver\": \"smtp.gmail.com\",\n  \"smtpport\": \"587\",\n  \"smtpusername\": \"nnamdionyemaobi@gmail.com\",\n  \"smtppassword\": \"squd crio vkex ifwn\",\n  \"async\": false\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        640,
+        0
+      ],
+      "id": "4ba8af25-b4e5-4ab5-96d5-2fb58b670f63",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3766046d-6fa5-4953-a6d2-b2c98a849963",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "HQgk7yxbIctZ3sj7",
+  "tags": []
+}

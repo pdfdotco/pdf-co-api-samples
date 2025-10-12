@@ -970,6 +970,7 @@
 \PDF from HTML template\Javascript-Snippets\numberFormat
 \PDF from HTML template\n8n\Creating Certificates with Google Form Data
 \PDF from HTML template\n8n\Generate Sales Quote with QR Code
+\PDF from HTML template\n8n\PDF Campaign Mailer with Personalization
 \PDF from HTML template\n8n\Personalized Meal Plan Generator Form Submission to PDF Delivery
 \PDF from HTML template\PHP\Generate PDF Invoice From HTML Template
 \PDF from HTML template\PHP\Invoice With Multiple Pages
