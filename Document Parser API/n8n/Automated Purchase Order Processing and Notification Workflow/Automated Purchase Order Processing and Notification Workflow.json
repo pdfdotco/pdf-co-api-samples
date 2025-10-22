@@ -1,0 +1,304 @@
+{
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "164UYRZdbflmG6ji6Cvkfgs9TdstlKZlL",
+          "mode": "list",
+          "cachedResultName": "INPUT-1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/164UYRZdbflmG6ji6Cvkfgs9TdstlKZlL"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2d7f1ae5-0815-4372-adf7-c8fd78001011",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appZE5WEkNNVvwjvd",
+          "mode": "list",
+          "cachedResultName": "Purchase Order Record",
+          "cachedResultUrl": "https://airtable.com/appZE5WEkNNVvwjvd"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblo8cifSJKHwsF0G",
+          "mode": "list",
+          "cachedResultName": "Invoice",
+          "cachedResultUrl": "https://airtable.com/appZE5WEkNNVvwjvd/tblo8cifSJKHwsF0G"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Purchase Order Number": "={{ $json.body.objects[1].value }}",
+            "Vendor's Name": "={{ $json.body.objects[2].value }}",
+            "Total Amount": "={{ $json.body.objects[3].value }}",
+            "Delivery Date": "={{ $json.body.objects[4].value }}",
+            "Vendor's Email": "={{ $json.body.objects[5].value }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Purchase Order Number",
+              "displayName": "Purchase Order Number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Vendor's Email",
+              "displayName": "Vendor's Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Vendor's Name",
+              "displayName": "Vendor's Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Total Amount",
+              "displayName": "Total Amount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Delivery Date",
+              "displayName": "Delivery Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "a14c3ef3-1f6a-4272-b33e-c9ca5b2621e7",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "Sg6****************",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/pdf/documentparser",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "nnam*******************************"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "templateId",
+              "value": "38568"
+            },
+            {
+              "name": "inline",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "a28a2988-8bd9-4a06-a2fd-404369da0270",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://api.pdf.co/v1/email/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "nnam**********************"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "your_email@gmail.com"
+            },
+            {
+              "name": "to",
+              "value": "{{ $('HTTP Request').item.json.body.objects[5].value }}"
+            },
+            {
+              "name": "subject",
+              "value": "=Update on Your Purchase Order {{ $('HTTP Request').item.json.body.objects[1].value }}"
+            },
+            {
+              "name": "bodyHtml",
+              "value": "=<p>Hi {{ $('HTTP Request').item.json.body.objects[2].value }},</p>  <p>We wanted to let you know that your <strong>Purchase Order {{ $('HTTP Request').item.json.body.objects[1].value }}</strong> has been successfully updated in our system.</p>  <p>Here are the key details for your reference:</p>  <ul>   <li><strong>PO Number:</strong> {{ $('HTTP Request').item.json.body.objects[1].value }}</li>   <li><strong>Total Amount:</strong> {{ $('HTTP Request').item.json.body.objects[3].value }}</li>   <li><strong>Delivery Date:</strong> {{ $('HTTP Request').item.json.body.objects[4].value }}</li>   <li><strong>Status:</strong> Archived</li> </ul>  <p>If any of these details appear incorrect or require clarification, please reach out to our procurement team at  <a href=\"mailto:{{ $('HTTP Request').item.json.body.objects[5].value }}\">{{ $('HTTP Request').item.json.body.objects[5].value }}</a>.</p>  <p>Thank you for your continued partnership!</p>  <p>Best regards,<br> {{ $('HTTP Request').item.json.body.objects[2].value }} Procurement Team</p>"
+            },
+            {
+              "name": "smtpserver",
+              "value": "smtp.gmail.com"
+            },
+            {
+              "name": "smtpport",
+              "value": "587"
+            },
+            {
+              "name": "smtpusername",
+              "value": "**************@gmail.com"
+            },
+            {
+              "name": "smtppassword",
+              "value": "**************************"
+            },
+            {
+              "name": "async",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "d76c4870-8bdf-42aa-b795-2072bd4d7e40",
+      "name": "HTTP Request1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ed9e3fe4-330e-4258-bb83-876b64ef0541",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "LWQ5UHS1ELVBsKNm",
+  "tags": []
+}
