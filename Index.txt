@@ -1000,6 +1000,7 @@
 \PDF from URL\cURL
 \PDF from URL\Java
 \PDF from URL\JavaScript
+\PDF from URL\n8n
 \PDF from URL\PHP
 \PDF from URL\PowerShell
 \PDF from URL\Python
@@ -1012,6 +1013,7 @@
 \PDF from URL\Java\Convert Web Page To PDF From Link
 \PDF from URL\JavaScript\Convert Web Page To PDF From Link (Node.js)
 \PDF from URL\JavaScript\Convert Web Page To PDF From Link (Node.js) - Async API
+\PDF from URL\n8n\Automatically Convert Webpage Urls from Google sheets Records
 \PDF from URL\PHP\Convert Web Page To PDF From Link
 \PDF from URL\PHP\Convert Web Page To PDF From Link Asynchronously
 \PDF from URL\PowerShell\Convert Web Page To PDF From Link
@@ -2062,6 +2064,7 @@
 \Replace Text With Image From PDF\cURL
 \Replace Text With Image From PDF\Java
 \Replace Text With Image From PDF\JavaScript
+\Replace Text With Image From PDF\n8n
 \Replace Text With Image From PDF\PHP
 \Replace Text With Image From PDF\PowerShell
 \Replace Text With Image From PDF\Python
@@ -2086,6 +2089,7 @@
 \Replace Text With Image From PDF\JavaScript\Replace Text With Signature (jQuery)\assets
 \Replace Text With Image From PDF\JavaScript\Replace Text With Signature (jQuery)\js
 \Replace Text With Image From PDF\JavaScript\Replace Text With Signature (jQuery)\js\signature-pad
+\Replace Text With Image From PDF\n8n\Search and Replace Text with Image
 \Replace Text With Image From PDF\PHP\Replace Placeholder With Signature
 \Replace Text With Image From PDF\PHP\Replace Text With Image Asynchronously
 \Replace Text With Image From PDF\PHP\Replace Text With Image From Uploaded File

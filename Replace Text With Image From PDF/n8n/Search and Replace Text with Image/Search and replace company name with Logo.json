@@ -1,0 +1,183 @@
+{
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "164UYRZdbflmG6ji6Cvkfgs9TdstlKZlL",
+          "mode": "list",
+          "cachedResultName": "INPUT-1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/164UYRZdbflmG6ji6Cvkfgs9TdstlKZlL"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2d7f1ae5-0815-4372-adf7-c8fd78001011",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Search & Replace Text or Delete",
+        "url": "={{ $json.webContentLink }}",
+        "operationType": "replaceWithImage",
+        "searchStringForReplaceWithImage": "Acme Inc.",
+        "replaceImage": "https://i.postimg.cc/L5734myM/LOGO2.png",
+        "pages": "0",
+        "advancedOptions": {
+          "name": "={{ $json.newName }}"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "8ae08a1c-7a9c-46c3-9184-b3c8c17b15e3",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Adds two readable GMT timestamps and a new filename:\n//   tsDisplay: \"YYYY-MM-DD HH:mm:ss GMT\"\n//   tsFile:    \"YYYY-MM-DD_HH-mm-ss_GMT\" (filename-safe)\n// Also sets baseName (original name without .pdf) and newName.\n\nfunction pad(n){ return n.toString().padStart(2,'0'); }\n\nfunction buildTimestamps(){\n  const d = new Date(); // UTC/GMT basis\n  const Y = d.getUTCFullYear();\n  const M = pad(d.getUTCMonth() + 1);\n  const D = pad(d.getUTCDate());\n  const h = pad(d.getUTCHours());\n  const m = pad(d.getUTCMinutes());\n  const s = pad(d.getUTCSeconds());\n  const tsDisplay = `${Y}-${M}-${D} ${h}:${m}:${s} GMT`;\n  const tsFile    = `${Y}-${M}-${D}_${h}-${m}-${s}_GMT`;\n  return { tsDisplay, tsFile };\n}\n\nconst { tsDisplay, tsFile } = buildTimestamps();\n\nreturn items.map(item => {\n  const original = (item.json?.name ?? '').toString();\n  const fallback = (item.json?.id ?? 'document');\n  const safeName = original || `${fallback}.pdf`;\n\n  // remove trailing .pdf (case-insensitive)\n  const baseName = safeName.replace(/\\.pdf$/i, '') || 'document';\n\n  // build filename using the filename-safe timestamp\n  const newName = `${baseName}-logoUpdated-${tsFile}.pdf`;\n\n  // attach for downstream nodes\n  item.json.baseName  = baseName;\n  item.json.tsDisplay = tsDisplay; // e.g., \"2025-10-25 13:33:37 GMT\"\n  item.json.tsFile    = tsFile;    // e.g., \"2025-10-25_13-33-37_GMT\"\n  item.json.newName   = newName;\n\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "341136b6-1ad5-4fed-b69c-05f9d4f8770e",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "de767c0f-1710-4e7e-a147-98ec9591881f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        880,
+        0
+      ],
+      "id": "a66762c4-7365-449b-80b1-d54864d59d92",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4b60efcd-6744-45cf-a36b-89d8a8e07913",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "LWQ5UHS1ELVBsKNm",
+  "tags": []
+}

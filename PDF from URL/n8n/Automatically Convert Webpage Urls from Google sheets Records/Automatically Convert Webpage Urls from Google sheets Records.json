@@ -1,0 +1,185 @@
+{
+  "name": "My workflow 6",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1c3SGw-ndxVdUosIopB3E32Cqlku2enGdcwRfbY9eAnQ",
+          "mode": "list",
+          "cachedResultName": "Webpages",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1c3SGw-ndxVdUosIopB3E32Cqlku2enGdcwRfbY9eAnQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1c3SGw-ndxVdUosIopB3E32Cqlku2enGdcwRfbY9eAnQ/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b65209b7-79a2-4028-a695-502aa5bfe36c",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "7iRVIt5uRDr98EJU",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "URL/HTML to PDF",
+        "url": "={{ $json.URL }}",
+        "advancedOptions": {
+          "name": "={{ $json.Slug }}",
+          "orientation": "portrait"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        420,
+        0
+      ],
+      "id": "0de00f61-d252-4561-a280-57ff57397e70",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        620,
+        0
+      ],
+      "id": "be50fb6a-8710-4356-b1b1-3584ed345833",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "name": "=",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Code').item.json.driveFolderId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        840,
+        0
+      ],
+      "id": "15805364-3478-4407-bdce-0279de4d5ff2",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const map = {\n  legal: '1CpeZggbkVKp-mT1_QKPKs5k7KerxV7BL',\n  blog:  '1vB02cTyzypNgL2xDzuHpfDGfEvo-T4y0',\n  docs:  '1EPuJSQV7aAfaZtdf_81toJrn8_AUAWdf',\n};\n\nfunction normSection(val) {\n  // handle undefined, trim whitespace, lowercase\n  return String(val ?? '')\n    .trim()\n    .toLowerCase();\n}\n\nreturn items.map(it => {\n  // read from either \"Section\" or \"section\"\n  const raw = it.json.Section ?? it.json.section;\n  const section = normSection(raw);\n\n  // map or fallback\n  it.json.driveFolderId = map[section] || map.legal;\n\n  // (optional) keep for debugging in the Executions UI\n  it.json._sectionRaw = raw;\n  it.json._sectionNorm = section;\n\n  return it;\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "345447e4-7430-42eb-925c-0f5bf0b9d86f",
+      "name": "Code"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6d6aaeae-920c-481f-8c36-6e8aacd00121",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "BiERqcf3zYvqynlW",
+  "tags": []
+}
