@@ -1565,6 +1565,7 @@
 \PDF To HTML API\JavaScript\Convert PDF To HTML From URL (Node.js) - Async API
 \PDF To HTML API\JavaScript\Convert PDF To HTML in JQuery
 \PDF To HTML API\JavaScript\Convert PDF To HTML in JQuery - Async API
+\PDF To HTML API\n8n\Auto-Process Editor’s Articles from Google Drive to TXT + HTML + Compressed PDF
 \PDF To HTML API\n8n\Publish HTML Converted from PDF
 \PDF To HTML API\PHP\Convert PDF To HTML Asynchronously
 \PDF To HTML API\PHP\Convert PDF To HTML From Uploaded File

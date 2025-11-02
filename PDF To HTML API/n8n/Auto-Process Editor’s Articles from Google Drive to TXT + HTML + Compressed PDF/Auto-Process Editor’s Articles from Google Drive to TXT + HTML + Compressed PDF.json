@@ -1,0 +1,389 @@
+{
+  "name": "My workflow 8",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "164UYRZdbflmG6ji6Cvkfgs9TdstlKZlL",
+          "mode": "list",
+          "cachedResultName": "INPUT-1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/164UYRZdbflmG6ji6Cvkfgs9TdstlKZlL"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        0
+      ],
+      "id": "02dee7e3-7f0e-4133-9f26-597c592b078b",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * n8n Code node\n * Input: item.json.createdTime or item.json[\"Created At\"]\n * Output: adds a new field `cleanDate` with format YYYY-MM-DD\n */\n\nreturn items.map(item => {\n  const rawDate = item.json['Created At'] || item.json.createdTime || new Date().toISOString();\n  \n  // keep only YYYY-MM-DD part\n  const cleanDate = rawDate.split('T')[0];\n\n  return {\n    json: {\n      ...item.json,\n      cleanDate\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        120,
+        0
+      ],
+      "id": "dd34c3f3-3100-46d7-abd7-cbd45b4c9c53",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1Pg6I9aSacilnZXpMsGT6FdJh0hx5atki",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1020,
+        -200
+      ],
+      "id": "c41da83b-2837-4358-a0e9-2af745ca21fd",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "=data",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1O9zJ2swIu4Ya8bMbFSJlMzr1D_cefFqp",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1020,
+        -20
+      ],
+      "id": "bb340459-a3dd-45cc-a47e-a8e7705444ec",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1_HHoFS4MS-wBXGcr3bXwIjx8vC6t-G7Y",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1020,
+        140
+      ],
+      "id": "49c95e84-463a-492f-836a-f0e99ada4e93",
+      "name": "Google Drive2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        -200
+      ],
+      "id": "4fdb42b1-7926-4f80-bd21-edebe8833478",
+      "name": "Binary Compressed file"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        -20
+      ],
+      "id": "002109f3-7dfa-479f-81d0-606f93ca5b0d",
+      "name": "Binary HTML File"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        140
+      ],
+      "id": "8f28fad4-9c34-430b-a1eb-59bd12a35442",
+      "name": "Binary Text File"
+    },
+    {
+      "parameters": {
+        "operation": "Convert from PDF",
+        "url": "={{ $('Code').item.json.webContentLink }}",
+        "convertType": "toHtml",
+        "advancedOptions": {
+          "name": "=FeaturePlaybook_{{ $('Code').item.json.cleanDate }}_Web"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        500,
+        -20
+      ],
+      "id": "9b448f38-b92c-49ba-a723-04202fbb4475",
+      "name": "Convert to HTML",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Compress PDF",
+        "url": "={{ $('Google Drive Trigger').item.json.webContentLink }}",
+        "advancedOptions": {
+          "name": "=FeaturePlaybook_{{ $('Code').item.json.cleanDate }}_Optimized"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        500,
+        -200
+      ],
+      "id": "d7b3dd36-b4dc-4f15-8b59-67617ee70542",
+      "name": "Optimize PDF",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Convert from PDF",
+        "url": "={{ $json.webContentLink }}",
+        "advancedOptions": {
+          "name": "=FeaturePlaybook_{{ $json.cleanDate }}_Text"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        500,
+        140
+      ],
+      "id": "b30763bf-4a8c-48b8-8046-9ed994927d57",
+      "name": "Convert to Text",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Optimize PDF",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Convert to HTML",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Convert to Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Binary Compressed file": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Binary HTML File": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Binary Text File": {
+      "main": [
+        [
+          {
+            "node": "Google Drive2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to HTML": {
+      "main": [
+        [
+          {
+            "node": "Binary HTML File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Optimize PDF": {
+      "main": [
+        [
+          {
+            "node": "Binary Compressed file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to Text": {
+      "main": [
+        [
+          {
+            "node": "Binary Text File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "40def560-533b-4642-a09a-ac202ec7b158",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "QPcj1MDCINFCF8cJ",
+  "tags": []
+}
