@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{campaign_title}}</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    /* Blank top section for logo placement */
+    .top-space {
+      height: 20px; /* adjust this as needed */
+      background-color: #ffffff;
+    }
+    .header {
+      background-color: {{brand_color}};
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    .hero {
+      text-align: center;
+      padding: 20px;
+    }
+    .hero img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+    .content {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .content h2 {
+      color: {{brand_color}};
+      margin-top: 0;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: {{brand_color}};
+      color: #ffffff;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .cta-button:hover {
+      background-color: #333;
+    }
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #777;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🏁 Reserved space for adding logo later via PDF Add -->
+  <div class="top-space"></div>
+
+  <div class="header">
+    <h1>{{campaign_title}}</h1>
+    <p>{{campaign_subtitle}}</p>
+  </div>
+
+  <div class="hero">
+    <img src="{{hero_image}}" alt="Campaign Image" />
+  </div>
+
+  <div class="content">
+    <h2>{{headline}}</h2>
+    <p>{{body_text}}</p>
+    <p style="text-align:center;">
+      <a href="{{cta_link}}" class="cta-button">{{cta_text}}</a>
+    </p>
+  </div>
+
+  <div class="footer">
+    <p>{{footer_text}}</p>
+    <p>© {{year}} {{company_name}}. All rights reserved.</p>
+  </div>
+
+</body>
+</html>

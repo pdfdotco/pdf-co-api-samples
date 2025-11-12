@@ -1,0 +1,456 @@
+{
+  "name": "My workflow 9",
+  "nodes": [
+    {
+      "parameters": {
+        "downloadAttachments": true,
+        "options": {
+          "customEmailConfig": "[\"UNSEEN\", [\"SUBJECT\", \"Legal Documents\"]]"
+        }
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [
+        -720,
+        0
+      ],
+      "id": "f90f1f8a-517c-4cb9-8d20-e2e87d3b4566",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "l11**********",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "attachment_0",
+        "name": "Engagement_Agreement"
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        60
+      ],
+      "id": "6ee40f7e-d98c-4a59-b142-9a9b82b3232b",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "attachment_1",
+        "name": "Filled_Form"
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -120
+      ],
+      "id": "b23060df-6c56-4916-ac07-2ad74073cb0f",
+      "name": "PDFco Api1",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "attachment_2",
+        "name": "SOW"
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        240
+      ],
+      "id": "7a98b49a-6c68-4fd7-b21f-22ab492fe1d2",
+      "name": "PDFco Api2",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Upload File to PDF.co",
+        "binaryData": true,
+        "binaryPropertyName": "attachment_3",
+        "name": "MNDA"
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -300
+      ],
+      "id": "80649978-386a-4fdf-b38c-7ae18c8d5627",
+      "name": "PDFco Api3",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "URL/HTML to PDF",
+        "convertType": "htmlTemplateToPDF",
+        "templateId": "20290",
+        "templateData": "={\n    \"project_title\": \"{{ $json.body.objects[0].value }}\",\n    \"client_name\": \"\",\n    \"reference_id\": \"{{ $json.body.objects[2].value }}\",\n    \"generated_at\": \"{{ $json.body.objects[3].value }}\"\n  } ",
+        "advancedOptions": {
+          "name": "={{ $json.body.objects[0].value }}_{{ $json.body.objects[1].value }}"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -200
+      ],
+      "id": "61898ee2-3f5c-4e7c-ae0c-48e29e9e2706",
+      "name": "PDFco Api4",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "Merge PDF",
+        "url": [
+          "={{ $json.urls[1] }}",
+          "={{ $json.urls[0] }}",
+          "={{ $json.urls[2] }}",
+          "={{ $json.urls[3] }}",
+          "={{ $json.urls[4] }}"
+        ],
+        "advancedOptions": {
+          "name": "={{ $json.fileName }}"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        940,
+        40
+      ],
+      "id": "e491268d-6c4c-4f1a-b959-2df33d506a45",
+      "name": "PDFco Api5",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1300,
+        40
+      ],
+      "id": "fee9316d-350c-40c5-bc99-29c62b399ad6",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.pdf.co/v1/pdf/documentparser",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "***********************"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"url\": \"{{ $json.url }}\",\n\"outputFormat\": \"JSON\",\n\"templateId\": \"41754\",\n\"async\": false,\n\"inline\": \"true\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        -200
+      ],
+      "id": "68f94535-c28b-4c78-8ef7-acb3a0092a55",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        560,
+        0
+      ],
+      "id": "bf386cc8-a1dc-4aeb-9682-428ed1af2741",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * n8n Code node\n * Place this RIGHT AFTER your Merge (Mode: Wait for all inputs).\n * It will:\n *  - Collect URLs from all connected branches\n *  - Derive a clean file name for the merged PDF\n * Outputs a SINGLE item with:\n *  - url1..url5, urls (array), count\n *  - fileBase, fileName\n */\n\n// ---------- helpers ----------\nfunction sanitizeName(s = '') {\n  return String(s)\n    .trim()\n    .replace(/[\\/\\\\:*?\"<>|]+/g, '') // remove illegal filename chars\n    .replace(/\\s+/g, ' ')\n    .replace(/[\\s]+/g, '_')         // spaces -> underscore\n    .replace(/[^\\w.\\-]+/g, '_')     // keep letters/numbers/_/.- only\n    .replace(/_+/g, '_')\n    .replace(/^_+|_+$/g, '');\n}\n\nfunction stripExt(name = '') {\n  const i = name.lastIndexOf('.');\n  if (i <= 0) return name;\n  return name.slice(0, i);\n}\n\nfunction nameFromUrl(u = '') {\n  try {\n    const last = decodeURIComponent(new URL(u).pathname.split('/').pop() || '');\n    return last || '';\n  } catch {\n    return '';\n  }\n}\n\nfunction pickFirst(...vals) {\n  for (const v of vals) {\n    if (typeof v === 'string' && v.trim()) return v;\n  }\n  return '';\n}\n\n// ---------- collect from all inputs ----------\nconst incoming = $input.all();\nconst urls = [];\nconst nameCandidates = [];\n\n// Optional: if you injected a cover URL explicitly on the current item\nconst coverUrl = $json.coverUrl;\nif (typeof coverUrl === 'string' && /^https?:\\/\\//i.test(coverUrl)) {\n  urls.push(coverUrl);\n  nameCandidates.push(nameFromUrl(coverUrl));\n}\n\nfor (const it of incoming) {\n  // gather any explicit names first (from JSON or Binary)\n  nameCandidates.push(\n    it.json?.outputName,\n    it.json?.fileName,\n    it.json?.filename,\n    it.json?.name,\n    it.binary?.data?.fileName,\n  );\n\n  // collect url candidates\n  const cand = [];\n  if (it.json) {\n    if (typeof it.json.url === 'string') cand.push(it.json.url);\n    if (typeof it.json.fileUrl === 'string') cand.push(it.json.fileUrl);\n    if (typeof it.json.downloadUrl === 'string') cand.push(it.json.downloadUrl);\n    if (typeof it.json.directUrl === 'string') cand.push(it.json.directUrl);\n    if (typeof it.json.signedUrl === 'string') cand.push(it.json.signedUrl);\n  }\n  const bin = it.binary?.data;\n  if (bin) {\n    if (typeof bin.fileUrl === 'string') cand.push(bin.fileUrl);\n    if (typeof bin.directUrl === 'string') cand.push(bin.directUrl);\n    if (typeof bin.signedUrl === 'string') cand.push(bin.signedUrl);\n  }\n\n  for (const c of cand) {\n    if (typeof c === 'string' && /^https?:\\/\\//i.test(c)) {\n      urls.push(c);\n      // derive additional name candidates from URL path\n      const fn = nameFromUrl(c);\n      if (fn) nameCandidates.push(fn);\n    }\n  }\n}\n\n// de-duplicate URLs while preserving order; keep at most 5\nconst seen = new Set();\nconst unique = [];\nfor (const u of urls) {\n  if (!seen.has(u)) {\n    seen.add(u);\n    unique.push(u);\n  }\n  if (unique.length >= 5) break;\n}\n\n// decide a base name for the MERGED output\n// priority: explicit names from upstream → name from first URL → fallback\nlet rawName =\n  pickFirst(...nameCandidates) ||\n  stripExt(nameFromUrl(unique[0] || '')) ||\n  'AttachmentPacket';\n\n// clean and ensure we have a PDF suffix\nrawName = sanitizeName(stripExt(rawName));\nconst fileBase = rawName || 'AttachmentPacket';\nconst fileName = `${fileBase}.pdf`;\n\n// expose url1..url5 + metadata\nconst out = { fileBase, fileName, count: unique.length, urls: unique };\nunique.forEach((u, i) => (out[`url${i + 1}`] = u));\n\nreturn [{ json: out }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        760,
+        40
+      ],
+      "id": "a2651715-9d8e-45bc-bfac-52acf0baaaed",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        40
+      ],
+      "id": "1b9aa917-1c7e-4a62-b9cc-33c897aa699f",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * Build a clean, safe filename from parser output\n * Uses:\n *   $json.body.objects[0].value  -> project title\n *   $json.body.objects[1].value  -> client name\n * Also uses $json.cleanDate if present, else today's YYYY-MM-DD\n */\n\nfunction sanitize(s = '') {\n  // Trim, replace forbidden filesystem chars, collapse spaces, limit length\n  return String(s)\n    .trim()\n    .replace(/[\\/\\\\:*?\"<>|]+/g, '')    // remove invalid filename chars\n    .replace(/\\s+/g, ' ')              // normalize spaces\n    .replace(/[\\s]+/g, '_')            // spaces -> underscore\n    .replace(/[^\\w.-]+/g, '_')         // keep letters/numbers/_/.- only\n    .replace(/_+/g, '_')               // collapse multiple underscores\n    .replace(/^_+|_+$/g, '');          // trim underscores\n}\n\nfunction pick(objects, idx, keyName) {\n  // Prefer by key/name match if present, else fallback to index\n  if (Array.isArray(objects)) {\n    const byKey = objects.find(o =>\n      (o?.name || o?.key || o?.field || '').toString().toLowerCase() === keyName\n    );\n    if (byKey && byKey.value) return byKey.value;\n    return objects[idx]?.value;\n  }\n  return undefined;\n}\n\nreturn items.map(item => {\n  const objects = item.json?.body?.objects || [];\n\n  // Try to get by key first (if your parser labels them), else by index\n  const rawProject = pick(objects, 0, 'project_title') ?? 'Untitled_Project';\n  const rawClient  = pick(objects, 1, 'client_name')   ?? 'Unknown_Client';\n\n  const project = sanitize(rawProject);\n  const client  = sanitize(rawClient);\n\n  // Use precomputed cleanDate if you have it, else today\n  const date = item.json?.cleanDate || new Date().toISOString().slice(0,10);\n\n  // Build base and ensure length is reasonable\n  let base = `${project}_${client}_${date}`;\n  if (base.length > 180) base = base.slice(0, 180);\n\n  // You can create multiple variants if useful\n  const fileBase  = base;\n  const fileName  = `${fileBase}.pdf`;       // generic\n  const coverName = `00_Cover_${fileBase}.pdf`;\n\n  return {\n    json: {\n      ...item.json,\n      projectTitle: rawProject,\n      clientName: rawClient,\n      fileBase,\n      fileName,      // <-- use this in subsequent nodes: {{ $json.fileName }}\n      coverName      // optional convenience name\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        140,
+        -200
+      ],
+      "id": "78d8e625-2bc6-4f51-b92a-1d6f60213d98",
+      "name": "Code1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "PDFco Api1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "PDFco Api2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "PDFco Api3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "PDFco Api1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "PDFco Api3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "PDFco Api4": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "PDFco Api5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "53318c00-c194-4b09-98dc-05cf4b1963f4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "UrKrvFpDAAqyJ5VN",
+  "tags": []
+}
