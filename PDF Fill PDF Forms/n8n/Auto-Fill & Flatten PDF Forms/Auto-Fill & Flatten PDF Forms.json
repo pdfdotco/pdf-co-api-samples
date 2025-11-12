@@ -1,0 +1,256 @@
+{
+  "name": "My workflow 7",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1avmJS-7cSSB7TpOtN7X31arycWJ3oxcDGsZFIkXtAB0",
+          "mode": "list",
+          "cachedResultName": "Task Details",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1avmJS-7cSSB7TpOtN7X31arycWJ3oxcDGsZFIkXtAB0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1avmJS-7cSSB7TpOtN7X31arycWJ3oxcDGsZFIkXtAB0/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b9dc6bdb-f1bc-48b2-9b2e-63eb743cef01",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "7iRVIt5uRDr98EJU",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * n8n Code Node\n * Converts MM/DD/YYYY → ISO (YYYY-MM-DD)\n * - Valid dates: keep original and add \"<Field> (ISO)\"\n * - Invalid dates that look like bare dates: remove original, add \"<Field> (error)\" = \"nonexistent-calendar-date\"\n */\n\nfunction parseUsDateStrict(str) {\n  if (typeof str !== 'string') return { ok: false };\n\n  const s = str.trim();\n\n  // Single source of truth regex (full string, 4-digit year)\n  const fullRE = /^(?<m>0?[1-9]|1[0-2])\\/(?<d>\\d{1,2})\\/(?<y>\\d{4})$/;\n  const match = s.match(fullRE);\n  if (!match) return { ok: false, candidate: false }; // not even a bare date string\n\n  const month = parseInt(match.groups.m, 10);\n  const day   = parseInt(match.groups.d, 10);\n  const year  = parseInt(match.groups.y, 10);\n\n  if (day < 1 || month < 1 || month > 12 || year < 1000) {\n    return { ok: false, candidate: true }; // looked like a date but invalid range\n  }\n\n  const dt = new Date(year, month - 1, day);\n  const isReal =\n    dt.getFullYear() === year &&\n    dt.getMonth() === month - 1 &&\n    dt.getDate() === day;\n\n  if (!isReal) return { ok: false, candidate: true }; // bare date shape but nonexistent (e.g., 2/29/1900)\n\n  return {\n    ok: true,\n    iso: `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`\n  };\n}\n\nreturn items.map(item => {\n  const input = { ...item.json };\n  const output = {};\n\n  for (const key of Object.keys(input)) {\n    const raw = input[key];\n\n    if (typeof raw === 'string') {\n      const res = parseUsDateStrict(raw);\n\n      if (res.ok) {\n        // ✅ Valid bare date string\n        output[key] = raw.trim();\n        output[`${key} (ISO)`] = res.iso;\n        continue;\n      }\n\n      if (res.candidate === true) {\n        // ❌ Looked like a bare date but invalid → remove original\n        output[`${key} (error)`] = 'nonexistent-calendar-date';\n        continue;\n      }\n    }\n\n    // Pass through everything else untouched (including strings that merely contain a date)\n    output[key] = raw;\n  }\n\n  return { json: output };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "08b15fa9-cb6c-400e-a475-39a8a1b57ed4",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "Fill a PDF Form",
+        "url": "filetoken://e6b30b843d01f03bcaf505762c93c427e8288e49cfb3c65652",
+        "fields": {
+          "metadataValues": [
+            {
+              "fieldName": "Asignee_Name",
+              "text": "={{ $json['Asignee\\'s Name'] }}",
+              "size": "9",
+              "fontName": "Arial"
+            },
+            {
+              "fieldName": "Created_at",
+              "text": "={{ $json['Created At (ISO)'] }}",
+              "size": "9",
+              "fontName": "Arial"
+            },
+            {
+              "fieldName": "Due_Date",
+              "text": "={{ $json['Due on (ISO)'] }}",
+              "size": "9",
+              "fontName": "Arial"
+            },
+            {
+              "fieldName": "Task",
+              "text": "={{ $json.Task }}",
+              "size": "9",
+              "fontName": "Arial"
+            }
+          ]
+        },
+        "advancedOptions": {
+          "name": "=Assigned Task to {{ $json['Asignee\\'s Name'] }}",
+          "profiles": "{ 'FlattenDocument()': [] }"
+        }
+      },
+      "type": "CUSTOM.PDFco Api",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "ffea1e2c-8d1f-474d-b18c-51ddc8776b46",
+      "name": "PDFco Api",
+      "credentials": {
+        "pdfcoApi": {
+          "id": "e4rYmqMypBxChuMH",
+          "name": "PDF.co account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/email/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "*************"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $json.url }}\",\n  \"from\": \"your_email@gmail.com\",\n  \"to\": \"reciepient@gmail.com\",\n  \"subject\": \"New Task Assigned: {{ $('Code').item.json.Task }}\",\n  \"bodyHtml\": \"<p>Hi,</p><p>This is to inform you about a new task assigned to you.</p><ul><li><strong>Task:</strong> {{ $('Code').item.json.Task }}</li><li><strong>Assigned To:</strong>{{ $('Code').item.json['Asignee\\'s Name'] }}</li><li><strong>Created On:</strong> {{ $('Code').item.json['Created At (ISO)'] }}</li><li><strong>Due On:</strong>{{ $('Code').item.json['Due on (ISO)'] }} </li></ul><p>The attached form contains more details about this task.</p><p>Best regards,<br>Project Automation Team</p>\",\n  \"smtpserver\": \"smtp.gmail.com\",\n  \"smtpport\": \"587\",\n  \"smtpusername\": \"************\",\n  \"smtppassword\": \"m*************\",\n  \"async\": false\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "9b8609fc-91d8-4c63-857a-7879af0ef2eb",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o",
+          "mode": "list",
+          "cachedResultName": "OUTPUT1",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KMbseCUfUSai6GT_ZgtdTVffdT6ZYn_o"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "1ad8dd34-d278-467d-b7dd-b83be9c7dda5",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ITkAguzW5WLvpiK5",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('PDFco Api').item.json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "79d90638-94b9-4329-a19d-9d96b3f58ada",
+      "name": "HTTP Request1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "PDFco Api",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFco Api": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7da58c53-0cf1-4a7a-b812-34e05d88ab63",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "126e6b989079117f697f2f8a89051695d5b7a0849f64dba2327caf4001ca0735"
+  },
+  "id": "CFfdWXP6OOmtfu3L",
+  "tags": []
+}
