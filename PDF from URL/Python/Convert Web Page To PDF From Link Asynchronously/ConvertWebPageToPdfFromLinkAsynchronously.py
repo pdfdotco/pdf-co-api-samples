@@ -29,7 +29,7 @@ def convertLinkToPDF(uploadedFileUrl, destinationFile):
     """Converts Link To PDF using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     parameters = {}
     parameters["async"] = Async
     parameters["name"] = os.path.basename(destinationFile)

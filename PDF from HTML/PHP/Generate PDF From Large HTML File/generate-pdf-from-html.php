@@ -19,7 +19,7 @@ $url = "https://api.pdf.co/v1/pdf/convert/from/html";
 
 
 // Prepare requests params
-// See documentation: https://apidocs.pdf.co/?#1-json-pdfconvertfromhtml
+// See documentation: https://docs.pdf.co/?#1-json-pdfconvertfromhtml
 $parameters = array();
 
 // Input HTML code to be converted. Required. 

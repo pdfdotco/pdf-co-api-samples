@@ -38,7 +38,7 @@ def rotatePDF(uploadedFileUrl, destinationFile):
     """Rotate PDF using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     parameters = {}
     parameters["url"] = uploadedFileUrl
     parameters["name"] = os.path.basename(destinationFile)

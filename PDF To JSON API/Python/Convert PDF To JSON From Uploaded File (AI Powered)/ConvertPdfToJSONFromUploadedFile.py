@@ -28,7 +28,7 @@ def convertPdfToJson(uploadedFileUrl, destinationFile):
     """Converts PDF To Json using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["password"] = Password

@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -46,8 +46,8 @@ namespace ByteScoutWebApiExample
 				1. Use Document Parser to create Template Id https://app.pdf.co/document-parser
 				2. Go to https://app.pdf.co/document-parser and create new template.
 				3. Save this new template
-				4. Copy it’s ID to clipboard
-				5. Now set ID of the template into “templateId” parameter
+				4. Copy itï¿½s ID to clipboard
+				5. Now set ID of the template into ï¿½templateIdï¿½ parameter
 			*/
             String templateId = "1";
 

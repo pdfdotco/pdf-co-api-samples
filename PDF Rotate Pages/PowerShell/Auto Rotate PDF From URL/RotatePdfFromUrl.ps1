@@ -13,7 +13,7 @@ $DestinationFile = ".\result.pdf"
 $query = "https://api.pdf.co/v1/pdf/edit/rotate/auto"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $body = @{
     "url" = $SourceFileURL
     "name" = $(Split-Path $DestinationFile -Leaf)

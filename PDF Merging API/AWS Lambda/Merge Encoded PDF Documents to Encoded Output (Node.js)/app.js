@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -23,7 +23,7 @@ const SourceFiles = [
     "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/sample_encrypted_aes128.pdf"
 ];
 
-// For more information, refer to documentations at https://apidocs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
+// For more information, refer to documentations at https://docs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
 const Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234', 'DataEncryptionAlgorithm': 'AES128', 'DataEncryptionKey': 'HelloThisKey1234', 'DataEncryptionIV': 'TreloThisKey1234' }";
 
 // Prepare request to `Merge PDF` API endpoint

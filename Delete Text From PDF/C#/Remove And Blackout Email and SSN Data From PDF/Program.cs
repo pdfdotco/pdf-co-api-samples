@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -65,7 +65,7 @@ namespace ByteScoutWebApiExample
 			webClient.Headers.Add("x-api-key", API_KEY);
 
 			// Prepare requests params as JSON
-			// See documentation: https://apidocs.pdf.co/#pdf-search-and-delete-text-from-pdf
+			// See documentation: https://docs.pdf.co/#pdf-search-and-delete-text-from-pdf
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
 			parameters.Add("name", Path.GetFileName(DestinationFile));
 			parameters.Add("password", Password);

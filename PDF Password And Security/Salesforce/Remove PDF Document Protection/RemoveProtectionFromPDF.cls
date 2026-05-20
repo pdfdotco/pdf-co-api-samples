@@ -27,7 +27,7 @@ public class RemoveProtectionFromPDF{
             Boolean async = false;
             
             // Prepare requests params as JSON
-            // See documentation: https://apidocs.pdf.co
+            // See documentation: https://docs.pdf.co
             // Create JSON payload
             JSONGenerator gen = JSON.createGenerator(true);
             gen.writeStartObject();

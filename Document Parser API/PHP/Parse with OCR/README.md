@@ -18,7 +18,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -208,7 +208,7 @@ function ParseDocument($apiKey, $uploadedFileUrl, $templateText)
     $async = TRUE;
 
     // Prepare URL for Document parser API call.
-    // See documentation: https://apidocs.pdf.co/?#1-pdfdocumentparser
+    // See documentation: https://docs.pdf.co/?#1-pdfdocumentparser
     $url = "https://api.pdf.co/v1/pdf/documentparser";
 
     // Prepare requests params

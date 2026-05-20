@@ -12,7 +12,7 @@ $query = "https://api.pdf.co/v1/pdf/convert/from/html"
 $query = [System.Uri]::EscapeUriString($query)
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://apidocs.pdf.co/?#1-json-pdfconvertfromhtml
+# See documentation: https://docs.pdf.co/?#1-json-pdfconvertfromhtml
 $body = @{
     "html" = $HtmlInput
     "name" = $(Split-Path $DestinationFile -Leaf)

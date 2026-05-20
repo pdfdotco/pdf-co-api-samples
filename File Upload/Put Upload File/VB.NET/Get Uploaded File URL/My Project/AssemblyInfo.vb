@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://developer.pdf.co/api/index.html                                '
+' API Documentation: https://docs.pdf.co/api/index.html                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -23,7 +23,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("ByteScoutWebApiExample")>
-<Assembly: AssemblyCopyright("Copyright ©  2017")>
+<Assembly: AssemblyCopyright("Copyright ï¿½  2017")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

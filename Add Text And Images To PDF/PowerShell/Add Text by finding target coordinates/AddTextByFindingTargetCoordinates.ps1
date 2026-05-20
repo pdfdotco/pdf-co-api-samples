@@ -9,14 +9,14 @@ $SourceFileUrl = "https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-
 $SearchString = 'Notes'
 
 # Prepare URL for PDF text search API call.
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $queryFindText = "https://api.pdf.co/v1/pdf/find?url=$($SourceFileURL)&searchString=$($SearchString)"
 $queryFindText = [System.Uri]::EscapeUriString($queryFindText)
 
 $queryFindText = "https://api.pdf.co/v1/pdf/find"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $bodyFindText = @{
     "url" = $SourceFileURL
     "searchString" = $SearchString
@@ -59,7 +59,7 @@ try {
         $query = "https://api.pdf.co/v1/pdf/edit/add"
 
         # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-        # See documentation: https://apidocs.pdf.co
+        # See documentation: https://docs.pdf.co
         $body = @{
             "name" = $resultFileName
             "url" = $SourceFileUrl

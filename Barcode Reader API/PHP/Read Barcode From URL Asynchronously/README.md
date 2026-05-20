@@ -18,7 +18,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -55,7 +55,7 @@ $apiKey = "***************************************";
 // You can also upload your own file into PDF.co and use it as url. Check "Upload File" samples for code snippets: https://github.com/bytescout/pdf-co-api-samples/tree/master/File%20Upload/    
 $sourceFileUrl = "https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-api/barcode-reader/sample.pdf";
 // Comma-separated list of barcode types to search. 
-// See valid barcode types in the documentation https://apidocs.pdf.co
+// See valid barcode types in the documentation https://docs.pdf.co
 $barcodeTypes = "Code128,Code39,Interleaved2of5,EAN13";
 // Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 $pages = "";

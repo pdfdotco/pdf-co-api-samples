@@ -28,7 +28,7 @@ def GeneratePDFFromHtml(SampleHtml, destinationFile):
     """Converts HTML to PDF using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co/?#1-json-pdfconvertfromhtml
+    # See documentation: https://docs.pdf.co/?#1-json-pdfconvertfromhtml
     parameters = {}
 
     # Input HTML code to be converted. Required.

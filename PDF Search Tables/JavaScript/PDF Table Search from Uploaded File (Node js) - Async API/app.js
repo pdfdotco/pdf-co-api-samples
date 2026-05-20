@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -103,7 +103,7 @@ function uploadFile(apiKey, localFile, uploadUrl) {
 
 function pdfTableSearch(uploadedFileUrl) {
     // Prepare URL for PDF Table Search API call.
-    // See documentation: https://apidocs.pdf.co
+    // See documentation: https://docs.pdf.co
     var query = `https://api.pdf.co/v1/pdf/find/table`;
     let reqOptions = {
         uri: query,

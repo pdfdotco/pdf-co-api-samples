@@ -18,7 +18,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -188,7 +188,7 @@ Module Module1
         Try
 
             ' Prepare requests params as JSON
-            ' See documentation: https : //apidocs.pdf.co/?#1-json-pdfconvertfromhtml
+            ' See documentation: https : //docs.pdf.co/?#1-json-pdfconvertfromhtml
             Dim parameters As New Dictionary(Of String, Object)
 
 

@@ -4,7 +4,7 @@ $API_KEY = "****************************"
 
 # Result file name
 $ResultFile = ".\barcode.png"
-# Barcode type. See valid barcode types in the documentation https://apidocs.pdf.co
+# Barcode type. See valid barcode types in the documentation https://docs.pdf.co
 $BarcodeType = "QRCode"
 # Barcode value
 $BarcodeValue = "QR123456\nhttps://pdf.co\nhttps://bytescout.com"
@@ -23,7 +23,7 @@ $resultFileName = [System.IO.Path]::GetFileName($ResultFile)
 $query = "https://api.pdf.co/v1/barcode/generate"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $body = @{
     "name" = $resultFileName
     "type" = $BarcodeType

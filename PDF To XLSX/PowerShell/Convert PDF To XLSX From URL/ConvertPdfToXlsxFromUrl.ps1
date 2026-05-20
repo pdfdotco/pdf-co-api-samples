@@ -16,7 +16,7 @@ $DestinationFile = ".\result.xlsx"
 $query = "https://api.pdf.co/v1/pdf/convert/to/xlsx"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $body = @{
     "name" = $(Split-Path $DestinationFile -Leaf)
     "password" = $Password

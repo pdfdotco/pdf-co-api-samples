@@ -26,7 +26,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -207,7 +207,7 @@ Module Module1
 
 	' Result file name
 	Const ResultFileName As String = ".\barcode.png"
-	' Barcode type. See valid barcode types in the documentation https://apidocs.pdf.co
+	' Barcode type. See valid barcode types in the documentation https://docs.pdf.co
 	Const BarcodeType As String = "Code128"
 	' Barcode value
 	Const BarcodeValue As String = "qweasd123456"
@@ -227,7 +227,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/barcode/generate"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //apidocs.pdf.co
+        ' See documentation: https : //docs.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
 		parameters.Add("name", Path.GetFileName(ResultFileName))
 		parameters.Add("type", BarcodeType)

@@ -41,7 +41,7 @@ $Profiles = "{ 'profiles': [ { 'profile1': { 'JPEGQuality': '25' } } ] }"
 $query = "https://api.pdf.co/v1/pdf/convert/to/jpg"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $body = @{
     "password" = $Password
     "pages" = $Pages

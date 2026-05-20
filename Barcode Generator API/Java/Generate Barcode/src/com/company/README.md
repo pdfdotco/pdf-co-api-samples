@@ -18,7 +18,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -52,7 +52,7 @@ public class Main
 
     // Result file name
     final static Path ResultFile = Paths.get(".\\barcode.png");
-    // Barcode type. See valid barcode types in the documentation https://apidocs.pdf.co
+    // Barcode type. See valid barcode types in the documentation https://docs.pdf.co
     final static String BarcodeType = "Code128";
     // Barcode value
     final static String BarcodeValue = "qweasd123456";

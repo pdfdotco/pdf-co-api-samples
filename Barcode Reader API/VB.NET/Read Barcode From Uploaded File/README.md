@@ -26,7 +26,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -211,7 +211,7 @@ Module Module1
 	' Source file name
 	const SourceFile as string = ".\sample.pdf"
 	' Comma-separated list of barcode types to search. 
-	' See valid barcode types in the documentation https://apidocs.pdf.co
+	' See valid barcode types in the documentation https://docs.pdf.co
 	Const BarcodeTypes As String = "Code128,Code39,Interleaved2of5,EAN13"
 	' Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 	Const Pages As String = ""
@@ -256,7 +256,7 @@ Module Module1
 				Dim url As String = "https://api.pdf.co/v1/barcode/read/from/url"
 
 				' Prepare requests params as JSON
-				' See documentation: https : //apidocs.pdf.co
+				' See documentation: https : //docs.pdf.co
 				Dim parameters As New Dictionary(Of String, Object)
 				parameters.Add("types", BarcodeTypes)
 				parameters.Add("pages", Pages)

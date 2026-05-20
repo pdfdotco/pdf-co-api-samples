@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://developer.pdf.co/api/index.html                                '
+' API Documentation: https://docs.pdf.co/api/index.html                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -41,7 +41,7 @@ Module Module1
         Try
 
             ' Prepare requests params as JSON
-            ' See documentation: https : //apidocs.pdf.co/?#1-json-pdfconvertfromhtml
+            ' See documentation: https : //docs.pdf.co/?#1-json-pdfconvertfromhtml
             Dim parameters As New Dictionary(Of String, Object)
 
             ' Input HTML code to be converted. Required. 

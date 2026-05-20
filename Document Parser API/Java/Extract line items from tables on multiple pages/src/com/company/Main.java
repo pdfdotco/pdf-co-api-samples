@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -109,7 +109,7 @@ public class Main {
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonBody.toString());
 
         // Prepare URL for Document parser API call.
-        // See documentation: https://apidocs.pdf.co/?#1-pdfdocumentparser
+        // See documentation: https://docs.pdf.co/?#1-pdfdocumentparser
         String query = String.format("https://api.pdf.co/v1/pdf/documentparser?async=%s", Async);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");

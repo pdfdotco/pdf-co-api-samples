@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -128,7 +128,7 @@ namespace ByteScoutWebApiExample
             webClient.Headers.Add("x-api-key", apiKey);
 
             // Prepare requests params as JSON
-            // See documentation: https://apidocs.pdf.co/?#pdf-search-text
+            // See documentation: https://docs.pdf.co/?#pdf-search-text
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("url", sourceFileUrl);
             parameters.Add("searchString", searchString);

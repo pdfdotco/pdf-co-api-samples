@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -56,7 +56,7 @@ public class Main {
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonBody.toString());
 
         // Prepare URL for AI Invoice Parser API call.
-        // See documentation: https://developer.pdf.co/api/ai-invoice-parser/index.html
+        // See documentation: https://docs.pdf.co/api/ai-invoice-parser/index.html
         String query = "https://api.pdf.co/v1/ai-invoice-parser";
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");

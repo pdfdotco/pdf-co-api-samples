@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 // Visit Knowledgebase for adding Text Macros to PDF 
-// https://apidocs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
+// https://docs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
 
 namespace ByteScoutWebApiExample
 {
@@ -60,7 +60,7 @@ namespace ByteScoutWebApiExample
             var X = coordinates.X;
             var Y = coordinates.Y + 25;
 
-            // See documentation: https://apidocs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
+            // See documentation: https://docs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
             // Prepare requests params as JSON
             string jsonPayload = $@"{{
     ""name"": ""{Path.GetFileName(DestinationFile)}"",
@@ -133,7 +133,7 @@ namespace ByteScoutWebApiExample
             webClient.Headers.Add("x-api-key", apiKey);
 
             // Prepare requests params as JSON
-            // See documentation: https://apidocs.pdf.co/07-pdf-search-text
+            // See documentation: https://docs.pdf.co/07-pdf-search-text
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("url", sourceFileUrl);
             parameters.Add("searchString", searchString);

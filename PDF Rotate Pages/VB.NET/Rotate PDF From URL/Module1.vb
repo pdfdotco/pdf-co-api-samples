@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://developer.pdf.co/api/index.html                                '
+' API Documentation: https://docs.pdf.co/api/index.html                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -48,7 +48,7 @@ Module Module1
         Dim url As String = "https://api.pdf.co/v1/pdf/edit/rotate"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //apidocs.pdf.co
+        ' See documentation: https : //docs.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
         parameters.Add("url", SourceFileUrl)
         parameters.Add("name", Path.GetFileName(DestinationFile))

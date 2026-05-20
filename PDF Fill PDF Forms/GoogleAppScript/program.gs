@@ -1,5 +1,5 @@
 // Visit Knowledgebase for adding Text Macros to PDF 
-// https://apidocs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
+// https://docs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
 
 // Handle PDF.co Menu on Google Sheet Open Event
 function onOpen() {

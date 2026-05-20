@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -35,7 +35,7 @@ namespace ByteScoutWebApiExample
         const string SourceFileURL = "https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-api/barcode-reader/sample.pdf";
         
         // Comma-separated list of barcode types to search. 
-        // See valid barcode types in the documentation https://apidocs.pdf.co
+        // See valid barcode types in the documentation https://docs.pdf.co
         const string BarcodeTypes = "Code128,Code39,Interleaved2of5,EAN13";
         
         // Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
@@ -54,7 +54,7 @@ namespace ByteScoutWebApiExample
             webClient.Headers.Add("x-api-key", API_KEY);
 
             // Prepare requests params as JSON
-            // See documentation: https://apidocs.pdf.co/?#barcode-reader
+            // See documentation: https://docs.pdf.co/?#barcode-reader
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("url", SourceFileURL);
             parameters.Add("type", BarcodeTypes);

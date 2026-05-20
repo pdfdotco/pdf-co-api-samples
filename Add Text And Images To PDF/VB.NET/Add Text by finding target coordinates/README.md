@@ -18,7 +18,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -208,7 +208,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/pdf/edit/add"
 
         ' Prepare requests params as JSON
-        ' See documentation: https://apidocs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
+        ' See documentation: https://docs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
         Dim jsonPayload As String = $"{{
     ""name"": ""{Path.GetFileName(DestinationFile)}"",
     ""url"": ""{SourceFileUrl}"",
@@ -276,11 +276,11 @@ Module Module1
         webClient.Headers.Add("Content-Type", "application/json")
 
         ' Prepare URL for PDF text search API call.
-        ' See documentation: https://apidocs.pdf.co/07-pdf-search-text
+        ' See documentation: https://docs.pdf.co/07-pdf-search-text
         Dim url As String = "https://api.pdf.co/v1/pdf/find"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //apidocs.pdf.co
+        ' See documentation: https : //docs.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
 		parameters.Add("url", SourceFileUrl)
 		parameters.Add("searchString", SearchString)

@@ -8,7 +8,7 @@ $API_KEY = "***********************************"
 # Direct URL of source DOC or DOCX file.
 $SourceFileURL = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/sample_encrypted_aes128.docx"
 
-# Refer to documentations for more info. https://apidocs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
+# Refer to documentations for more info. https://docs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
 $Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }"
 
 # Destination PDF file name
@@ -21,7 +21,7 @@ $Async = $true
 $query = "https://api.pdf.co/v1/pdf/convert/from/doc"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $body = @{
     "name" = $(Split-Path $DestinationFile -Leaf)
     "url" = $SourceFileURL

@@ -15,7 +15,7 @@ BASE_URL = "https://api.pdf.co/v1"
 
 # Result file name
 ResultFile = ".\\barcode.png"
-# Barcode type. See valid barcode types in the documentation https://apidocs.pdf.co
+# Barcode type. See valid barcode types in the documentation https://docs.pdf.co
 BarcodeType = "Code128"
 # Barcode value
 BarcodeValue = "qweasd123456"

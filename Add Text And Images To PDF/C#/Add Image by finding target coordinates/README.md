@@ -18,7 +18,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -261,7 +261,7 @@ namespace ByteScoutWebApiExample
             webClient.Headers.Add("x-api-key", apiKey);
 
             // Prepare requests params as JSON
-            // See documentation: https://apidocs.pdf.co/?#pdf-search-text
+            // See documentation: https://docs.pdf.co/?#pdf-search-text
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("url", sourceFileUrl);
             parameters.Add("searchString", searchString);

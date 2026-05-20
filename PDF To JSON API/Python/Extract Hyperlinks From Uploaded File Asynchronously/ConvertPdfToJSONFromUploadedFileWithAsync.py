@@ -61,7 +61,7 @@ def convertPdfToJson(uploadedFileUrl, destinationFile):
     profiles = '{ "profiles": [ { "profile1": { "OutputStructure": "OnlyLinks", "OutputTransformation": "$..text" } } ] }'
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["password"] = Password

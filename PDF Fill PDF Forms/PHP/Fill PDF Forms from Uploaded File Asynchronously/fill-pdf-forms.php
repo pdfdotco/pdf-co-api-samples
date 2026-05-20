@@ -102,7 +102,7 @@ function FillPdfForm($apiKey, $uploadedFileUrl)
     $url = "https://api.pdf.co/v1/pdf/edit/add";
 
     // Prepare requests params
-    // See documentation: https://apidocs.pdf.co
+    // See documentation: https://docs.pdf.co
     $parameters = array();
 
     // URL of uploaded PDF file.

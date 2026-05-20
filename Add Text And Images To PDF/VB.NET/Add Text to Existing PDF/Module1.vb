@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://developer.pdf.co/api/index.html                                '
+' API Documentation: https://docs.pdf.co/api/index.html                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -14,7 +14,7 @@ Imports System.Net
 Imports Newtonsoft.Json.Linq
 
 ' Visit Knowledgebase for adding Text Macros to PDF 
-' https://apidocs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
+' https://docs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
 
 Module Module1
 
@@ -59,7 +59,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/pdf/edit/add"
 
         ' Prepare requests params as JSON
-        ' See documentation: https://apidocs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
+        ' See documentation: https://docs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
         Dim jsonPayload As String = $"{{
     ""name"": ""{Path.GetFileName(DestinationFile)}"",
     ""url"": ""{SourceFileUrl}"",

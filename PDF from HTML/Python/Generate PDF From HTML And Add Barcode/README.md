@@ -18,7 +18,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -48,7 +48,7 @@ BASE_URL = "https://api.pdf.co/v1"
 
 # Result file name
 ResultFile = ".\\barcode.png"
-# Barcode type. See valid barcode types in the documentation https://apidocs.pdf.co
+# Barcode type. See valid barcode types in the documentation https://docs.pdf.co
 BarcodeType = "Code128"
 # Barcode value
 BarcodeValue = "qweasd123456"
@@ -79,7 +79,7 @@ def generateBarcode(destinationFile):
     """Generates Barcode using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["type"] = BarcodeType
@@ -166,7 +166,7 @@ def GeneratePDFFromHtml(SampleHtml, destinationFile):
     """Converts HTML to PDF using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co/?#1-json-pdfconvertfromhtml
+    # See documentation: https://docs.pdf.co/?#1-json-pdfconvertfromhtml
     parameters = {}
 
     # Input HTML code to be converted. Required.
@@ -251,7 +251,7 @@ def addImageToExistingPdf(PdfUrl, barcodeUrl, destinationFile):
     """Add image using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     payload = json.dumps({
         "name": os.path.basename(destinationFile),
         "url": PdfUrl,

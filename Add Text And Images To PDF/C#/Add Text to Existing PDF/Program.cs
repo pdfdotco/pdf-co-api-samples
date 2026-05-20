@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -16,7 +16,7 @@ using System.IO;
 using System.Net;
 
 // Visit Knowledgebase for adding Text Macros to PDF 
-// https://apidocs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
+// https://docs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
 
 namespace ByteScoutWebApiExample
 {
@@ -58,7 +58,7 @@ namespace ByteScoutWebApiExample
 			// * Add text annotation *
 
 			// Prepare requests params as JSON
-			// See documentation: https://apidocs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
+			// See documentation: https://docs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
             string jsonPayload = $@"{{
     ""name"": ""{Path.GetFileName(DestinationFile)}"",
     ""url"": ""{SourceFileUrl}"",

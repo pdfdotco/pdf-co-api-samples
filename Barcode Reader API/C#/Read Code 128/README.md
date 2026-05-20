@@ -18,7 +18,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -158,7 +158,7 @@ namespace ByteScoutWebApiExample
         const string SourceFile = @".\Code_128.png";
 
         // Comma-separated list of barcode types to decode.
-        // See the documentation: https://apidocs.pdf.co/?#barcode-reader
+        // See the documentation: https://docs.pdf.co/?#barcode-reader
         const string BarcodeTypes = "Code128";
         
         // Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
@@ -188,7 +188,7 @@ namespace ByteScoutWebApiExample
             // * READ BARCODES FROM UPLOADED FILE *
 
             // Prepare requests params as JSON
-            // See documentation: https://apidocs.pdf.co/?#barcode-reader
+            // See documentation: https://docs.pdf.co/?#barcode-reader
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("url", uploadedFileUrl);
             parameters.Add("type", BarcodeTypes);

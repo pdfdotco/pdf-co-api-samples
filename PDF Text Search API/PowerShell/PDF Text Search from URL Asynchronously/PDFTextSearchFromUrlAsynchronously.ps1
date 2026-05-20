@@ -21,11 +21,11 @@ $RegexSearch = 'True'
 $Async = $true
 
 # Prepare URL for PDF text search API call.
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $query = "https://api.pdf.co/v1/pdf/find"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $body = @{
     "password" = $Password
     "pages" = $Pages

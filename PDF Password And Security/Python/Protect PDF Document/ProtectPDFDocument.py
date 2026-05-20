@@ -62,7 +62,7 @@ def protectPDF(uploadedFileUrl, destinationFile):
     """Protect PDF using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     parameters = {"name": os.path.basename(destinationFile), "url": uploadedFileUrl, "ownerPassword": OwnerPassword,
                   "userPassword": UserPassword, "encryptionAlgorithm": EncryptionAlgorithm,
                   "allowAccessibilitySupport": AllowAccessibilitySupport,

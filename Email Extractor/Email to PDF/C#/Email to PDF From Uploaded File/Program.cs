@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -82,13 +82,13 @@ namespace ByteScoutWebApiExample
 
 					// True by default. 
 					// Set to true to automatically embeds all attachments from original input email MSG or EML fileas files into final output PDF. 
-					// Set to false if you don’t want to embed attachments so it will convert only the body of input email.
+					// Set to false if you donï¿½t want to embed attachments so it will convert only the body of input email.
 					parameters.Add("embedAttachments", true);
 
 					// true by default. 
 					// Converts attachments that are supported by API (doc, docx, html, png, jpg etc) into PDF and merges into output final PDF. 
 					// Non-supported file types are added as PDF attachments (Adobe Reader or another viewer maybe required to view PDF attachments).
-					// Set to false if you don’t want to convert attachments from original email and want to embed them as original files (as embedded pdf attachments). 
+					// Set to false if you donï¿½t want to convert attachments from original email and want to embed them as original files (as embedded pdf attachments). 
 					parameters.Add("convertAttachments", true);
 
 					// Can be Letter, A4, A5, A6 or custom size like 200x200

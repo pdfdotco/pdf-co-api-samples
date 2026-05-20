@@ -28,7 +28,7 @@ $resultFileName = [System.IO.Path]::GetFileName($DestinationFile)
 $query = "https://api.pdf.co/v1/pdf/edit/add"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://apidocs.pdf.co
+# See documentation: https://docs.pdf.co
 $body = @{
     "name" = $resultFileName
     "url" = $SourceFileUrl

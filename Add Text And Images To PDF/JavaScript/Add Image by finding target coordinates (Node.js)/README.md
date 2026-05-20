@@ -18,7 +18,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -49,7 +49,7 @@ const SourceFileUrl = "https://bytescout-com.s3.amazonaws.com/files/demo-files/c
 const SearchString = 'Your Company Name';
 
 // Prepare URL for PDF text search API call.
-// See documentation: https://apidocs.pdf.co/07-pdf-search-text
+// See documentation: https://docs.pdf.co/07-pdf-search-text
 var queryFindText = `/v1/pdf/find`;
 
 // JSON payload for find text

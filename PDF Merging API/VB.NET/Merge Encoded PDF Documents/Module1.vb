@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://developer.pdf.co/api/index.html                                '
+' API Documentation: https://docs.pdf.co/api/index.html                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -31,7 +31,7 @@ Module Module1
 		"https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/sample_encrypted_aes128.pdf",
 		"https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/sample_encrypted_aes128.pdf"}
 
-	' For more information, refer to documentations at https://apidocs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
+	' For more information, refer to documentations at https://docs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
 	Const Profiles As String = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }"
 
 	' Destination PDF file name
@@ -56,7 +56,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/pdf/merge"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //apidocs.pdf.co
+        ' See documentation: https : //docs.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
 		parameters.Add("name", Path.GetFileName(DestinationFile))
 		parameters.Add("url", String.Join(",", SourceFiles))

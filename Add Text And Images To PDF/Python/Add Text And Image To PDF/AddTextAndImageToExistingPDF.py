@@ -2,7 +2,7 @@ import os
 import requests # pip install requests
 
 # Visit Knowledgebase for adding Text Macros to PDF 
-# https://apidocs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
+# https://docs.pdf.co/kb/Fill%20PDF%20and%20Add%20Text%20or%20Images%20(pdf-edit-add)/macros
 
 # The authentication key (API Key).
 # Get your own by registering at https://app.pdf.co
@@ -49,7 +49,7 @@ def addToExistingPDF(destinationFile):
     """Add Text using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     payload = json.dumps({
         "name": os.path.basename(destinationFile),
         "password": Password,

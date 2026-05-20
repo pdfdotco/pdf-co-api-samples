@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://developer.pdf.co/api/index.html                                '
+' API Documentation: https://docs.pdf.co/api/index.html                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -24,7 +24,7 @@ Module Module1
     ' You can also upload your own file into PDF.co and use it as url. Check "Upload File" samples for code snippets: https://github.com/bytescout/pdf-co-api-samples/tree/master/File%20Upload/   
     Const SourceFileURL As String = "https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-api/barcode-reader/sample.pdf"
     ' Comma-separated list of barcode types to search. 
-    ' See valid barcode types in the documentation https://apidocs.pdf.co
+    ' See valid barcode types in the documentation https://docs.pdf.co
     Const Pages As String = ""
 
     ' Some of advanced options available through profiles:
@@ -64,7 +64,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/barcode/read/from/url"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //apidocs.pdf.co
+        ' See documentation: https : //docs.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
 		parameters.Add("pages", Pages)
 		parameters.Add("url", SourceFileURL)

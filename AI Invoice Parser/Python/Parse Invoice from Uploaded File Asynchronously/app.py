@@ -81,7 +81,7 @@ def getParsedInvoice(uploadedFileUrl):
 
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     parameters = {}
     parameters["url"] = uploadedFileUrl
 

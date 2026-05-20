@@ -23,7 +23,7 @@ def convertCSVToPDF(uploadedFileUrl, destinationFile):
     """Converts CSV to PDF using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["url"] = uploadedFileUrl

@@ -21,10 +21,10 @@ $apiKey = "***************************************";
 $sourceFileUrl = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/barcode_encrypted_aes128.png";
 
 // Comma-separated list of barcode types to search. 
-// See valid barcode types in the documentation https://apidocs.pdf.co
+// See valid barcode types in the documentation https://docs.pdf.co
 $barcodeTypes = "QRCode";
 
-// Refer to documentations for more info. https://apidocs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
+// Refer to documentations for more info. https://docs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
 $profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'Qweasd1234567890', 'DataDecryptionIV': '0mDI&qLv*ivTCd$*' }";
 
 

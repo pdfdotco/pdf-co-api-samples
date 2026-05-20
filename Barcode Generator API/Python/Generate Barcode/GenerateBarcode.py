@@ -10,7 +10,7 @@ BASE_URL = "https://api.pdf.co/v1"
 
 # Result file name
 ResultFile = ".\\barcode.png"
-# Barcode type. See valid barcode types in the documentation https://apidocs.pdf.co
+# Barcode type. See valid barcode types in the documentation https://docs.pdf.co
 BarcodeType = "Code128"
 # Barcode value
 BarcodeValue = "qweasd123456"
@@ -23,7 +23,7 @@ def generateBarcode(destinationFile):
     """Generates Barcode using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://apidocs.pdf.co
+    # See documentation: https://docs.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["type"] = BarcodeType
