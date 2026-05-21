@@ -2,7 +2,7 @@
 
 ## REQUEST FREE TECH SUPPORT
 
-[Click here to get in touch](https://bytescout.zendesk.com/hc/en-us/requests/new?subject=PDF.co%20Web%20API%20Question)
+[Click here to get in touch](https://support.pdf.co/en)
 
 or just send email to [support@bytescout.com](mailto:support@bytescout.com?subject=PDF.co%20Web%20API%20Question) 
 
@@ -11,7 +11,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 [Get Your 60 Day Free Trial](https://bytescout.com/download/web-installer?utm_source=github-readme)
 [Explore Documentation](https://bytescout.com/documentation/index.html?utm_source=github-readme)
 [Explore Source Code Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/)
-[Sign Up For Online Training](https://academy.bytescout.com/)
+
 
 
 ## ON-DEMAND REST WEB API
@@ -92,7 +92,7 @@ public class Main
 
         // Sample profile that sets advanced conversion options
         // Advanced options are properties of XMLExtractor class from ByteScout XML Extractor SDK used in the back-end:
-        // https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/6f2b5e9c-ba15-f9fe-192b-c3e31ec4a0ee.htm
+        // 
         String Profiles = "{ 'profiles': [ { 'profile1': { 'TrimSpaces': 'False', 'PreserveFormattingOnTextExtraction': 'True', 'Unwrap': 'True', 'ShrinkMultipleSpaces': 'True' } } ] }";
 
         // Prepare URL for `PDF To XML` API call

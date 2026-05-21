@@ -59,7 +59,7 @@ Some of advanced options available through profiles:
 
 // Sample profile that sets advanced conversion options
 // Advanced options are properties of XMLExtractor class from ByteScout PDF Extractor SDK used in the back-end:
-// https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/87ce5fa6-3143-167d-abbd-bc7b5e160fe5.htm
+// 
 
 /*
 Valid RotationAngle values:

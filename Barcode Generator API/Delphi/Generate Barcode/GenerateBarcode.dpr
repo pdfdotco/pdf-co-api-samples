@@ -28,7 +28,7 @@ const
     API_KEY: string = '********************************************'
     // Result file name
     RESULT_FILE_NAME: string = 'barcode.png';
-	// Barcode type. See valid barcode types in the documentation https://secure.bytescout.com/cloudapi.html#api-Default-barcodeGenerateGet
+	// Barcode type. See valid barcode types in the documentation https://docs.pdf.co/api-reference/barcode/overview
     BARCODE_TYPE: string = 'Code128';
     // Barcode value
 	BARCODE_VALUE: string = 'qweasd123456';

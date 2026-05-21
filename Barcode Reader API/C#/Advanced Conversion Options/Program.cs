@@ -57,7 +57,7 @@ namespace ByteScoutWebApiExample
 
         // Sample profile that sets advanced conversion options
         // Advanced options are properties of Reader class from Bytescout BarCodeReader used in the back-end:
-        // https://cdn.bytescout.com/help/BytescoutBarCodeReaderSDK/html/T_Bytescout_BarCodeReader_Reader.htm
+        // 
         static string Profiles = File.ReadAllText(@".\profile.json");
 
 

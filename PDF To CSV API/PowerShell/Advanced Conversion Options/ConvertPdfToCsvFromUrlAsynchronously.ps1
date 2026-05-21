@@ -43,7 +43,7 @@ $Async = $true
 
 # Sample profile that sets advanced conversion options
 # Advanced options are properties of CSVExtractor class from ByteScout PDF Extractor SDK used in the back-end:
-# https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/87ce5fa6-3143-167d-abbd-bc7b5e160fe5.htm
+# 
 $Profiles = '{ "profiles": [{ "profile1": { "OCRMode": "TextFromImagesAndVectorsAndFonts", "CSVSeparatorSymbol": "," } } ] }'
 
 # Prepare URL for `PDF To CSV` API call

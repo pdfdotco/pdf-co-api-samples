@@ -54,7 +54,7 @@ Some of advanced options available through profiles:
 
 // Sample profile that sets advanced conversion options
 // Advanced options are properties of JSONExtractor class from ByteScout JSON Extractor SDK used in the back-end:
-// https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/84356d44-6249-3251-2da8-83c1f34a2f39.htm
+// 
 const Profiles = '{ "profiles": [ { "profile1": { "TrimSpaces": "False", "PreserveFormattingOnTextExtraction": "True" } } ] }';
 
 // Prepare request to `PDF To JSON` API endpoint

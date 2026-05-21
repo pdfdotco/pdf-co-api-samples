@@ -76,7 +76,7 @@ Module Module1
                 ' 3. MAKE UPLOADED PDF FILE SEARCHABLE
 
                 ' Prepare URL for PDF text search API call.
-                ' See documentation: https : //app.pdf.co/documentation/api/1.0/pdf/find.html
+                ' See documentation: https : //docs.pdf.co/api-reference/pdf-find/basic
                 Dim url As String = "https://api.pdf.co/v1/pdf/find"
 
                 ' Prepare requests params as JSON

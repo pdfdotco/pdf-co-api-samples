@@ -61,7 +61,7 @@ namespace ByteScoutWebApiExample
 
         // Sample profile that sets advanced conversion options
         // Advanced options are properties of XMLExtractor class from ByteScout XML Extractor SDK used in the back-end:
-        // https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/6f2b5e9c-ba15-f9fe-192b-c3e31ec4a0ee.htm
+        // 
         static string Profiles = File.ReadAllText("profile.json");
 
         static void Main(string[] args)

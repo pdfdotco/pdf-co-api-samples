@@ -10,7 +10,7 @@ You can download free trial version of PDF.co Web API from our website to see an
 
 ## REQUEST FREE TECH SUPPORT
 
-[Click here to get in touch](https://bytescout.zendesk.com/hc/en-us/requests/new?subject=PDF.co%20Web%20API%20Question)
+[Click here to get in touch](https://support.pdf.co/en)
 
 or just send email to [support@bytescout.com](mailto:support@bytescout.com?subject=PDF.co%20Web%20API%20Question) 
 
@@ -19,7 +19,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 [Get Your 60 Day Free Trial](https://bytescout.com/download/web-installer?utm_source=github-readme)
 [Explore Documentation](https://bytescout.com/documentation/index.html?utm_source=github-readme)
 [Explore Source Code Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/)
-[Sign Up For Online Training](https://academy.bytescout.com/)
+
 
 
 ## ON-DEMAND REST WEB API

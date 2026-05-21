@@ -24,7 +24,7 @@ Module Module1
     ' You can also upload your own file into PDF.co and use it as url. Check "Upload File" samples for code snippets: https://github.com/bytescout/pdf-co-api-samples/tree/master/File%20Upload/   
 	Const SourceFileURL As String = "https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-api/pdf-info/sample.pdf"
 	' Comma-separated list of barcode types to search. 
-	' See valid barcode types in the documentation https://secure.bytescout.com/cloudapi.html#api-Default-barcodeReadFromUrlGet
+	' See valid barcode types in the documentation https://docs.pdf.co/api-reference/barcode/overview
 	Const BarcodeTypes As String = "Code128,Code39,Interleaved2of5,EAN13"
 	' Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 	Const Pages As String = ""

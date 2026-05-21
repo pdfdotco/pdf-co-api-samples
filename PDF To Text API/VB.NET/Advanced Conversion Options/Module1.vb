@@ -48,7 +48,7 @@ Module Module1
 
     ' Sample profile that sets advanced conversion options
     ' Advanced options are properties of TextExtractor class from ByteScout Text Extractor SDK used in the back-end:
-    ' https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/8a2bae5a-346f-8338-b5aa-6f3522dca0d4.htm
+    ' 
     ReadOnly Profiles = File.ReadAllText("profile.json")
 
     Sub Main()

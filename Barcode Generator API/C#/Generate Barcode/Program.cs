@@ -27,7 +27,7 @@ namespace ByteScoutWebApiExample
 
 		// Result file name
 		const string ResultFileName = @".\barcode.png";
-		// Barcode type. See valid barcode types in the documentation https://secure.bytescout.com/cloudapi.html#api-Default-barcodeGenerateGet
+		// Barcode type. See valid barcode types in the documentation https://docs.pdf.co/api-reference/barcode/overview
 		const string BarcodeType = "Code128";
 		// Barcode value
 		const string BarcodeValue = "qweasd123456";

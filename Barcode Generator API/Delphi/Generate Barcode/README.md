@@ -2,7 +2,7 @@
 
 ## REQUEST FREE TECH SUPPORT
 
-[Click here to get in touch](https://bytescout.zendesk.com/hc/en-us/requests/new?subject=PDF.co%20Web%20API%20Question)
+[Click here to get in touch](https://support.pdf.co/en)
 
 or just send email to [support@bytescout.com](mailto:support@bytescout.com?subject=PDF.co%20Web%20API%20Question) 
 
@@ -11,7 +11,7 @@ or just send email to [support@bytescout.com](mailto:support@bytescout.com?subje
 [Get Your 60 Day Free Trial](https://bytescout.com/download/web-installer?utm_source=github-readme)
 [Explore Documentation](https://bytescout.com/documentation/index.html?utm_source=github-readme)
 [Explore Source Code Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/)
-[Sign Up For Online Training](https://academy.bytescout.com/)
+
 
 
 ## ON-DEMAND REST WEB API
@@ -169,7 +169,7 @@ const
     API_KEY: string = '********************************************'
     // Result file name
     RESULT_FILE_NAME: string = 'barcode.png';
-	// Barcode type. See valid barcode types in the documentation https://secure.bytescout.com/cloudapi.html#api-Default-barcodeGenerateGet
+	// Barcode type. See valid barcode types in the documentation https://docs.pdf.co/api-reference/barcode/overview
     BARCODE_TYPE: string = 'Code128';
     // Barcode value
 	BARCODE_VALUE: string = 'qweasd123456';

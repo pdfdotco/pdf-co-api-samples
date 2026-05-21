@@ -29,7 +29,7 @@ $Pages = ""
 
 # Sample profile that sets advanced conversion options
 # Advanced options are properties of Reader class from Bytescout BarCodeReader used in the back-end:
-# https://cdn.bytescout.com/help/BytescoutBarCodeReaderSDK/html/ba101d21-3db7-eb54-d112-39cadc023d02.htm
+# 
 $Profiles = '{ "profiles": [ { "profile1": { "FastMode": true } } ] }'
 
 # Prepare URL for `Barcode Reader` API call
