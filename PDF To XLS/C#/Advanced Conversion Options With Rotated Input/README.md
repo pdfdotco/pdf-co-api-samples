@@ -12,7 +12,7 @@ Save time on writing and testing code by using the code below and use it in your
 
 [Click here to get in touch](https://support.pdf.co/en)
 
-or just send email to [support@bytescout.com](mailto:support@bytescout.com?subject=PDF.co%20Web%20API%20Question) 
+or just send email to [support@pdf.co](mailto:support@pdf.co?subject=PDF.co%20Web%20API%20Question) 
 
 ## ON-PREMISE OFFLINE SDK 
 

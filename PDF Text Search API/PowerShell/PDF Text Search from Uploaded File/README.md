@@ -12,7 +12,7 @@ Trial version of PDF.co Web API can be downloaded for free from our website. It 
 
 [Click here to get in touch](https://support.pdf.co/en)
 
-or just send email to [support@bytescout.com](mailto:support@bytescout.com?subject=PDF.co%20Web%20API%20Question) 
+or just send email to [support@pdf.co](mailto:support@pdf.co?subject=PDF.co%20Web%20API%20Question) 
 
 ## ON-PREMISE OFFLINE SDK 
 
