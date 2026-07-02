@@ -1,6 +1,6 @@
 <?php
 
-// Please refer to our knowledge base at (https://docs.pdf.co/kb/Email%20Send%20(email-send)/index) for SMTP related information
+// Please refer to our knowledge base at (https://docs.pdf.co/api-reference/email/send#send-email-with-file) for SMTP related information
 
 $curl = curl_init();
 

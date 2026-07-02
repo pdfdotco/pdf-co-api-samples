@@ -11,7 +11,7 @@ $SourceFileUrl = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-fi
 # Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 $Pages = ""
 
-# Refer to documentations for more info. https://docs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
+# Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
 $Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }"
 
 # (!) Make asynchronous job

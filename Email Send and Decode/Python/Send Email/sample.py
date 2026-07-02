@@ -3,7 +3,7 @@ import json
 
 url = "https://api.pdf.co/v1/email/send"
 
-# Please refer to our knowledge base at (https://docs.pdf.co/kb/Email%20Send%20(email-send)/index) for SMTP related information
+# Please refer to our knowledge base at (https://docs.pdf.co/api-reference/email/send#send-email-with-file) for SMTP related information
 
 payload = json.dumps({
   "url": "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/pdf-info/sample.pdf",
