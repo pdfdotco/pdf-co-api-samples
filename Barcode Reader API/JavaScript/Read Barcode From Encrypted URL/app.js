@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api-reference                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -24,7 +24,7 @@ const SourceFileUrl = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/de
 // See valid barcode types in the documentation https://docs.pdf.co
 const BarcodeTypes = "QRCode";
 
-// Refer to documentations for more info. https://docs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
+// Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
 const Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'Qweasd1234567890', 'DataDecryptionIV': '0mDI&qLv*ivTCd$*' }";
 
 // Prepare request to `Barcode Reader` API endpoint

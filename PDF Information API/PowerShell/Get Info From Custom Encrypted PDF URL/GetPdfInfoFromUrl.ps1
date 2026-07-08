@@ -5,7 +5,7 @@ $API_KEY = "***********************************"
 # Direct URL of PDF file to get information
 $SourceFileURL = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/sample_encrypted_aes128.pdf"
 
-# Refer to documentations for more info. https://docs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
+# Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
 $Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }"
 
 

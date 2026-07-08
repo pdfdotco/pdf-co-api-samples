@@ -49,7 +49,7 @@ const SourceFileUrl = "https://bytescout-com.s3.amazonaws.com/files/demo-files/c
 const SearchString = 'Your Company Name';
 
 // Prepare URL for PDF text search API call.
-// See documentation: https://docs.pdf.co/07-pdf-search-text
+// See documentation: https://docs.pdf.co/api-reference/pdf-find/basic
 var queryFindText = `/v1/pdf/find`;
 
 // JSON payload for find text

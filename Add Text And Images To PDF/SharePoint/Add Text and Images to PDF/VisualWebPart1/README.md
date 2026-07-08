@@ -178,7 +178,7 @@ namespace AddTextAndImagesToPDFWebPart.VisualWebPart1
             // * Add text annotation *
 
             // Prepare requests params as JSON
-            // See documentation: https://docs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
+            // See documentation: https://docs.pdf.co/api-reference/pdf-add
             string jsonPayload = $@"{{
                                         ""name"": ""{DestinationFile}"",
                                         ""url"": ""{SourceFileUrl}"",

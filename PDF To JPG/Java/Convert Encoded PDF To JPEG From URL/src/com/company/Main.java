@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api/index.html                                //
+// API Documentation: https://docs.pdf.co/api-reference                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -34,7 +34,7 @@ public class Main
     // Comma-separated list of page numbers (or ranges) to process. Leave empty for all pages. Example: '1,3-5,7-'.
     final static String Pages = "";
 
-    //  Refer to documentations for more info. https://docs.pdf.co/32-1-user-controlled-data-encryption-and-decryption
+    //  Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
     final static String Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }";
 
 

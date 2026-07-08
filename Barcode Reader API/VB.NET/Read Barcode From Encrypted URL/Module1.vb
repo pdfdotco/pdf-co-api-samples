@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://docs.pdf.co/api/index.html                                '
+' API Documentation: https://docs.pdf.co/api-reference                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -28,7 +28,7 @@ Module Module1
 	' See valid barcode types in the documentation https://docs.pdf.co
 	Const BarcodeTypes As String = "QRCode"
 
-	' Refer to documentations for more info. https://docs.pdf.co/32-1-user-controlled-data-encryption-and-decryption.
+	' Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption.
 	Const Profiles As String = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'Qweasd1234567890', 'DataDecryptionIV': '0mDI&qLv*ivTCd$*' }"
 
 	Sub Main()

@@ -183,7 +183,7 @@ namespace ByteScoutWebApiExample
             var X = coordinates.X;
             var Y = coordinates.Y + 25;
 
-            // See documentation: https://docs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
+            // See documentation: https://docs.pdf.co/api-reference/pdf-add
             // Prepare requests params as JSON
             string jsonPayload = $@"{{
     ""name"": ""{Path.GetFileName(DestinationFile)}"",
@@ -256,7 +256,7 @@ namespace ByteScoutWebApiExample
             webClient.Headers.Add("x-api-key", apiKey);
 
             // Prepare requests params as JSON
-            // See documentation: https://docs.pdf.co/07-pdf-search-text
+            // See documentation: https://docs.pdf.co/api-reference/pdf-find/basic
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("url", sourceFileUrl);
             parameters.Add("searchString", searchString);

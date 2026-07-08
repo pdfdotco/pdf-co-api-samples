@@ -201,7 +201,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/pdf/edit/add"
 
         ' Prepare requests params as JSON
-        ' See documentation: https://docs.pdf.co/04-pdf-add-text-signatures-and-images-to-pdf
+        ' See documentation: https://docs.pdf.co/api-reference/pdf-add
         Dim jsonPayload As String = $"{{
     ""name"": ""{Path.GetFileName(DestinationFile)}"",
     ""url"": ""{SourceFileUrl}"",
