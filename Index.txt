@@ -56,7 +56,6 @@
 \Render Url As Png
 \Replace Text From PDF
 \Replace Text With Image From PDF
-\Translate PDF
 \Add Text And Images To PDF\AWS Lambda
 \Add Text And Images To PDF\C#
 \Add Text And Images To PDF\cURL
@@ -2107,9 +2106,3 @@
 \Replace Text With Image From PDF\VB.NET\Replace Text With Image From Uploaded File
 \Replace Text With Image From PDF\VB.NET\Replace Text With Image From URL
 \Replace Text With Image From PDF\VB.NET\Replace Text With Image From URL Asynchronously
-\Translate PDF\C#
-\Translate PDF\cURL
-\Translate PDF\C#\Translate PDF From Uploaded File
-\Translate PDF\C#\Translate PDF From URL
-\Translate PDF\C#\Translate PDF From URL Asynchronously
-\Translate PDF\cURL\Translate PDF Document
