@@ -40,7 +40,7 @@ try {
             $query = "https://api.pdf.co/v1/pdf/convert/to/png"
 
             # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-            # See documentation: https://docs.pdf.co
+            # See documentation: https://developer.pdf.co
             $body = @{
                 "password" = $Password
                 "pages" = $Pages

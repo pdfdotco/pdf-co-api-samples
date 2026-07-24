@@ -103,7 +103,7 @@ function ParseDocument($apiKey, $uploadedFileUrl, $templateText)
     $async = TRUE;
     
     // Prepare URL for Document parser API call.
-    // See documentation: https://docs.pdf.co/?#1-pdfdocumentparser
+    // See documentation: https://developer.pdf.co/?#1-pdfdocumentparser
     $url = "https://api.pdf.co/v1/pdf/documentparser";
 
     // Prepare requests params

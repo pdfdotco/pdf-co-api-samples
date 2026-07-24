@@ -32,7 +32,7 @@ def deleteTextFromPdf(uploadedFileUrl, destinationFile):
     """Delete Text from PDF using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["async"] = Async
     parameters["name"] = os.path.basename(destinationFile)

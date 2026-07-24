@@ -30,7 +30,7 @@ def unprotectPDF(uploadedFileUrl, destinationFile):
     """Remove password from PDF using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {"name": os.path.basename(destinationFile), "url": uploadedFileUrl, "password": PDFFilePassword, "async": Async}
 
     # Serializing json

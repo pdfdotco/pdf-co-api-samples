@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -74,7 +74,7 @@ namespace ByteScoutWebApiExample
                     // 3. PERFORM TABLE SEARCH
 
                     // URL for `PDF Table Search` API call
-                    // See documentation: https://docs.pdf.co
+                    // See documentation: https://developer.pdf.co
                     var url = "https://api.pdf.co/v1/pdf/find/table";
 
                     // Prepare requests params as JSON

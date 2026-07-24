@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://docs.pdf.co/api-reference                                '
+' API Documentation: https://developer.pdf.co/api                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -24,7 +24,7 @@ Module Module1
     ' Source file name
     Const SourceFile As String = ".\Code_128.png"
     ' Comma-separated list of barcode types to search. 
-    ' See valid barcode types in the documentation https://docs.pdf.co
+    ' See valid barcode types in the documentation https://developer.pdf.co
     Const BarcodeTypes As String = "Code128"
     ' Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
     Const Pages As String = ""
@@ -74,7 +74,7 @@ Module Module1
                 Dim url As String = "https://api.pdf.co/v1/barcode/read/from/url"
 
                 ' Prepare requests params as JSON
-                ' See documentation: https : //docs.pdf.co
+                ' See documentation: https : //developer.pdf.co
                 Dim parameters As New Dictionary(Of String, Object)
                 parameters.Add("types", BarcodeTypes)
                 parameters.Add("pages", Pages)

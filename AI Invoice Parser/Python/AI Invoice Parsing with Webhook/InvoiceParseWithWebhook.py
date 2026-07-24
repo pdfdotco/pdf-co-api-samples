@@ -25,7 +25,7 @@ def getParsedInvoice(uploadedFileUrl, callbackURL):
     """AI Invoice Parser using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["url"] = uploadedFileUrl
     parameters["callback"] = callbackURL

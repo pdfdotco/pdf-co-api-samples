@@ -12,7 +12,7 @@ $Pages = "1-2,3-"
 $query = "https://api.pdf.co/v1/pdf/split"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://docs.pdf.co
+# See documentation: https://developer.pdf.co
 $body = @{
     "pages" = $Pages
     "url" = $SourceFileUrl

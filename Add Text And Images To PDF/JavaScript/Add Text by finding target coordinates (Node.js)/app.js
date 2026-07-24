@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -14,7 +14,7 @@ var path = require("path");
 var fs = require("fs");
 
 // Visit Knowledgebase for adding Text Macros to PDF 
-// https://docs.pdf.co/api-reference/pdf-add#macros
+// https://developer.pdf.co/api/pdf-add#macros
 
 // The authentication key (API Key).
 // Get your own by registering at https://app.pdf.co
@@ -28,7 +28,7 @@ const SourceFileUrl = "https://bytescout-com.s3.amazonaws.com/files/demo-files/c
 const SearchString = 'Notes';
 
 // Prepare URL for PDF text search API call.
-// See documentation: https://docs.pdf.co/api-reference/pdf-find/basic
+// See documentation: https://developer.pdf.co/api/pdf-find/basic
 var queryFindText = `/v1/pdf/find`;
 
 // JSON payload for find text

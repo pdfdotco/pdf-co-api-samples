@@ -56,7 +56,7 @@ def convertPdfToXml(uploadedFileUrl, destinationFile):
     Profiles = '{ "profiles": [ { "profile1": { "TrimSpaces": "False", "PreserveFormattingOnTextExtraction": "True", "Unwrap": "True", "ShrinkMultipleSpaces": "True" } } ] }'
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["password"] = Password

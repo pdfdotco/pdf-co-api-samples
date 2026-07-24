@@ -1,7 +1,7 @@
 <?php
 
 // Visit Knowledgebase for adding Text Macros to PDF 
-// https://docs.pdf.co/api-reference/pdf-add#macros
+// https://developer.pdf.co/api/pdf-add#macros
 
 $curl = curl_init();
 

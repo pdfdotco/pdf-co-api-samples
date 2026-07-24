@@ -59,7 +59,7 @@ public class ProtectPDFDocument{
             Boolean async = false;
             
             // Prepare requests params as JSON
-            // See documentation: https://docs.pdf.co
+            // See documentation: https://developer.pdf.co
             // Create JSON payload
             JSONGenerator gen = JSON.createGenerator(true);
             gen.writeStartObject();

@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 // Visit Knowledgebase for adding Text Macros to PDF 
-// https://docs.pdf.co/api-reference/pdf-add#macros
+// https://developer.pdf.co/api/pdf-add#macros
 
 namespace ByteScoutWebApiExample
 {
@@ -60,7 +60,7 @@ namespace ByteScoutWebApiExample
             var X = coordinates.X;
             var Y = coordinates.Y + 25;
 
-            // See documentation: https://docs.pdf.co/api-reference/pdf-add
+            // See documentation: https://developer.pdf.co/api/pdf-add
             // Prepare requests params as JSON
             string jsonPayload = $@"{{
     ""name"": ""{Path.GetFileName(DestinationFile)}"",
@@ -133,7 +133,7 @@ namespace ByteScoutWebApiExample
             webClient.Headers.Add("x-api-key", apiKey);
 
             // Prepare requests params as JSON
-            // See documentation: https://docs.pdf.co/api-reference/pdf-find/basic
+            // See documentation: https://developer.pdf.co/api/pdf-find/basic
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("url", sourceFileUrl);
             parameters.Add("searchString", searchString);

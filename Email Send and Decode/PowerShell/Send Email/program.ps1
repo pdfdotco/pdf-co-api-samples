@@ -1,4 +1,4 @@
-# Please refer to our knowledge base at (https://docs.pdf.co/api-reference/email/send#send-email-with-file) for SMTP related information
+# Please refer to our knowledge base at (https://developer.pdf.co/api/email/send#send-email-with-file) for SMTP related information
 
 
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"

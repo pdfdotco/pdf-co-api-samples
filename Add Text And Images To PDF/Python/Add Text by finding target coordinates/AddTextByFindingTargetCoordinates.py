@@ -2,7 +2,7 @@ import os
 import requests # pip install requests
 
 # Visit Knowledgebase for adding Text Macros to PDF 
-# https://docs.pdf.co/api-reference/pdf-add#macros
+# https://developer.pdf.co/api/pdf-add#macros
 
 # The authentication key (API Key).
 # Get your own by registering at https://app.pdf.co
@@ -47,12 +47,12 @@ def main(args = None):
 
 def findTextWithinPDF(sourceFile, searchText):
     # Prepare URL for PDF text search API call
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
 
     retVal = dict()
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["url"] = sourceFile
     parameters["searchString"] = searchText
@@ -85,7 +85,7 @@ def addImageToPDF(destinationFile, top, left):
     """Add text using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     payload = json.dumps({
         "name": os.path.basename(destinationFile),
         "password": Password,

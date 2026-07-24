@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -27,7 +27,7 @@ namespace ByteScoutWebApiExample
 		const string SourceFileUrl = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/pdf-info/sample.pdf";
 
 		// Email Details
-		// Please refer to our knowledge base at (https://docs.pdf.co/api-reference/email/send#send-email-with-file) for SMTP related information
+		// Please refer to our knowledge base at (https://developer.pdf.co/api/email/send#send-email-with-file) for SMTP related information
 		const string From = "John Doe <john@example.com>";
 		const string To = "Partner <partner@example.com>";
 		const string Subject = "Check attached sample pdf";

@@ -18,7 +18,7 @@ or just send email to [support@pdf.co](mailto:support@pdf.co?subject=PDF.co%20We
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://developer.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -200,7 +200,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/pdf/edit/add"
 
         ' Prepare requests params as JSON
-        ' See documentation: https://docs.pdf.co/api-reference/pdf-add
+        ' See documentation: https://developer.pdf.co/api/pdf-add
         Dim jsonPayload As String = $"{{
     ""name"": ""{Path.GetFileName(DestinationFile)}"",
     ""url"": ""{SourceFileUrl}"",

@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://docs.pdf.co/api-reference                                '
+' API Documentation: https://developer.pdf.co/api                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -24,7 +24,7 @@ Module Module1
     ' You can also upload your own file into PDF.co and use it as url. Check "Upload File" samples for code snippets: https://github.com/bytescout/pdf-co-api-samples/tree/master/File%20Upload/   
 	Const SourceFileURL As String = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/sample_encrypted_aes128.pdf"
 
-	' Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
+	' Refer to documentations for more info. https://developer.pdf.co/knowledgebase/user-controlled-encryption
 	Const Profiles As String = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }"
 
 	Sub Main()
@@ -42,7 +42,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/pdf/info"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //docs.pdf.co
+        ' See documentation: https : //developer.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
 		parameters.Add("url", SourceFileURL)
 		parameters.Add("profiles", Profiles)

@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -9,7 +9,7 @@
 //*******************************************************************************************//
 
 
-// Please refer to our knowledge base at (https://docs.pdf.co/api-reference/email/send#send-email-with-file) for SMTP related information
+// Please refer to our knowledge base at (https://developer.pdf.co/api/email/send#send-email-with-file) for SMTP related information
 
 var request = require('request');
 var options = {

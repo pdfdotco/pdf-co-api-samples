@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -56,7 +56,7 @@ namespace ByteScoutWebApiExample
 
 
 			// Prepare requests params as JSON
-			// See documentation: https://docs.pdf.co
+			// See documentation: https://developer.pdf.co
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("url", SourceFileUrl);
 			parameters.Add("name", FileName);

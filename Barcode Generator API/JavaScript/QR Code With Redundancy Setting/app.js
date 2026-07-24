@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -19,7 +19,7 @@ const API_KEY = "***********************************";
 
 // Result image file name
 const DestinationFile = "./barcode.png";
-// Barcode type. See valid barcode types in the documentation https://docs.pdf.co/#barcode-generator
+// Barcode type. See valid barcode types in the documentation https://developer.pdf.co/#barcode-generator
 const BarcodeType = "QRCode";
 // Barcode value
 const BarcodeValue = "QR123456\nhttps://pdf.co\nhttps://bytescout.com";
