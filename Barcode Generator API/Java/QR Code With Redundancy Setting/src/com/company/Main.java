@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -28,7 +28,7 @@ public class Main
 
     // Result file name
     final static Path ResultFile = Paths.get(".\\barcode.png");
-    // Barcode type. See valid barcode types in the documentation https://docs.pdf.co/#barcode-generator
+    // Barcode type. See valid barcode types in the documentation https://developer.pdf.co/#barcode-generator
     final static String BarcodeType = "QRCode";
     // Barcode value
     final static String BarcodeValue = "QR123456\\nhttps://pdf.co\\nhttps://bytescout.com";

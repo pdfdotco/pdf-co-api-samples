@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -15,7 +15,7 @@ $(document).ready(function () {
 });
 
 $(document).on("click", "#submit", function () {
-    var apiKey = $("#apiKey").val().trim(); // Get your API key by registering at https://docs.pdf.co
+    var apiKey = $("#apiKey").val().trim(); // Get your API key by registering at https://developer.pdf.co
 
     var url = "https://api.pdf.co/v1/barcode/generate";
 

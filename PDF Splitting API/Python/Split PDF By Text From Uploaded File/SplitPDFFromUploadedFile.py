@@ -24,7 +24,7 @@ def splitPDF(uploadedFileUrl):
     """Split PDF By Text using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["searchString"] = SplitText
     parameters["url"] = uploadedFileUrl

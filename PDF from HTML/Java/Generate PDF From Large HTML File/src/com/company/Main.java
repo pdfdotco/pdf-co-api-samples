@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -57,7 +57,7 @@ public class Main
         }
 
         // Prepare request body in JSON format
-        // See documentation: https://docs.pdf.co/?#1-json-pdfconvertfromhtml
+        // See documentation: https://developer.pdf.co/?#1-json-pdfconvertfromhtml
         JsonObject jsonBody = new JsonObject();
 
         // Input HTML code to be converted. Required.

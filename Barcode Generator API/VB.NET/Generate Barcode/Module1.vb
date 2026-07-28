@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://docs.pdf.co/api-reference                                '
+' API Documentation: https://developer.pdf.co/api                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -22,7 +22,7 @@ Module Module1
 
 	' Result file name
 	Const ResultFileName As String = ".\barcode.png"
-	' Barcode type. See valid barcode types in the documentation https://docs.pdf.co
+	' Barcode type. See valid barcode types in the documentation https://developer.pdf.co
 	Const BarcodeType As String = "Code128"
 	' Barcode value
 	Const BarcodeValue As String = "qweasd123456"
@@ -42,7 +42,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/barcode/generate"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //docs.pdf.co
+        ' See documentation: https : //developer.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
 		parameters.Add("name", Path.GetFileName(ResultFileName))
 		parameters.Add("type", BarcodeType)

@@ -43,12 +43,12 @@ def main(args = None):
 
 def findTextWithinPDF(sourceFile, searchText):
     # Prepare URL for PDF text search API call
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
 
     retVal = dict()
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["url"] = sourceFile
     parameters["searchString"] = searchText
@@ -78,7 +78,7 @@ def addImageToPDF(destinationFile, top, left):
     """Add image using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
 
     payload = json.dumps({
         "name": os.path.basename(destinationFile),

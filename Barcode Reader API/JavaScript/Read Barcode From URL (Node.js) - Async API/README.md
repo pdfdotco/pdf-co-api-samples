@@ -18,7 +18,7 @@ or just send email to [support@pdf.co](mailto:support@pdf.co?subject=PDF.co%20We
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://developer.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -45,7 +45,7 @@ const API_KEY = "***********************************";
 // Direct URL of source file to search barcodes in.
 const SourceFileUrl = "https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-api/barcode-reader/sample.pdf";
 // Comma-separated list of barcode types to search. 
-// See valid barcode types in the documentation https://docs.pdf.co
+// See valid barcode types in the documentation https://developer.pdf.co
 const BarcodeTypes = "Code128,Code39,Interleaved2of5,EAN13";
 // Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 const Pages = "";

@@ -13,7 +13,7 @@ BASE_URL = "https://api.pdf.co/v1"
 SourceFileURL = "https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-api/barcode-reader/sample.pdf"
 
 # Comma-separated list of barcode types to search.
-# See valid barcode types in the documentation https://docs.pdf.co
+# See valid barcode types in the documentation https://developer.pdf.co
 BarcodeTypes = "Code128,Code39,Interleaved2of5,EAN13"
 
 # Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
@@ -46,7 +46,7 @@ def readBarcodes(uploadedFileUrl):
     """Get Barcode Information using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["types"] = BarcodeTypes
     parameters["pages"] = Pages

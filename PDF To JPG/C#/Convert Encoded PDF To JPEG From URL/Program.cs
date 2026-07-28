@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -30,7 +30,7 @@ namespace ByteScoutWebApiExample
 		// Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 		const string Pages = "";
 
-		// Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
+		// Refer to documentations for more info. https://developer.pdf.co/knowledgebase/user-controlled-encryption
 		const string Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }";
 		
 		static void Main(string[] args)

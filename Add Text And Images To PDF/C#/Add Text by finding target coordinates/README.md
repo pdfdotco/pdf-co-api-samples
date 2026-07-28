@@ -18,7 +18,7 @@ or just send email to [support@pdf.co](mailto:support@pdf.co?subject=PDF.co%20We
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://developer.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -183,7 +183,7 @@ namespace ByteScoutWebApiExample
             var X = coordinates.X;
             var Y = coordinates.Y + 25;
 
-            // See documentation: https://docs.pdf.co/api-reference/pdf-add
+            // See documentation: https://developer.pdf.co/api/pdf-add
             // Prepare requests params as JSON
             string jsonPayload = $@"{{
     ""name"": ""{Path.GetFileName(DestinationFile)}"",
@@ -256,7 +256,7 @@ namespace ByteScoutWebApiExample
             webClient.Headers.Add("x-api-key", apiKey);
 
             // Prepare requests params as JSON
-            // See documentation: https://docs.pdf.co/api-reference/pdf-find/basic
+            // See documentation: https://developer.pdf.co/api/pdf-find/basic
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("url", sourceFileUrl);
             parameters.Add("searchString", searchString);

@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -10,7 +10,7 @@
 
 
 // Visit Knowledgebase for adding Text Macros to PDF 
-// https://docs.pdf.co/api-reference/pdf-add#macros
+// https://developer.pdf.co/api/pdf-add#macros
 
 $(document).ready(function () {
     $("#resultBlock").hide();

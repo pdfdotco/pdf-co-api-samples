@@ -1,5 +1,5 @@
 // Visit Knowledgebase for adding Text Macros to PDF 
-// https://docs.pdf.co/api-reference/pdf-add#macros
+// https://developer.pdf.co/api/pdf-add#macros
 
 // Handle PDF.co Menu on Google Sheet Open Event
 function onOpen() {

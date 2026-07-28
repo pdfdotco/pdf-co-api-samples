@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -76,7 +76,7 @@ namespace AddTextAndImagesToPDFWebPart.VisualWebPart1
             // * Add text annotation *
 
             // Prepare requests params as JSON
-            // See documentation: https://docs.pdf.co/api-reference/pdf-add
+            // See documentation: https://developer.pdf.co/api/pdf-add
             string jsonPayload = $@"{{
                                         ""name"": ""{DestinationFile}"",
                                         ""url"": ""{SourceFileUrl}"",

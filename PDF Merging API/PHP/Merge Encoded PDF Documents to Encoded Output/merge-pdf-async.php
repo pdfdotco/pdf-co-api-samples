@@ -22,7 +22,7 @@ $sourceFiles = array(
     "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/sample_encrypted_aes128.pdf", 
     "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/sample_encrypted_aes128.pdf");
 
-// For more information, refer to documentations at https://docs.pdf.co/knowledgebase/user-controlled-encryption
+// For more information, refer to documentations at https://developer.pdf.co/knowledgebase/user-controlled-encryption
 $profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234', 'DataEncryptionAlgorithm': 'AES128', 'DataEncryptionKey': 'HelloThisKey1234', 'DataEncryptionIV': 'TreloThisKey1234' }";
 
 // Prepare URL for `Merge PDF` API call

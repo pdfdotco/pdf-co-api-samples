@@ -18,7 +18,7 @@ or just send email to [support@pdf.co](mailto:support@pdf.co?subject=PDF.co%20We
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://developer.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -52,7 +52,7 @@ def fillPDFForm():
     """Fillable PDF form using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     payload = "{\n    \"async\": false,\n    \"encrypt\": true,\n    \"name\": \"newDocument\",\n    \"url\": \"https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/pdf-edit/sample.pdf\",\n    \"annotations\":[        \n       {\n            \"text\":\"sample prefilled text\",\n            \"x\": 10,\n            \"y\": 30,\n            \"size\": 12,\n            \"pages\": \"0-\",\n            \"type\": \"TextField\",\n            \"id\": \"textfield1\"\n        },\n        {\n            \"x\": 100,\n            \"y\": 150,\n            \"size\": 12,\n            \"pages\": \"0-\",\n            \"type\": \"Checkbox\",\n            \"id\": \"checkbox2\"\n        },\n        {\n            \"x\": 100,\n            \"y\": 170,\n            \"size\": 12,\n            \"pages\": \"0-\",\n            \"link\": \"https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/pdf-edit/logo.png\",\n            \"type\": \"CheckboxChecked\",\n            \"id\":\"checkbox3\"\n        }          \n        \n    ],\n    \n    \"images\": [\n        {\n            \"url\": \"bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/pdf-edit/logo.png\",\n            \"x\": 200,\n            \"y\": 250,\n            \"pages\": \"0\",\n            \"link\": \"www.pdf.co\"\n        }\n        \n    ]\n}"
     # Prepare URL for 'Fillable PDF' API request
     url = "{}/pdf/edit/add".format(BASE_URL)

@@ -11,7 +11,7 @@ $SourceFileUrl = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-fi
 # Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 $Pages = ""
 
-# Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
+# Refer to documentations for more info. https://developer.pdf.co/knowledgebase/user-controlled-encryption
 $Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }"
 
 # (!) Make asynchronous job
@@ -22,7 +22,7 @@ $Async = $true
 $query = "https://api.pdf.co/v1/pdf/convert/to/jpg"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://docs.pdf.co
+# See documentation: https://developer.pdf.co
 $body = @{
     "profiles" = $Profiles
     "pages" = $Pages

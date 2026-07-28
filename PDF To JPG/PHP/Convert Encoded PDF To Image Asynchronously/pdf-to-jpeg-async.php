@@ -23,7 +23,7 @@ $sourceFileUrl = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-fi
 // Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 $pages = "";
 
-// Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
+// Refer to documentations for more info. https://developer.pdf.co/knowledgebase/user-controlled-encryption
 $profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }";
 
 // Prepare URL for `PDF To JPEG` API call

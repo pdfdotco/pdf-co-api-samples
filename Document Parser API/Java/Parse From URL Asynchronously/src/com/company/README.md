@@ -18,7 +18,7 @@ or just send email to [support@pdf.co](mailto:support@pdf.co?subject=PDF.co%20We
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://docs.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://developer.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -92,7 +92,7 @@ public class Main {
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonBody.toString());
 
         // Prepare URL for Document parser API call.
-        // See documentation: https://docs.pdf.co/?#1-pdfdocumentparser
+        // See documentation: https://developer.pdf.co/?#1-pdfdocumentparser
         String query = String.format("https://api.pdf.co/v1/pdf/documentparser?async=%s", Async);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");

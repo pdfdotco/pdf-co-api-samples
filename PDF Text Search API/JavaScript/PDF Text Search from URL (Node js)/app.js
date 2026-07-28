@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -34,7 +34,7 @@ const SearchString = '[4-9][0-9].[0-9][0-9]'; // Regular expression to find numb
 const RegexSearch = 'True';
 
 // Prepare URL for PDF text search API call.
-// See documentation: https://docs.pdf.co
+// See documentation: https://developer.pdf.co
 var query = `https://api.pdf.co/v1/pdf/find`;
 let reqOptions = {
     uri: query,

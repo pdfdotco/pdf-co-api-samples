@@ -54,7 +54,7 @@ def convertPdfToText(uploadedFileUrl, destinationFile):
     Profiles = '{ "profiles": [{ "profile1": { "RotationAngle": 1 } } ] }'
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["password"] = Password

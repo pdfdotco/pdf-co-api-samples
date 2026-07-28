@@ -14,7 +14,7 @@ SourceFileURL = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-fil
 # Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 Pages = ""
 
-# Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
+# Refer to documentations for more info. https://developer.pdf.co/knowledgebase/user-controlled-encryption
 Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }"
 
 def main(args = None):
@@ -25,7 +25,7 @@ def convertPdfToImage(sourceFileURL):
     """Converts PDF To Image using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["url"] = sourceFileURL
     parameters["pages"] = Pages

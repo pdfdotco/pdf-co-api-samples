@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://docs.pdf.co/api-reference                                //
+// API Documentation: https://developer.pdf.co/api                                     //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -29,10 +29,10 @@ namespace ByteScoutWebApiExample
         const string SourceFileURL = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/barcode_encrypted_aes128.png";
         
         // Comma-separated list of barcode types to search. 
-        // See valid barcode types in the documentation https://docs.pdf.co
+        // See valid barcode types in the documentation https://developer.pdf.co
         const string BarcodeTypes = "QRCode";
         
-        // Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
+        // Refer to documentations for more info. https://developer.pdf.co/knowledgebase/user-controlled-encryption
         const string Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'Qweasd1234567890', 'DataDecryptionIV': '0mDI&qLv*ivTCd$*' }";
 
 
@@ -45,7 +45,7 @@ namespace ByteScoutWebApiExample
             webClient.Headers.Add("x-api-key", API_KEY);
 
             // Prepare requests params as JSON
-            // See documentation: https://docs.pdf.co/?#barcode-reader
+            // See documentation: https://developer.pdf.co/?#barcode-reader
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("url", SourceFileURL);
             parameters.Add("types", BarcodeTypes);

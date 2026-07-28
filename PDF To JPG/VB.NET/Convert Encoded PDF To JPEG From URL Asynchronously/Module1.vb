@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://docs.pdf.co/api-reference                                '
+' API Documentation: https://developer.pdf.co/api                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -32,7 +32,7 @@ Module Module1
 	' Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. Example: '0,2-5,7-'.
 	Const Pages As String = ""
 
-	' Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
+	' Refer to documentations for more info. https://developer.pdf.co/knowledgebase/user-controlled-encryption
 	Const Profiles As String = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'HelloThisKey1234', 'DataDecryptionIV': 'TreloThisKey1234' }"
 
 	' (!) Make asynchronous job
@@ -54,7 +54,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/pdf/convert/to/jpg"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //docs.pdf.co
+        ' See documentation: https : //developer.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
 		parameters.Add("url", SourceFileUrl)
 		parameters.Add("pages", Pages)

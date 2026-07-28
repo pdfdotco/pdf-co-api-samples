@@ -23,7 +23,7 @@ def convertDOCToPDF(uploadedFileUrl, destinationFile):
     """Converts DOC to PDF using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://docs.pdf.co
+    # See documentation: https://developer.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["url"] = uploadedFileUrl

@@ -6,17 +6,17 @@ $API_KEY = "***********************************"
 $SourceFileURL = "https://bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/encryption/barcode_encrypted_aes128.png"
 
 # Comma-separated list of barcode types to search. 
-# See valid barcode types in the documentation https://docs.pdf.co
+# See valid barcode types in the documentation https://developer.pdf.co
 $BarcodeTypes = "QRCode"
 
-# Refer to documentations for more info. https://docs.pdf.co/knowledgebase/user-controlled-encryption
+# Refer to documentations for more info. https://developer.pdf.co/knowledgebase/user-controlled-encryption
 $Profiles = "{ 'DataDecryptionAlgorithm': 'AES128', 'DataDecryptionKey': 'Qweasd1234567890', 'DataDecryptionIV': '0mDI&qLv*ivTCd$*' }"
 
 # Prepare URL for `Barcode Reader` API call
 $query = "https://api.pdf.co/v1/barcode/read/from/url"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://docs.pdf.co
+# See documentation: https://developer.pdf.co
 $body = @{
     "types" = $BarcodeTypes
     "profiles" = $Profiles
