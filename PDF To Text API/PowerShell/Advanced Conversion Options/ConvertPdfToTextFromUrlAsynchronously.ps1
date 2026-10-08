@@ -34,7 +34,7 @@ $Async = $true
 
 # Sample profile that sets advanced conversion options
 # Advanced options are properties of TextExtractor class from ByteScout Text Extractor SDK used in the back-end:
-# 
+# https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/8a2bae5a-346f-8338-b5aa-6f3522dca0d4.htm
 $Profiles = '{ "profiles": [ { "profile1": { "TrimSpaces": "False", "PreserveFormattingOnTextExtraction": "True", "Unwrap": "True" } } ] }'
 
 
@@ -42,7 +42,7 @@ $Profiles = '{ "profiles": [ { "profile1": { "TrimSpaces": "False", "PreserveFor
 $query = "https://api.pdf.co/v1/pdf/convert/to/text"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://developer.pdf.co
+# See documentation: https://apidocs.pdf.co
 $body = @{
     "name" = $(Split-Path $DestinationFile -Leaf)
     "password" = $Password

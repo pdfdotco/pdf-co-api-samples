@@ -33,7 +33,7 @@ def searchTableInPDF(uploadedFileUrl):
     """Search Text using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://developer.pdf.co
+    # See documentation: https://apidocs.pdf.co
     parameters = {}
     parameters["async"] = Async
     parameters["password"] = Password

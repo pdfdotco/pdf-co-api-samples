@@ -60,7 +60,7 @@ def convertPdfToExcel(uploadedFileUrl, destinationFile):
     profiles = '{ "profiles": [{ "profile1": { "RotationAngle": 1 } } ] }'
 
     # Prepare requests params as JSON
-    # See documentation: https://developer.pdf.co
+    # See documentation: https://apidocs.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["password"] = Password

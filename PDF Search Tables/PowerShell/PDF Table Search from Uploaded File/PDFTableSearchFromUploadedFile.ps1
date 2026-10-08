@@ -38,11 +38,11 @@ try {
             # 3. TABLE SEARCH FROM UPLOADED FILE
 
             # Prepare URL for PDF Table Search API call.
-            # See documentation: https://developer.pdf.co
+            # See documentation: https://apidocs.pdf.co
             $query = "https://api.pdf.co/v1/pdf/find/table"
 
             # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-            # See documentation: https://developer.pdf.co
+            # See documentation: https://apidocs.pdf.co
             $body = @{
                 "password" = $Password
                 "pages" = $Pages

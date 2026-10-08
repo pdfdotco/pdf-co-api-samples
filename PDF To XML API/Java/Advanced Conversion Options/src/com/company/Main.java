@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api                                     //
+// API Documentation: https://developer.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -69,7 +69,7 @@ public class Main
 
         // Sample profile that sets advanced conversion options
         // Advanced options are properties of XMLExtractor class from ByteScout XML Extractor SDK used in the back-end:
-        // 
+        // https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/6f2b5e9c-ba15-f9fe-192b-c3e31ec4a0ee.htm
         String Profiles = "{ 'profiles': [ { 'profile1': { 'TrimSpaces': 'False', 'PreserveFormattingOnTextExtraction': 'True', 'Unwrap': 'True', 'ShrinkMultipleSpaces': 'True' } } ] }";
 
         // Prepare URL for `PDF To XML` API call

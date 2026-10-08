@@ -38,7 +38,7 @@ def addImageToExistingPdf(destinationFile):
     """Add image using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://developer.pdf.co
+    # See documentation: https://apidocs.pdf.co
     payload = json.dumps({
         "name": os.path.basename(destinationFile),
         "password": Password,

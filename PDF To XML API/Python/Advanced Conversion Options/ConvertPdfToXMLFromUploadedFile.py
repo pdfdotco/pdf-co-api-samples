@@ -3,7 +3,7 @@ import requests # pip install requests
 
 # The authentication key (API Key).
 # Get your own by registering at https://app.pdf.co
-API_KEY = "hirenpatel2236@gmail.com_f5859c8ae9a7bca8"
+API_KEY = "YOUR_PDFCO_API_KEY"
 
 # Base URL for PDF.co Web API requests
 BASE_URL = "https://api.pdf.co/v1"
@@ -52,11 +52,11 @@ def convertPdfToXml(uploadedFileUrl, destinationFile):
 
     # Sample profile that sets advanced conversion options
     # Advanced options are properties of XMLExtractor class from ByteScout XML Extractor SDK used in the back-end:
-    # 
+    # https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/6f2b5e9c-ba15-f9fe-192b-c3e31ec4a0ee.htm
     Profiles = '{ "profiles": [ { "profile1": { "TrimSpaces": "False", "PreserveFormattingOnTextExtraction": "True", "Unwrap": "True", "ShrinkMultipleSpaces": "True" } } ] }'
 
     # Prepare requests params as JSON
-    # See documentation: https://developer.pdf.co
+    # See documentation: https://apidocs.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["password"] = Password

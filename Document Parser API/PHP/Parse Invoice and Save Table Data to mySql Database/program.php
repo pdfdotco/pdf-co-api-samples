@@ -9,7 +9,7 @@
 <?php 
 
 // Get submitted form data
-$apiKey = $_POST["apiKey"]; // The authentication key (API Key). Get your own by registering at https://app.pdf.co
+$apiKey = $_POST["apiKey"]; // The authentication key (API Key). Get your own by registering at https://app.pdf.co/documentation/api
 
 
 // 1. RETRIEVE THE PRESIGNED URL TO UPLOAD THE FILE.
@@ -153,7 +153,7 @@ function ParseDocument($apiKey, $uploadedFileUrl, $templateText)
     $async = TRUE;
 
     // Prepare URL for Document parser API call.
-    // See documentation: https://developer.pdf.co/?#1-pdfdocumentparser
+    // See documentation: https://apidocs.pdf.co/?#1-pdfdocumentparser
     $url = "https://api.pdf.co/v1/pdf/documentparser";
 
     // Prepare requests params

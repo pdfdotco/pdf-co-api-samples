@@ -13,7 +13,7 @@ $resultFileName = [System.IO.Path]::GetFileName($ResultFile)
 $query = "https://api.pdf.co/v1/url/convert/to/png"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://developer.pdf.co
+# See documentation: https://apidocs.pdf.co
 $body = @{
     "name" = $resultFileName
     "url" = $InputUrl

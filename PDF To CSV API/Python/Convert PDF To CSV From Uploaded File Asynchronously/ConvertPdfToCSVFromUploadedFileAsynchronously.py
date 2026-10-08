@@ -35,7 +35,7 @@ def convertPdfToCSV(uploadedFileUrl, destinationFile):
     """Converts PDF To CSV using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://developer.pdf.co
+    # See documentation: https://apidocs.pdf.co
     parameters = {}
     parameters["async"] = Async
     parameters["name"] = os.path.basename(destinationFile)

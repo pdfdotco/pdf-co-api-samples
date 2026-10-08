@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://developer.pdf.co/api                                '
+' API Documentation: https://developer.pdf.co/api/index.html                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -50,11 +50,11 @@ Module Module1
         webClient.Headers.Add("Content-Type", "application/json")
 
         ' Prepare URL for PDF text search API call.
-        ' See documentation: https : //developer.pdf.co/api/pdf-find/basic
+        ' See documentation: https : //app.pdf.co/documentation/api/1.0/pdf/find.html
 		Dim url As String = "https://api.pdf.co/v1/pdf/find"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //developer.pdf.co
+        ' See documentation: https : //apidocs.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
 		parameters.Add("password", Password)
 		parameters.Add("pages", Pages)

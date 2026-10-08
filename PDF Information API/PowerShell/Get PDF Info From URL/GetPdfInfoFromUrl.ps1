@@ -10,7 +10,7 @@ $SourceFileURL = "https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-
 $query = "https://api.pdf.co/v1/pdf/info"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://developer.pdf.co
+# See documentation: https://apidocs.pdf.co
 $body = @{
     "url" = $SourceFileURL
 } | ConvertTo-Json

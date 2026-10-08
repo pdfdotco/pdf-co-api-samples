@@ -56,6 +56,7 @@
 \Render Url As Png
 \Replace Text From PDF
 \Replace Text With Image From PDF
+\Translate PDF
 \Add Text And Images To PDF\AWS Lambda
 \Add Text And Images To PDF\C#
 \Add Text And Images To PDF\cURL
@@ -419,10 +420,6 @@
 \Document Parser API\Java\Parse Uploaded File Asynchronously
 \Document Parser API\Java\Parse with OCR
 \Document Parser API\Java\Parsing and reading data from Airline Tickets
-\Document Parser API\Java\Extract Borderless Table to CSV using Template ID Asynchronously\target
-\Document Parser API\Java\Extract Borderless Table to CSV using Template ID Asynchronously\target\classes
-\Document Parser API\Java\Extract Multipage PDF Table to CSV Asynchronously\target
-\Document Parser API\Java\Extract Multipage PDF Table to CSV Asynchronously\target\classes
 \Document Parser API\JavaScript\Parse From Url (Node.js)
 \Document Parser API\JavaScript\Parse Uploaded File (Node.js)
 \Document Parser API\n8n\Automated Purchase Order Processing and Notification Workflow
@@ -817,9 +814,7 @@
 \PDF Fill PDF Forms\Java\Fill PDF Form Asynchronously\target
 \PDF Fill PDF Forms\Java\Fill PDF Form Asynchronously\target\classes
 \PDF Fill PDF Forms\Java\Fill PDF Form Asynchronously\target\classes\archetype-resources
-\PDF Fill PDF Forms\Java\Fill PDF Form Asynchronously\target\classes\com
 \PDF Fill PDF Forms\Java\Fill PDF Form Asynchronously\target\classes\META-INF
-\PDF Fill PDF Forms\Java\Fill PDF Form Asynchronously\target\classes\com\company
 \PDF Fill PDF Forms\Java\Fill PDF Form Asynchronously\target\classes\META-INF\maven
 \PDF Fill PDF Forms\JavaScript\Fill PDF Forms
 \PDF Fill PDF Forms\JavaScript\Fill PDF Forms Simplified
@@ -1494,10 +1489,8 @@
 \PDF To CSV API\Java\Convert PDF to CSV From URL Asynchronously\target\maven-archiver
 \PDF To CSV API\Java\Convert PDF to CSV From URL Asynchronously\target\classes\$org
 \PDF To CSV API\Java\Convert PDF to CSV From URL Asynchronously\target\classes\archetype-resources
-\PDF To CSV API\Java\Convert PDF to CSV From URL Asynchronously\target\classes\com
 \PDF To CSV API\Java\Convert PDF to CSV From URL Asynchronously\target\classes\META-INF
 \PDF To CSV API\Java\Convert PDF to CSV From URL Asynchronously\target\classes\$org\example
-\PDF To CSV API\Java\Convert PDF to CSV From URL Asynchronously\target\classes\com\company
 \PDF To CSV API\Java\Convert PDF to CSV From URL Asynchronously\target\classes\META-INF\maven
 \PDF To CSV API\JavaScript\Advanced Conversion Options
 \PDF To CSV API\JavaScript\Advanced Conversion Options With Rotated Input
@@ -1556,9 +1549,7 @@
 \PDF To HTML API\Java\Convert PDF to HTML From Uploaded File Asynchronously\target
 \PDF To HTML API\Java\Convert PDF to HTML From Uploaded File Asynchronously\target\classes
 \PDF To HTML API\Java\Convert PDF to HTML From Uploaded File Asynchronously\target\classes\archetype-resources
-\PDF To HTML API\Java\Convert PDF to HTML From Uploaded File Asynchronously\target\classes\com
 \PDF To HTML API\Java\Convert PDF to HTML From Uploaded File Asynchronously\target\classes\META-INF
-\PDF To HTML API\Java\Convert PDF to HTML From Uploaded File Asynchronously\target\classes\com\company
 \PDF To HTML API\Java\Convert PDF to HTML From Uploaded File Asynchronously\target\classes\META-INF\maven
 \PDF To HTML API\JavaScript\Convert PDF To HTML From Uploaded File (Node.js)
 \PDF To HTML API\JavaScript\Convert PDF To HTML From Uploaded File (Node.js) - Async API
@@ -2106,3 +2097,9 @@
 \Replace Text With Image From PDF\VB.NET\Replace Text With Image From Uploaded File
 \Replace Text With Image From PDF\VB.NET\Replace Text With Image From URL
 \Replace Text With Image From PDF\VB.NET\Replace Text With Image From URL Asynchronously
+\Translate PDF\C#
+\Translate PDF\cURL
+\Translate PDF\C#\Translate PDF From Uploaded File
+\Translate PDF\C#\Translate PDF From URL
+\Translate PDF\C#\Translate PDF From URL Asynchronously
+\Translate PDF\cURL\Translate PDF Document

@@ -27,7 +27,7 @@ public class CompressPDFDocument{
             Boolean async = false;
             
             // Prepare requests params as JSON
-            // See documentation: https://developer.pdf.co
+            // See documentation: https://apidocs.pdf.co
             // Create JSON payload
             JSONGenerator gen = JSON.createGenerator(true);
             gen.writeStartObject();

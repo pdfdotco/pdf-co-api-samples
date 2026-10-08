@@ -1,7 +1,7 @@
 '*******************************************************************************************'
 '                                                                                           '
 ' Get API Key https://app.pdf.co/signup                                                     '
-' API Documentation: https://developer.pdf.co/api                                '
+' API Documentation: https://developer.pdf.co/api/index.html                                '
 '                                                                                           '
 ' Note: Replace placeholder values in the code with your API Key                            '
 ' and file paths (if applicable)                                                            '
@@ -48,7 +48,7 @@ Module Module1
 
     ' Sample profile that sets advanced conversion options
     ' Advanced options are properties of TextExtractor class from ByteScout Text Extractor SDK used in the back-end:
-    ' 
+    ' https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/8a2bae5a-346f-8338-b5aa-6f3522dca0d4.htm
     ReadOnly Profiles = File.ReadAllText("profile.json")
 
     Sub Main()
@@ -66,7 +66,7 @@ Module Module1
 		Dim url As String = "https://api.pdf.co/v1/pdf/convert/to/text"
 
         ' Prepare requests params as JSON
-        ' See documentation: https : //developer.pdf.co
+        ' See documentation: https : //apidocs.pdf.co
         Dim parameters As New Dictionary(Of String, Object)
 		parameters.Add("name", Path.GetFileName(DestinationFile))
 		parameters.Add("password", Password)

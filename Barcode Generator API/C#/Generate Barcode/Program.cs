@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api                                     //
+// API Documentation: https://developer.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -27,7 +27,7 @@ namespace ByteScoutWebApiExample
 
 		// Result file name
 		const string ResultFileName = @".\barcode.png";
-		// Barcode type. See valid barcode types in the documentation https://developer.pdf.co/api/barcode/overview
+		// Barcode type. See valid barcode types in the documentation https://secure.bytescout.com/cloudapi.html#api-Default-barcodeGenerateGet
 		const string BarcodeType = "Code128";
 		// Barcode value
 		const string BarcodeValue = "qweasd123456";
@@ -42,7 +42,7 @@ namespace ByteScoutWebApiExample
 			webClient.Headers.Add("x-api-key", API_KEY);
 
 			// Prepare requests params as JSON
-            // See documentation: https://developer.pdf.co/#barcode-generator
+            // See documentation: https://apidocs.pdf.co/#barcode-generator
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("name", Path.GetFileName(ResultFileName));
             parameters.Add("type", BarcodeType);

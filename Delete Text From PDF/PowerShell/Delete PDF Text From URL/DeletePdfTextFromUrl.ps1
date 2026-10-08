@@ -14,7 +14,7 @@ $DestinationFile = ".\result.pdf"
 $query = "https://api.pdf.co/v1/pdf/edit/delete-text"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://developer.pdf.co
+# See documentation: https://apidocs.pdf.co
 $body = @{
     "name" = $(Split-Path $DestinationFile -Leaf)
     "password" = $Password

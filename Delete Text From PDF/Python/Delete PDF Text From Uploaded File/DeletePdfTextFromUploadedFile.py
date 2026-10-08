@@ -26,7 +26,7 @@ def deleteTextFromPdf(uploadedFileUrl, destinationFile):
     """DELETE TEXT FROM UPLOADED PDF FILE using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://developer.pdf.co
+    # See documentation: https://apidocs.pdf.co
     parameters = {}
     parameters["name"] = os.path.basename(destinationFile)
     parameters["password"] = Password

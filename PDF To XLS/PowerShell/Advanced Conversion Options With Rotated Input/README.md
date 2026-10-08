@@ -10,23 +10,23 @@ Visit our website to get a free trial version of PDF.co Web API. Free trial cont
 
 ## REQUEST FREE TECH SUPPORT
 
-[Click here to get in touch](https://support.pdf.co/en)
+[Click here to get in touch](https://bytescout.zendesk.com/hc/en-us/requests/new?subject=PDF.co%20Web%20API%20Question)
 
-or just send email to [support@pdf.co](mailto:support@pdf.co?subject=PDF.co%20Web%20API%20Question) 
+or just send email to [support@bytescout.com](mailto:support@bytescout.com?subject=PDF.co%20Web%20API%20Question) 
 
 ## ON-PREMISE OFFLINE SDK 
 
 [Get Your 60 Day Free Trial](https://bytescout.com/download/web-installer?utm_source=github-readme)
 [Explore Documentation](https://bytescout.com/documentation/index.html?utm_source=github-readme)
 [Explore Source Code Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/)
-
+[Sign Up For Online Training](https://academy.bytescout.com/)
 
 
 ## ON-DEMAND REST WEB API
 
 [Get your API key](https://app.pdf.co/signup?utm_source=github-readme)
 [Security](https://pdf.co/security)
-[Explore Web API Documentation](https://developer.pdf.co?utm_source=github-readme)
+[Explore Web API Documentation](https://apidocs.pdf.co?utm_source=github-readme)
 [Explore Web API Samples](https://github.com/bytescout/ByteScout-SDK-SourceCode/tree/master/PDF.co%20Web%20API)
 
 ## VIDEO REVIEW
@@ -81,7 +81,7 @@ $DestinationFile = ".\result.xls"
 
 # Sample profile that sets advanced conversion options
 # Advanced options are properties of XLSExtractor class from ByteScout PDF Extractor SDK used in the back-end:
-# 
+# https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/87ce5fa6-3143-167d-abbd-bc7b5e160fe5.htm
 
 # Valid RotationAngle values:
 # 0 - no rotation
@@ -121,7 +121,7 @@ try {
             $query = "https://api.pdf.co/v1/pdf/convert/to/xls"
 
             # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-            # See documentation: https://developer.pdf.co
+            # See documentation: https://apidocs.pdf.co
             $body = @{
                 "name" = $(Split-Path $DestinationFile -Leaf)
                 "password" = $Password

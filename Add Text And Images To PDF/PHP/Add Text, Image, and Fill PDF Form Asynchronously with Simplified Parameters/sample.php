@@ -10,7 +10,7 @@
 <?php
 
 // Main Script
-$apiKey = "bulahasta@gmail.com_YOTzXHwVtmHhLpM16SSFihtXeD9h9ASvEcF9EtedQXpcQMYvV6cDGVJsgOum63VT"; // Replace with your API key
+$apiKey = "YOUR_PDFCO_API_KEY"; // Replace with your API key
 $url = "https://api.pdf.co/v1/pdf/edit/add";
 
 $parameters = array(

@@ -43,14 +43,14 @@ $Async = $true
 
 # Sample profile that sets advanced conversion options.
 # Advanced options are properties of XLSExtractor class from ByteScout PDF Extractor SDK used in the back-end:
-# 
+# https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/2712c05b-9674-5253-df76-2a31ed055afd.htm
 $Profiles = '{ "profiles": [ { "profile1": { "RichTextFormatting": false, "PageToWorksheet": false } } ] }'
 
 # Prepare URL for `PDF To XLS` API call
 $query = "https://api.pdf.co/v1/pdf/convert/to/xls"
 
 # Prepare request body (will be auto-converted to JSON by Invoke-RestMethod)
-# See documentation: https://developer.pdf.co
+# See documentation: https://apidocs.pdf.co
 $body = @{
     "name" = $(Split-Path $DestinationFile -Leaf)
     "password" = $Password

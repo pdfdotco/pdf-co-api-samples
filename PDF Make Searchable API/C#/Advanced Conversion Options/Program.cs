@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api                                     //
+// API Documentation: https://developer.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -36,7 +36,7 @@ namespace ByteScoutWebApiExample
 
         // Sample profile that sets advanced conversion options
         // Advanced options are properties of SearchablePDFMaker class from ByteScout PDF Extractor SDK used in the back-end:
-        // 
+        // https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/5dee0c85-e13d-b93b-ab0f-d4b42ef60756.htm
         static string Profiles = File.ReadAllText("profile.json");
 
 

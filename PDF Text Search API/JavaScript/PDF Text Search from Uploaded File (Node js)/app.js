@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api                                     //
+// API Documentation: https://developer.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -109,7 +109,7 @@ function uploadFile(apiKey, localFile, uploadUrl) {
 
 function pdfTextSearch(uploadedFileUrl) {
     // Prepare URL for PDF text search API call.
-    // See documentation: https://developer.pdf.co
+    // See documentation: https://apidocs.pdf.co
     var query = `https://api.pdf.co/v1/pdf/find`;
     let reqOptions = {
         uri: query,

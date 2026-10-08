@@ -25,7 +25,7 @@ def convertPdfToImage(sourceFileURL, destinationFile):
     """Converts PDF To Image using PDF.co Web API"""
 
     # Prepare requests params as JSON
-    # See documentation: https://developer.pdf.co
+    # See documentation: https://apidocs.pdf.co
     parameters = {}
     parameters["password"] = Password
     parameters["pages"] = Pages

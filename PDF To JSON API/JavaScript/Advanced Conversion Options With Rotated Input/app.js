@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api                                     //
+// API Documentation: https://developer.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -59,7 +59,7 @@ Some of advanced options available through profiles:
 
 // Sample profile that sets advanced conversion options
 // Advanced options are properties of JSONExtractor class from ByteScout PDF Extractor SDK used in the back-end:
-// 
+// https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/87ce5fa6-3143-167d-abbd-bc7b5e160fe5.htm
 
 /*
 Valid RotationAngle values:

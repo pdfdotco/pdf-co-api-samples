@@ -15,7 +15,7 @@ $apiKey = $_POST["apiKey"]; // The authentication key (API Key). Get your own by
 $url = "https://api.pdf.co/v1/pdf/edit/add";
 
 // Prepare requests params
-// See documentation: https://developer.pdf.co
+// See documentation: https://apidocs.pdf.co
 $parameters = array();
 
 // Direct URL of source PDF file.

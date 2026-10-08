@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api                                     //
+// API Documentation: https://developer.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -26,7 +26,7 @@ public class Main
 {
     // The authentication key (API Key).
     // Get your own by registering at https://app.pdf.co
-    final static String API_KEY = "nnamdionyemaobi@gmail.com_Fcz589ZrRNt66ufvgsZZaMOHs918OOJ75F6p5sHyIZAUVpnjM1e3cVrq3jFs5gDi";
+    final static String API_KEY = "YOUR_PDFCO_API_KEY";
 
     // Direct URL of source PDF file.
     final static String SourceFileUrl = "bytescout-com.s3-us-west-2.amazonaws.com/files/demo-files/cloud-api/pdf-form/f1040.pdf";

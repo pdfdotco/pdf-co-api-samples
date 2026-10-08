@@ -1,7 +1,7 @@
 //*******************************************************************************************//
 //                                                                                           //
 // Get Your API Key: https://app.pdf.co/signup                                               //
-// API Documentation: https://developer.pdf.co/api                                     //
+// API Documentation: https://developer.pdf.co/api/index.html                                //
 //                                                                                           //
 // Note: Replace placeholder values in the code with your API Key                            //
 // and file paths (if applicable)                                                            //
@@ -57,7 +57,7 @@ Some of advanced options available through profiles:
 */
 // Sample profile that sets advanced conversion options.
 // Advanced options are properties of XLSExtractor class from ByteScout PDF Extractor SDK used in the back-end:
-// 
+// https://cdn.bytescout.com/help/BytescoutPDFExtractorSDK/html/2712c05b-9674-5253-df76-2a31ed055afd.htm
 const Profiles = '{ "profiles": [ { "profile1": { "RichTextFormatting": false, "PageToWorksheet": false } } ] }';
 
 // Prepare request to `PDF To XLS` API endpoint
